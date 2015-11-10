@@ -1,0 +1,80 @@
+<div ng-class="{'invisible-notify':notifyContainer.isInvisible,'visible-notify':notifyContainer.isVisible}" >
+    <div class="header-container">
+        <div class="row">
+            <span class="col-sm-12">
+                {{messages.header.label}}
+                <button type="button" class="close pull-right" aria-label="Close"><span aria-hidden="true" ng-click="showNofityContainer()">&times;</span></button>
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">#</div>
+            <div class="col-sm-7">{{messages.header.bookName}}</div>
+            <div class="col-sm-3">{{messages.header.options}}</div>
+        </div>
+    </div>
+
+    <div ng-if="notifyData.length">
+        <div class="scrollable-container">
+            <div ng-repeat="item in notifyData" class="row">
+                <div class="col-sm-1">{{$index + 1}}</div>
+                <div class="col-sm-7">{{item.bookName}}</div>
+
+                <div class="col-sm-1"
+                     data-toggle="tooltip"
+                     data-placement="top"
+                     title="Publish the uploaded book">
+                    <span ng-click="publishBookByNotify(item)"
+                          class="notifyOptionsButtonCorner glyphicon glyphicon-ok"
+                          data-button-type="publish"></span>
+                </div>
+                 <div class="col-sm-1"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Delete the uploaded book">
+                     <span ng-click="openDeleteBookByNotifyPopUp(item)"
+                           class="notifyOptionsButtonCorner glyphicon glyphicon-trash"
+                           data-button-type="trash"></span>
+                 </div>
+                 <div class="col-sm-1"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Remove the notification">
+                     <i ng-click="deleteNotify(item,true)"
+                        class="notifyOptionsButtonCorner icon-bell-off"
+                        data-button-type="remove"></i>
+                 </div>
+            </div>
+
+        </div>
+    </div>
+    <div ng-if="!notifyData.length">
+        <h2 class="text-center">{{messages.noNotificationLabel}}</h2>
+    </div>
+</div>
+
+<div id="deleteBookNotifyDialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>{{messages.deleteBookNotifyDialog.firstPart}} {{localItem.bookName}} {{messages.deleteBookNotifyDialog.secondPart}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="deleteBookByNotify(localItem)" data-dismiss="modal">{{messages.deleteBookNotifyDialog.yesButton}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{messages.deleteBookNotifyDialog.noButton}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="notifyErrorDialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>{{errorMessage}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="deleteNotify(localItem,localCallable)" data-dismiss="modal">{{messages.notifyErrorDialog.okButton}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

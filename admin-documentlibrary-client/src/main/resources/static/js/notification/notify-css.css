@@ -1,0 +1,103 @@
+.notificationCommandContainer{
+    background-color: #bfd9ff;
+
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -o-border-radius: 20px;
+    -ms-border-radius: 20px;
+
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 3px;
+    padding-bottom: 5px;
+}
+
+.invisible-notify {
+    display: none;
+}
+
+.newNotify {
+    -webkit-transition: 1s linear all; /* Chrome */
+    transition: 1s linear all;
+    -webkit-box-shadow: 0px 0px 30px 10px rgba(247,58,0,1);
+    -moz-box-shadow: 0px 0px 30px 10px rgba(247,58,0,1);
+    box-shadow: 0px 0px 30px 5px rgba(247,58,0,1);
+}
+
+.newNotify-leave {
+    -webkit-transition: 1s linear all; /* Chrome */
+    transition: 1s linear all;
+    box-shadow: 0px 0px 0px 0px;
+    -webkit-box-shadow: 0px 0px 0px 0px;
+    -moz-box-shadow:  0px 0px 0px 0px;
+}
+
+.visible-notify {
+    width: 350px;
+    right: 0;
+    background-color: #dbdbdb;
+    display: block;
+    position: absolute;
+    border-top: 1px black solid;
+    border-right: 1px black solid;
+    border-left: 1px black solid;
+    border-bottom: 1px black solid;
+
+    border-bottom-right-radius: 10px;
+    -moz-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -o-border-bottom-right-radius: 10px;
+    -ms-border-bottom-right-radius: 10px;
+
+    border-bottom-left-radius: 10px;
+    -moz-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -o-border-bottom-left-radius: 10px;
+    -ms-border-bottom-left-radius: 10px;
+
+    z-index: 1;
+    padding-left: 4px;
+    padding-right: 4px;
+
+    padding-bottom: 3px;
+}
+
+.enable-notify{
+    color: red;
+}
+.scrollable-container{
+    overflow: auto;
+    height: 200px;
+}
+
+.header-container{
+    background-color: #bfbfbf;
+    border-bottom: 1px solid #aeaeae;
+
+    display: block;
+}
+
+.scrollable-container .row {
+    border-bottom: 1px solid #aeaeae;
+}
+
+.scrollable-container .row:hover{
+    background-color: rgba(189, 213, 248, 0.85);
+}
+
+.notifyOptionsButtonCorner {
+    padding: 4px;
+}
+
+.notifyOptionsButtonCorner[data-button-type="publish"]:hover{
+    background-color: #82ff30;
+}
+
+.notifyOptionsButtonCorner[data-button-type="trash"]:hover {
+    background-color: #ff4b41;
+}
+
+.notifyOptionsButtonCorner[data-button-type="remove"]:hover {
+    background-color: #bfbfbf;
+}

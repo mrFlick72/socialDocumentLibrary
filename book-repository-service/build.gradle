@@ -1,0 +1,98 @@
+apply plugin: "sonar-runner"
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven'
+apply plugin: "net.saliman.cobertura"
+
+buildscript {
+    ext {
+        springBootVersion = '1.2.3.RELEASE'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+        classpath("io.spring.gradle:dependency-management-plugin:0.5.0.RELEASE")
+
+        classpath 'net.saliman:gradle-cobertura-plugin:2.2.8'
+    }
+}
+
+group = 'it.valeriovaudi.documentlibrary'
+version = '1.0.0-RELEASE'
+
+jar {
+    baseName = 'book-repository-service'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    deployerJars
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile ('org.springframework.boot:spring-boot-starter')
+    compile ('org.springframework.boot:spring-boot-starter-web')
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-integration")
+
+    compile("org.springframework.integration:spring-integration-java-dsl:1.0.1.RELEASE")
+    compile("org.springframework.integration:spring-integration-jms")
+    compile("org.springframework.hateoas:spring-hateoas")
+
+    compile("org.apache.directory.studio:org.apache.commons.io:2.4")
+
+    compile 'org.apache.activemq:activemq-client:5.10.0'
+    compile 'org.apache.activemq:activemq-pool:5.10.0'
+
+    compile "org.apache.pdfbox:pdfbox:1.8.9"
+    compile "org.apache.pdfbox:fontbox:1.8.9"
+
+    compile("javax.json:javax.json-api:1.0")
+    compile("org.glassfish:javax.json:1.0.4")
+
+    compile("com.google.guava:guava:18.0")
+
+    testCompile("org.apache.activemq:activemq-broker:5.10.0")
+
+    testCompile 'org.apache.activemq:activemq-runtime-config:5.10.0'
+    testCompile 'org.apache.activemq:activemq-kahadb-store:5.10.0'
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+eclipse {
+    classpath {
+         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+
+
+sonarRunner {
+    sonarProperties {
+//        coberturaReportPath = file("$buildDir/reports/cobertura/cobertura.xml")
+//        property "sonar.surefire.reportsPath","$buildDir/test-results"
+    }
+}
+
+task stampaPath << {
+    println "path: $buildDir"
+}

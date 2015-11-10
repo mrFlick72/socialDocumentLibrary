@@ -1,0 +1,21 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="pageSpecificMenuOptions">
+    </div>
+
+    <ol th:fragment="breadcrumb" class="breadcrumb">
+        <li th:inline="text"><span class="glyphicon glyphicon-home"></span> [[#{glyphicon-home.label}]]</li>
+    </ol>
+
+    <div th:fragment="content">
+        <div data-region="half" class="container-fluid library-background">
+            <div class="row">
+                <div class="col-sm-12" ng-controller="homeController">
+                    <admin-book-list messages="messages" books="bookList" filter-if-published="true" tags="metadata"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

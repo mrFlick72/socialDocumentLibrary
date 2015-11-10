@@ -1,0 +1,28 @@
+<div th:fragment="content">
+    <div data-region="half" class="container-fluid library-background" ng-controller="helpController">
+        <div class="welcome-container">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row format-row">
+                        <div class="col-sm-12">
+                            Help
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <ul class="list-group">
+                                <li ng-click="adminBookListHelpContent()" th:inline="text" class="list-group-item"><span class="glyphicon glyphicon-book"></span> [[#{glyphicon-book.label}]]</li>
+                                <li ng-click="uploadBookHelpContent()" th:inline="text" class="list-group-item" ><i class="icon-upload"></i> [[#{book.upload.label}]]</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-8">
+                            <div ng-include="helpContent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

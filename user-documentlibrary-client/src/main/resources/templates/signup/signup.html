@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+        >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"/>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css}"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.jsdelivr.net/webjars/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/webjars/respond/1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/security-style.css}" />
+
+    <link rel="icon" th:href="@{/img/favicon.jpeg}" type="image/x-icon"/>
+    <link rel="shortcut icon" th:href="@{/img/favicon.jpeg}" type="image/x-icon"/>
+
+    <title th:text="#{signup.title}">Social Document Library</title>
+</head>
+<body class="sing-up-body">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6 library-background round-all-border-container">
+            <div class="row">
+                <header class="col-sm-12">
+                    <img th:src="@{/img/feature-brand-book.jpg}" class="img-thumbnail" />
+                </header>
+            </div>
+            <div class="row">
+                <section class="col-sm-12">
+                    <form class="form-narrow form-horizontal" method="post" th:action="@{/signup}" th:object="${signupForm}">
+                        <fieldset>
+                            <legend th:text="#{signup.registerForm.legend}">Register Form</legend>
+                            <div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'filed-error-container'">
+                                <label for="firstName" class="col-sm-2 control-label" th:text="#{signup.firstName}">First Name</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" th:placeholder="#{signup.firstName}" th:field="*{firstName}" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <span class="field-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Invalid First Name</span>
+                                </div>
+                            </div>
+                            <div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'filed-error-container'">
+                                <label for="lastName" class="col-sm-2 control-label" th:text="#{signup.lastName}">Last Name</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" th:placeholder="#{signup.lastName}" th:field="*{lastName}" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <span class="field-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{userName}">Invalid First Name</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group" th:classappend="${#fields.hasErrors('mail')}? 'filed-error-container'">
+                                <label for="mail" class="col-sm-2 control-label" th:text="#{signup.mail}">E-Mail</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="mail" placeholder="E-Mail" th:placeholder="#{signup.mail}" th:field="*{mail}" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <span class="field-error" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">Invalid E-Mail</span>
+                                </div>
+                            </div>
+                            <div class="form-group"  th:classappend="${#fields.hasErrors('userName')}? 'filed-error-container'">
+                                <label for="userName" class="col-sm-2 control-label" th:text="#{signup.userName}">User Name</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="userName" placeholder="User Name" th:placeholder="#{signup.userName}" th:field="*{userName}" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <span class="field-error" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Incorrect user Name</span>
+                                </div>
+                            </div>
+                            <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'filed-error-container'">
+                                <label for="password" class="col-sm-2 control-label" th:text="#{signup.password}">Password</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="password" placeholder="Password" th:placeholder="#{signup.password}" th:field="*{password}"/>
+                                </div>
+                                <div class="col-sm-4">
+                                    <span class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect password</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default" th:text="#{signup.signup}">Sign up</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-sm-10">
+                                    <p th:inline="text">[[#{signup.haveAccount}]] <a href="signin" th:href="@{/signin}" th:text="#{signin.signin}">Sign In</a></p>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
+</body>
+</html>

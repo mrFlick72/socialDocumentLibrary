@@ -1,0 +1,67 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+   <ul th:fragment="pageSpecificMenuOptions" class="nav navbar-nav" ng-controller="bookReaderToolBarController">
+        <li><a th:inline="text" ng-click="enabledBookmark()"><span class="hand-cursor glyphicon glyphicon-bookmark" ng-class="{'bookmark-enabled':state}"></span></a></li>
+        <li ng-click="previousPage()" th:inline="text"><a><span class="hand-cursor glyphicon glyphicon-chevron-left"></span></a></li>
+        <li ng-click="nextPage()" th:inline="text"><a><span class="hand-cursor glyphicon glyphicon-chevron-right"></span></a></li>
+
+
+   <!--    <li ng-click="zoomIn()" th:inline="text"><a ng-click="zoomIn()">Zoom +</a></li>
+       <li ng-click="zoomOut()" th:inline="text"><a ng-click="zoomOut()">Zoom -</a></li>-->
+        <li>
+            <form class="navbar-form navbar-left form-inline">
+                <div class="form-group">
+                    <input ng-focus="enableChangePage($event)" ng-blur="enableChangePage($event)" ng-keypress="changePage($event)"
+                           ng-model="page" class="form-control" data-numericMarker="true"/>
+                    /
+                    <input class="form-control" ng-model="lastPage" disabled="disabled"/>
+                </div>
+            </form>
+        </li>
+       <div class="col-sm-2 bookReaderNearToolBox">
+           <div class="panel panel-default">
+               <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> Tool Box</div>
+               <div class="panel-body">
+                   <div class="row">
+                       <span ng-click="enabledBookmark()" th:inline="text" class="hand-cursor glyphicon glyphicon-bookmark col-sm-4" ng-class="{'bookmark-enabled':state}"></span>
+                       <span ng-click="previousPage()" class="hand-cursor glyphicon glyphicon-chevron-left col-sm-4"></span>
+                       <span ng-click="nextPage()" th:inline="text" class="hand-cursor glyphicon glyphicon-chevron-right col-sm-4"></span>
+                   </div>
+
+                   <div class="row">
+                        <span class="col-sm-5">
+                             <input ng-focus="enableChangePage($event)" ng-blur="enableChangePage($event)" ng-keypress="changePage($event)"
+                                    ng-model="page" class="form-control" data-numericMarker="true"/>
+                        </span>
+                        <span class="col-sm-1"> / </span>
+                        <span class="col-sm-5">
+                            <input class="form-control col-lg-2" ng-model="lastPage" disabled="disabled"/>
+                        </span>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </ul>
+
+    <ol th:fragment="breadcrumb" class="breadcrumb" ng-controller="readBookBreadcrumbController">
+        <li><a href="#" th:inline="text" th:href="@{/index}"><span class="glyphicon glyphicon-home"></span> [[#{glyphicon-home.label}]]</a></li>
+        <li><a th:inline="text" th:href="@{/bookUserList}"><span class="glyphicon glyphicon-book"></span> [[#{glyphicon-book.label}]]</a></li>
+        <li><span class="glyphicon glyphicon-file"></span> {{bookName}}</li>
+    </ol>
+
+    <div th:fragment="content">
+        <div th:fragment="reader" class="container-fluid library-background">
+            <div th:attr="ng-init='initBookReader(\'__${bookId}__\')'"
+                 ng-controller="readBookController">
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-8 book-reader"
+                         id="bookReader">
+                        <img class="img-responsive center-block" ng-src="{{currentPageContent}}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

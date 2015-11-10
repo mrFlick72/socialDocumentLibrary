@@ -1,0 +1,56 @@
+<div ng-controller="changeTipShortHelpCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(4)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(4)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+
+    <div ng-if="tipCode == 0">
+        <p class="text-justify">
+            If you want search a new book you can choice the search book function on the menu as you can see in figure.
+            For other details please follow next tips
+        </p>
+        <img class="img-responsive" th:src="@{img/help/searchBook/mainPage.png}"/>
+    </div>
+
+    <div ng-if="tipCode == 1">
+        <p class="text-justify">
+            If you want search a book you can filling the form with either book name and search tags or both.
+            for information about the field you can use the tool tips ad in figure
+        </p>
+        <img class="img-responsive" th:src="@{img/help/searchBook/compileFormSearchBook.png}"/>
+    </div>
+
+    <div ng-if="tipCode == 2">
+        <p class="text-justify">
+            For read the book you can click on the read book button, the green button or you can click on the book thumbnail
+        </p>
+        <img class="img-responsive" th:src="@{img/help/searchBook/searchBookeResultReadBook.png}" />
+    </div>
+
+    <div ng-if="tipCode == 3">
+        <p class="text-justify">
+            for evaluating the feedback you can read the feedback of other users under the book description section
+        </p>
+        <img class="img-responsive" th:src="@{img/help/searchBook/searchBookeResultFeedBack.png}" />
+    </div>
+
+    <div ng-if="tipCode == 4">
+        <p class="text-justify">
+            for evaluating the score you can see the score section
+        </p>
+        <img class="img-responsive" th:src="@{img/help/searchBook/searchBookeResultScore.png}" />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(4)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(4)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+</div>

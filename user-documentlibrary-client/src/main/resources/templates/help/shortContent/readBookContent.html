@@ -1,0 +1,49 @@
+<div ng-controller="changeTipShortHelpCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(3)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(3)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+
+    <div ng-if="tipCode == 0">
+        In the read book function you can change page in many way. You can change page with the keyboard arrows key, with the command on the tool bar and with the command in the following tool bar.
+        For other details please follow next tips
+    </div>
+
+    <div ng-if="tipCode == 1">
+        Change page by arrows Key <br/>
+        <img class="img-responsive" th:src="@{/img/help/readBook/arrowsKey.jpg}"/>
+    </div>
+
+    <div ng-if="tipCode == 2">
+        Change page by tool bar command <br/>
+        <img class="img-responsive" th:src="@{/img/help/readBook/toolBarPosition.png}"/>
+        <ul class="list-group">
+            <li class="list-group-item"><span class="glyphicon glyphicon-bookmark" ng-class="{'bookmark-enabled':state}"></span> for enable/disable bookmark during read you can click on the button like this on the tool bar</li>
+            <li class="list-group-item"><span class="glyphicon glyphicon-chevron-left"></span> <span class="glyphicon glyphicon-chevron-right"></span> for change page during read you can click on the buttons like those on the tool bar</li>
+            <li class="list-group-item"><img class="img-thumbnail" th:src="@{/img/help/readBook/directChangePageFollowingToolBar.png}"/>  For change page in a direct way you can use the command on the tool bar</li>
+        </ul>
+    </div>
+
+    <div ng-if="tipCode == 3">
+        Change page by following tool bar command <br/>
+        <img class="img-responsive" th:src="@{/img/help/readBook/followingToolBarPosition.png}"/>
+        <ul class="list-group">
+            <li class="list-group-item"><span class="glyphicon glyphicon-bookmark" ng-class="{'bookmark-enabled':state}"></span> for enable/disable bookmark during read you can click on the button like this on the tool bar</li>
+            <li class="list-group-item"><span class="glyphicon glyphicon-chevron-left"></span> <span class="glyphicon glyphicon-chevron-right"></span> for change page during read you can click on the buttons like those on the tool bar</li>
+            <li class="list-group-item"><img class="img-thumbnail" th:src="@{/img/help/readBook/directChangePageFollowingToolBar.png}"/>  For change page in a direct way you can use the command on the tool bar</li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(3)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(3)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+</div>

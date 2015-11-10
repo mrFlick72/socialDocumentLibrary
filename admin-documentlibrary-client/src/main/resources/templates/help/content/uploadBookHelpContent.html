@@ -1,0 +1,59 @@
+<div ng-controller="changeTipShortHelpCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(4)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(4)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+
+    <div ng-if="tipCode == 0">
+        <p class="text-justify">
+            If you want upload a new book you can choice the upload book function on the menu as you can see in the figure.
+            For other details please follow next tips
+        </p>
+        <img class="img-responsive" th:src="@{img/help/uploadBook/adminUploadBook1.png}"/>
+    </div>
+
+    <div ng-if="tipCode == 1">
+        <p class="text-justify">
+            For upload a new book you must choose a pdf as book master and optionally Author, Description and Search Tags.
+            For information about the field you can use the tool tips ad in figure
+        </p>
+        <img class="img-responsive" th:src="@{img/help/uploadBook/adminUploadBook2.png}"/>
+    </div>
+
+    <div ng-if="tipCode == 2">
+        <p class="text-justify">
+            Once you have click on choose file the system will open a file chooser. In this stage you have choose the pdf file that you want upload
+        </p>
+        <img class="img-responsive" th:src="@{img/help/uploadBook/adminUploadBook3.png}"/>
+    </div>
+
+    <div ng-if="tipCode == 3">
+        <p class="text-justify">
+            For submit the form data, file and metadata you must click on the button in highlighted in figure
+        </p>
+        <img class="img-responsive" th:src="@{img/help/uploadBook/adminUploadBook4.png}"/>
+    </div>
+
+    <div ng-if="tipCode == 4">
+        <p class="text-justify">
+            After that you submitted the form you have wait for the task completion.
+            For know if the task is finished, you can wait the notification as highlighted in figure.
+            Clicking on the notification icon the system will open a container with all the notification and
+            you can choice of delete the notification, publish or delete on the fly the book
+        </p>
+        <img class="img-responsive" th:src="@{img/help/uploadBook/adminUploadBook5.png}"/>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(4)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(4)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+</div>

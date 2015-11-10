@@ -1,0 +1,142 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="pageSpecificMenuOptions">
+    </div>
+
+    <ol th:fragment="breadcrumb" class="breadcrumb">
+        <li><a href="#" th:inline="text" th:href="@{/index}"><span class="glyphicon glyphicon-home"></span> [[#{glyphicon-home.label}]]</a></li>
+        <li  th:inline="text"><i class="icon-upload"/> [[#{book.upload.label}]]</li>
+    </ol>
+
+    <div th:fragment="content">
+        <div data-region="half" class="container-fluid library-background">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" th:inline="text"><i class="icon-upload"/>[[#{glyphicon-cloud-upload.headerPanel.label}]]</div>
+                        <div class="panel-body">
+                            <form id="uploadBookForm" th:action="@{/uploadBookFile}" th:object="${bookMaster}"
+                                  enctype="multipart/form-data" method="post">
+                                <div class="row format-row file-field-container">
+                                    <label for="fileField" class="col-sm-2 control-label" th:text="#{fileField.label}">File: </label>
+                                    <div class="col-sm-6">
+                                        <input id="fileField" class="form-control filestyle" th:field="*{{file}}" type="file" data-buttonBefore="true"/>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('file')}" class="col-sm-2">
+                                        <span class="label label-danger" th:errors="*{file}" >Incorrect LP</span>
+                                    </div>
+                                    <div th:class="${#fields.hasErrors('file')} ? 'col-sm-2' : 'col-sm-push-2 col-sm-2'">
+                                        <span class="mandatoy-flag pull-right" data-toggle="tooltip" data-placement="top"
+                                              th:title="#{help.localHelp.fileFieldContainer}">*</span>
+                                    </div>
+                                </div>
+
+                                    <div class="row format-row">
+                                        <div class="col-sm-12">
+                                            <hr/>
+                                        </div>
+                                    </div>
+
+                                <div class="book-metadata-container">
+                                    <div class="row format-row">
+                                        <div class="col-sm-10">
+                                            <h5 th:text="#{bookUpload.uploadBookForm.bookMetadataHeader.label}">Book metadata: </h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="row format-row">
+                                        <div class="col-sm-12">
+                                            <hr/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row format-row">
+                                        <label for="authorField" class="col-sm-2 control-label" th:text="#{authorField.label}">Author: </label>
+                                        <div class="col-sm-6">
+                                            <input id="authorField" class="form-control"  th:field="*{{author}}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row format-row">
+                                        <label for="metadataField" class="col-sm-2 control-label" th:text="#{metadataField.label}">Add metadata </label>
+                                        <div class="col-sm-6">
+                                            <select id="metadataField" class="form-control" th:field="*{{metadata}}"
+                                                    multiple="multiple" data-select2DataMarker="true" th:placeholder="#{bookUploadPage.tags.placeholder}" placeholder="Choose your hint tag">
+                                                <option th:each="searchTag : ${searchTags}" th:text="${searchTag}" th:value="${searchTag}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row format-row">
+                                        <label for="descriptionField" class="col-sm-2 control-label" th:text="#{descriptionField.label}">Description: </label>
+                                        <div class="col-sm-6">
+                                            <textarea id="descriptionField" class="form-control"  th:field="*{{description}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row format-row">
+                                    <div class="col-sm-12">
+                                        <hr/>
+                                    </div>
+                                </div>
+
+                                <div class="row format-row">
+                                    <div class="col-sm-12">
+                                        <button type="button" id = "uploadBookFormSubmitButton" class="btn btn-success" th:inline="text"><i class="icon-upload"/> [[#{updateBook.submit.label}]]</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="row format-row pull-right">
+                                <div class="col-sm-12">
+                                    <span class="mandatoy-flag">*</span> <span th:text="#{help.localHelp.fileFieldContainer}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="loadingUploadBookDialog" class="modal fade" role="dialog" data-toggle="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"  th:text="#{loadingUploadBookDialog.header.title}">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <img th:src="@{img/loading.gif}" class="img-responsive"/>
+                            </div>
+                            <div class="col-sm-8">
+                                <p th:text="#{loadingUploadBookDialog.body.content}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div id="completUploadBookDialog" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" th:text="#{bookUpload.completUploadBookDialog.header}">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-justify" th:text="#{bookUpload.completUploadBookDialog.body}"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{bookUpload.completUploadBookDialog.okButton}">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+    </div>
+</div>
+
+
+

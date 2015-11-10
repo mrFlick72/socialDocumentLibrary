@@ -1,0 +1,53 @@
+<div ng-controller="changeTipShortHelpCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(3)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(3)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+
+    <div ng-if="tipCode == 0">
+        <p class="text-justify">
+            If you want read a book in your prefered list you can choose the My book list function
+            on the menu as you can see in figure.
+        </p>
+        <img class="img-responsive" th:src="@{img/help/myBookList/myBookListPage.png}"/>
+    </div>
+    <div ng-if="tipCode == 1">
+        <p class="text-justify">
+            If you want search a book in your prefered list you can choose the search function on
+            My list of favorite books header panel, as you can see in figure.
+        </p>
+        <img class="img-responsive" th:src="@{img/help/myBookList/bookListPage.png}"/>
+    </div>
+    <div ng-if="tipCode == 2">
+        <p class="text-justify">
+            For any book in your list yon can do several things as you can see in figure.
+        </p>
+        <ol>
+            <li>Open a book for reading with the green button Read Book </li>
+            <li>Open a book for reading with thumbnail</li>
+            <li>Remove a book in your book list with the red button Remove Book from the list</li>
+            <li>Open the update feedback/score with the button</li>
+            <li>Show the score resume with the button</li>
+        </ol>
+        <img class="img-responsive" th:src="@{img/help/myBookList/bookListPage2.png}"/>
+    </div>
+    <div ng-if="tipCode == 3">
+        <p class="text-justify">
+            If you want set/update the your feedback/score you can click on the button for open the setting popup as you can see in figure.
+        </p>
+        <img class="img-responsive" th:src="@{img/help/myBookList/changeFeedBack.png}"/>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(3)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(3)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+</div>

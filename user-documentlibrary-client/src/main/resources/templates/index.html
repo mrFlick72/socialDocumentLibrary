@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html ng-app="social-document-library"
+      xmlns:th="http://www.thymeleaf.org">
+      <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+            <link rel="stylesheet" th:href="@{/css/fontello/css/fontello-embedded.css}"/>
+
+            <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"/>
+            <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css}"/>
+
+
+            <link rel="stylesheet" th:href="@{/webjars/select2/3.5.2/select2.css}"/>
+
+            <link rel="stylesheet" th:href="@{/webjars/select2-bootstrap-css/1.3.1/select2-bootstrap.css}"/>
+
+
+            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+                  <script src="http://cdn.jsdelivr.net/webjars/html5shiv/3.7.2/html5shiv.min.js"></script>
+                  <script src="http://cdn.jsdelivr.net/webjars/respond/1.4.2/dest/respond.min.js"></script>
+            <![endif]-->
+
+            <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+
+            <link rel="icon" th:href="@{/img/favicon.jpeg}" type="image/x-icon"/>
+            <link rel="shortcut icon" th:href="@{/img/favicon.jpeg}" type="image/x-icon"/>
+
+            <title>Social Document Library</title>
+      </head>
+      <body ng-controller="rootController">
+            <header>
+                  <div class="container-fluid library-background">
+                        <div class="row">
+                              <div class="col-lg-12 header-background">
+                                    <img th:remove="all" src="../../resources/static/img/header.jpg" />
+                              </div>
+                        </div>
+                  </div>
+            </header>
+            <nav class="container-fluid library-background"
+                 th:fragment="menu" >
+                  <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                              <div class="navbar navbar-default" role="navigation">
+                                    <div class="navbar-header">
+                                          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                                <span class="sr-only">Toggle navigation</span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                          </button>
+                                          <span class="navbar-brand">Social Document Library</span>
+                                    </div>
+                                    <div class="collapse navbar-collapse">
+                                          <div class="tool-bar">
+                                                <div class="row">
+                                                      <ul class="nav navbar-nav navbar-left items">
+                                                            <ul class="nav navbar-nav" th:classappend="${isActiveBookUserList==true}?'active': ''">
+                                                                  <li><a href="#" th:inline="text" th:href="@{/bookUserList}"><span class="glyphicon glyphicon-book"></span></a></li>
+                                                                  <li class="text"><a href="#" th:inline="text" th:href="@{/bookUserList}">[[#{glyphicon-book.label}]]</a></li>
+                                                            </ul>
+
+                                                            <ul class="nav navbar-nav" th:classappend="${isActiveBookSearch==true}?'active': ''">
+                                                                  <li><a href="#" th:inline="text" th:href="@{/bookSearch}"><span class="glyphicon glyphicon-search"></span></a></li>
+                                                                  <li class="text"><a href="#" th:inline="text" th:href="@{/bookSearch}">[[#{glyphicon-search.label}]]</a></li>
+                                                            </ul>
+                                                      </ul>
+                                                      <ul class="nav navbar-nav navbar-right items">
+                                                            <ul class="nav navbar-nav" ng-click="backFunction()">
+                                                                  <li><a><span class="glyphicon  glyphicon-arrow-left"></span></a></li>
+                                                                  <li class="text"><a>Back</a></li>
+                                                            </ul>
+
+                                                            <ul class="nav navbar-nav" ng-controller="shortHelpMenuController"  ng-click="showShortHelp()">
+                                                                  <li><a href="#" th:inline="text"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+                                                                  <li class="text"><a href="#" th:inline="text"> [[#{glyphicon-question-sign.label}]]</a></li>
+                                                            </ul>
+                                                            <ul class="nav navbar-nav lastMenuItem dxSide">
+                                                                  <li class="text"><a href="#" th:inline="text" th:href="@{/logout}">[[#{glyphicon-off.label}]]</a></li>
+                                                                  <li><a href="#" th:inline="text" th:href="@{/logout}"> <span class="glyphicon glyphicon-off"></span></a></li>
+                                                            </ul>
+
+                                                      </ul><!--/.navbar-collapse -->
+                                                </div>
+                                          </div>
+
+                                          <div class="row toolbox">
+                                                <ul th:if="${withToolBoox}" class="nav navbar-nav navbar-left">
+                                                      <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Tool Box: </a></li>
+                                                </ul>
+
+                                                <div th:replace="${templatePath} :: pageSpecificMenuOptions"></div>
+                                          </div>
+                                    </div><!--/.nav-collapse -->
+                              </div>
+                        </div>
+                  </div>
+            </nav>
+            <div class="container-fluid library-background">
+                  <div class="row format-row" ng-controller="shortHelpController" ng-init="initShortHelp()" >
+                        <div ng-if="shortHelp" ng-include="shortHelpUrl"></div>
+                  </div>
+            </div>
+
+            <div th:replace="${templatePath} :: ${template}">
+                  Home Page
+            </div>
+
+            <footer class="container-fluid library-background footer-style">
+                  <div class="row">
+                        <div class="col-sm-3">
+                              <div class="well">
+                                    <p>
+                                          <h4 class="text-center">We have respect and gratitude against to Open Source Projects.</h4>
+                                          Thanks a lot for the <a href="http://getbootstrap.com/" target="_blank">Boostrap</a>,
+                                          <a href="http://glyphicons.com/" target="_blank">glyphicons.com</a> and <a href="http://fontello.com/" target="_blank">Fontello</a>
+                                    </p>
+                              </div>
+                        </div>
+                        <div class="col-sm-6">
+                              <div class="page-header">
+                                    <p class="text-center"><h1 class="text-center">Tesina HCI</h1></p>
+                              </div>
+                              <div class="row">
+                                    <span class="col-sm-3">First Name</span>
+                                    <span class="col-sm-3">Last Name</span>
+                                    <span class="col-sm-3">Academic ID</span>
+                              </div>
+                              <div class="row">
+                                    <span class="col-sm-3">Valerio</span>
+                                    <span class="col-sm-3">Vaudi</span>
+                                    <span class="col-sm-3">1034003</span>
+                              </div>
+                        </div>
+                  </div>
+            </footer>
+
+            <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+            <script th:src="@{/webjars/select2/3.5.2/select2.min.js}"></script>
+            <script th:src="@{/js/lib/jquery.number.min.js}"></script>
+
+            <script th:src="@{/webjars/angularjs/1.3.15/angular.min.js}"></script>
+            <script th:src="@{/webjars/angularjs/1.3.15/angular-sanitize.min.js}"></script>
+
+            <script th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}" ></script>
+
+            <script th:src="@{/js/bookList/BookListWidget.js}"></script>
+            <script th:src="@{/js/bookList/BookListConfigurationService.js}"></script>
+
+            <script th:src="@{/js/SocialDocumetLibrary.js}"></script>
+
+            <script th:src="@{/js/SearchBookController.js}"></script>
+            <script th:src="@{/js/ReadBookController.js}"></script>
+
+            <script th:src="@{/js/BookUserListController.js}"></script>
+
+            <script th:src="@{/js/ShortHelpController.js}"></script>
+      </body>
+</html>
+

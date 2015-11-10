@@ -1,0 +1,34 @@
+<div class="welcome-container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="row format-row">
+                <div class="col-sm-12">
+                    Help   <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="hideShortHelp()"><span aria-hidden="true">&times;</span></button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <ul class="list-group">
+                        <li ng-click="searchContentShortHelp()" th:inline="text" class="list-group-item" ><span class="glyphicon glyphicon-search"></span> [[#{glyphicon-search.label}]]</li>
+                        <li ng-click="myBookListContentShortHelp()" th:inline="text" class="list-group-item" ><span class="glyphicon glyphicon-book"></span> [[#{glyphicon-book.label}]]</li>
+                        <li ng-click="readBookContentShortHelp()" th:inline="text" class="list-group-item"><i class="icon-book-open"> </i> [[#{glyphicon-book.label}]]</li>
+                    </ul>
+                </div>
+                <div class="col-sm-8">
+                    <div ng-include="shortHelpContent"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12"> <hr/> </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button class="btn btn-default pull-right" ng-click="hideShortHelp()" th:text="#{help.shortHelp.closeButton}">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,42 @@
+<div ng-controller="changeTipShortHelpCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(2)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(2)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+
+    <div ng-if="tipCode == 0">
+        <p class="text-justify">
+            If you want search a book for publish/unpublish change metadata you can choice the book function on the menu as you can see in the figure.
+            For other details please follow next tips
+        </p>
+        <img class="img-responsive" th:src="@{img/help/adminBookList/adminBookList1.png}"/>
+    </div>
+
+    <div ng-if="tipCode == 1">
+        <p class="text-justify">
+            If you want search a book for management you can filling the form with book name field.
+            for information about the field you can use the tool tips ad in figure
+        </p>
+        <img class="img-responsive" th:src="@{img/help/adminBookList/adminBookList2.png}"/>
+    </div>
+
+    <div ng-if="tipCode == 2">
+        <p class="text-justify">
+            Every row in book list has the otpions for publush/unpublish, open option popup in which you can change Author, Description and add/remove search tags
+        </p>
+        <img class="img-responsive" th:src="@{img/help/adminBookList/adminBookList3.png}"/>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12"><hr/></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <a href="#" ng-click="previousTip(2)" class="btn btn-default pull-left">&lt;&lt; previous tip</a>  <a href="#" ng-click="nextTip(2)" class="btn btn-default pull-right">next tip &gt;&gt;</a>
+        </div>
+    </div>
+</div>

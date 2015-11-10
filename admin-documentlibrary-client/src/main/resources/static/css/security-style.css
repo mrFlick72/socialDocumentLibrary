@@ -1,0 +1,38 @@
+body {
+    margin: 0px;
+}
+
+.sing-in-body{
+    margin-top: 10%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.sing-up-body{
+    margin-top: 2%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.round-all-border-container{
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -o-border-radius: 20px;
+    -ms-border-radius: 20px;
+}
+
+.img-thumbnail{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}

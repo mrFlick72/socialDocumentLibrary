@@ -1,0 +1,17 @@
+<div th:fragment="content" class="library-background library-background-container">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:inline="text"><span class="glyphicon glyphicon-exclamation-sign"/> [[#{exception.panel.header.label}]]</h3>
+                </div>
+                <div class="panel-body">
+                    <img th:src="@{/img/sad_expression.jpg}" class="pull-left"/>
+                    <p class="text-center extra-space-left" th:text="${exceptionMessage}">Exceptions text</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

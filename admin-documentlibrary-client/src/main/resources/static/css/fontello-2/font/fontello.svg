@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2015 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="book" unicode="&#xe800;" d="m915 583q22-32 10-72l-154-505q-10-36-42-60t-69-25h-515q-43 0-83 30t-55 74q-14 37-1 71 0 2 1 15t3 20q0 5-2 12t-2 11q1 6 5 12t9 13 9 13q13 21 25 51t17 51q2 6 0 17t0 16q2 6 9 15t10 13q12 20 23 51t14 51q1 5-1 17t0 16q2 7 12 17t13 13q10 14 23 47t16 54q0 4-2 14t-1 15q1 4 5 10t10 13 10 11q4 7 9 17t8 20 9 20 11 18 15 13 20 6 26-3l0-1q21 5 28 5h425q41 0 63-32t10-72l-152-506q-20-66-40-85t-72-20h-485q-15 0-21-8-6-9-1-24 14-39 81-39h515q16 0 31 9t19 23l168 550q4 13 3 32 21-8 33-24z m-594-1q-2-7 1-12t11-6h339q8 0 15 6t9 12l12 36q2 7-2 12t-11 6h-339q-7 0-14-6t-9-12z m-46-143q-3-7 1-12t11-6h339q7 0 14 6t10 12l11 36q3 7-1 13t-11 5h-339q-8 0-14-5t-10-13z" horiz-adv-x="928.6" />
+<glyph glyph-name="bell-off" unicode="&#xe801;" d="m869 375q34-199 167-311 0-29-22-50t-50-21h-250q0-59-42-101t-101-42-100 42-42 100z m-298-480q9 0 9 9t-9 8q-32 0-56 24t-24 57q0 9-9 9t-9-9q0-41 29-70t69-28z m560 892q4-5 4-13t-6-12l-1045-905q-5-5-13-4t-12 6l-47 53q-4 6-4 14t6 12l104 89q-11 18-11 37 28 24 51 49t47 67 42 89 28 114 11 146q0 84 65 157t171 89q-4 10-4 21 0 23 15 38t38 16 38-16 16-38q0-11-4-21 69-10 122-46t82-88l234 202q5 5 13 4t12-6z" horiz-adv-x="1142.9" />
+<glyph glyph-name="trash" unicode="&#xe802;" d="m286 82v393q0 8-5 13t-13 5h-36q-8 0-13-5t-5-13v-393q0-8 5-13t13-5h36q8 0 13 5t5 13z m143 0v393q0 8-5 13t-13 5h-36q-8 0-13-5t-5-13v-393q0-8 5-13t13-5h36q8 0 13 5t5 13z m142 0v393q0 8-5 13t-12 5h-36q-8 0-13-5t-5-13v-393q0-8 5-13t13-5h36q7 0 12 5t5 13z m-303 554h250l-27 65q-4 5-9 6h-177q-6-1-10-6z m518-18v-36q0-8-5-13t-13-5h-54v-529q0-46-26-80t-63-34h-464q-37 0-63 33t-27 79v531h-53q-8 0-13 5t-5 13v36q0 8 5 13t13 5h172l39 93q9 21 31 35t44 15h178q22 0 44-15t30-35l39-93h173q8 0 13-5t5-13z" horiz-adv-x="785.7" />
+</font>
+</defs>
+</svg>

@@ -1,0 +1,182 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-sm-6">
+                <span class="glyphicon glyphicon-book"></span> {{messages.listHeaderLabel}}
+            </div>
+
+            <div class="col-sm-6">
+                <form ng-show="searchInList" class="pull-right form-inline" role="search">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input ng-model="bookNameSearchCriteria" type="text" class="form-control" placeholder="Search a book in your list"/>
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="well" ng-if="noBookMessage">
+            <h1 class="text-center">{{noBookMessage}}</h1>
+        </div>
+        <ul class="list-group">
+            <li ng-repeat="book in bookList" class="list-group-item">
+                <!--first book-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel">
+                            <div class="panel-title">
+                                <div class="row format-row">
+                                    <div class="col-sm-12">
+                                        <a class="btn btn-success" ng-href="{{readBookUrlFactory(book.bookId,book.bookName)}}">
+                                            <i class="icon-book-open"> {{messages.openBookLabel}}</i>
+                                        </a>
+
+                                        <button ng-if="isRemovable" class="pull-right btn btn-danger" ng-click="openConfirmRemoveBookFromUserBookListPopUp(book)">
+                                            <span class="glyphicon glyphicon-remove-sign"></span> {{messages.removeBookLabel}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row format-row">
+                                    <div class="col-sm-12">
+                                        {{book.bookName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <a ng-href="{{readBookUrlFactory(book.bookId,book.bookName)}}">
+                                            <img ng-src="{{book.thumbnail}}" class="img-thumbnail"/>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="well">
+                                            {{book.description}}
+                                        </div>
+
+                                        <div class="panel panel-default" ng-if="readUserFeedBack">
+                                            <div class="panel-heading">
+                                                <span class="glyphicon glyphicon-comment"></span> {{messages.feedbackPanel.headerLabel}}
+                                            </div>
+                                            <div class="panel-body feedBackPanel">
+                                                <div ng-repeat="userFeedBack in book.userFeedBacks">
+                                                    <h4>{{userFeedBack.firstNameAndLastName}}</h4>
+                                                    <table class="table">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td ng-repeat="score in scoresToArray(userFeedBack.score)"><span class="glyphicon glyphicon-star"/></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <h5 class="title">{{userFeedBack.feadbackTitle}}</h5>
+                                                    <div class="text-justify well" ng-bind-html="userFeedBack.feadbackBody"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <span class="glyphicon glyphicon-comment"></span> {{messages.feedbackPanel.headerLabel}}
+                                                <span ng-if="feedbackSectionSetting.feedBackForm" ng-click="openFeedBackDialog(book)" class="glyphicon glyphicon-pencil pull-right"></span>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div ng-if="feedbackSectionSetting.feedBackForm">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label>{{messages.feedbackPanel.bodyLabel}}</label>
+                                                            <score-input ng-model="book.feedback.score" read-only="true" ></score-input>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="well">
+                                                        <h4>{{book.feedback.title}}</h4>
+                                                        <div ng-bind-html="book.feedback.body"></div>
+                                                    </div>
+                                                </div>
+                                                <!--{{feedbackSectionSetting.feedBackSummitIsVisible}}-->
+                                                <div ng-if="feedbackSectionSetting.feedBackSummit">
+                                                    <div class="panel-group" id="score-{{book.bookId}}">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                {{messages.feedbackPanel.scoreSubmitLabel}}<span class="glyphicon glyphicon-chevron-down pull-right" ng-click="changeFeedBackSummitIsVisible(book)"></span>
+                                                            </div>
+                                                            <div class="panel-body animate-if" ng-show="book.feedBackSummitIsVisible">
+                                                                <score-reader scores="book.feedback.scores"></score-reader>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="modal fade" id="commentEditDialog" role="dialog" data-toggle="modal" data-backdrop="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h3>{{messages.feedbackPopUp.headerLabel}}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="feedbackTitle">{{messages.feedbackPopUp.titleLabel}}</label>
+                            <input id="feedbackTitle" class="form-control" ng-model="localItem.feedback.title"/>
+
+                            <hr/>
+
+                            <label for="feedbackBody">{{messages.feedbackPopUp.bodyLabel}}</label>
+                            <div id="feedbackBody" data-editor="true" class="editor" contenteditable ng-model="localItem.feedback.body"></div>
+
+                            <label for="feedbackScore">{{messages.feedbackPopUp.scoreLabel}}</label>
+                            <score-input ng-model="localItem.feedback.score" read-only="false"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-info" ng-click="confirm()" data-dismiss="modal">{{messages.feedbackPopUp.okButtonLabel}}</a>
+                <a class="btn btn-info" data-dismiss="modal">{{messages.feedbackPopUp.closeButtonLabel}}</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="deleteBookConfirmDialog" role="dialog" data-toggle="modal" data-backdrop="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h3>{{messages.deleteBookConfirmDialog.headerLabel}}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {{messages.deleteBookConfirmDialog.bodyPartOneLabel}} {{itemRef4ConfirmRemoveFromBookList.bookName}} {{messages.deleteBookConfirmDialog.bodyPartTwoLabel}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-info" ng-click="removeBookFromUserBookList()" data-dismiss="modal">{{messages.deleteBookConfirmDialog.okButtonLabel}}</a>
+                <a class="btn btn-info" data-dismiss="modal">{{messages.deleteBookConfirmDialog.closeButtonLabel}}</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

@@ -1,0 +1,137 @@
+<div class="panel panel-default" ng-cloak="ngClock">
+    <div class="panel-heading">
+        <span class="glyphicon glyphicon-book"/> {{messages.headelLabel}}
+        <button data-refresh-button="true" ng-if="enableResreshButton" class="btn btn-info pull-right" ng-click="refreshBookList()">Resfresh</button>
+    </div>
+    <div class="panel-body">
+        <table class="table" >
+            <thead>
+            <tr class="text-center">
+                <th>{{messages.tableHeader.bookNameLabel}}</th>
+                <th>{{messages.tableHeader.authorLabel}}</th>
+                <th>{{messages.tableHeader.actionLabel}}</th>
+                <th>{{messages.tableHeader.publishedLabel}}</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="book in bookList | isPublishedFilter:'published':filterIfPublished | filter:{delete:false} | bookNameFilter:bookNameFilterCriteria"
+                        ng-class="{'bookIsPublished':book.published}" class="row-group">
+                    <td>{{book.name}}</td>
+                    <td>{{book.author}}</td>
+                    <td>
+                        <div ng-click="openOptionPopUp('optionDialog',book)" class="row options-group">
+                            <i class="icon-wrench col-sm-2"/>
+                            <span>{{messages.optionsTableCell.optionsLabel}}</span>
+                        </div>
+                        <div ng-if="!book.published" ng-click="publishBook(book)" class="row options-group">
+                            <span class="glyphicon glyphicon-ok col-sm-2"/>
+                            <span>{{messages.optionsTableCell.publishLabeld}}</span>
+                        </div>
+                        <div ng-if="book.published" ng-click="unPublishBook(book)" class="row options-group">
+                            <span class="glyphicon glyphicon-remove col-sm-2"/>
+                            <span>{{messages.optionsTableCell.unPublishLabeld}}</span>
+                        </div>
+                        <div ng-click="deleteBook(book)" ng-class="{'round-disabled':book.published}"
+                             title="{{book.published ? messages.deleteBookToolTipContent : ''}}" class="row options-group"
+                             data-toggle="tooltip" data-placement="top" >
+                            <span class="glyphicon glyphicon-trash col-sm-2"/>
+                            <span>{{messages.optionsTableCell.deleteLabel}}</span>
+                        </div>
+                    </td>
+                    <td><input class="checkbox" type="checkbox" ng-model="book.published" ng-change="changePublishedStatus(book)"/></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="modal fade" id="confirmDialog" role="dialog" data-toggle="modal" data-backdrop="">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">&times;</a>
+                        <h3>{{messages.deleteConfirmPopUp.headerLabel}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {{messages.deleteConfirmPopUp.messagePartOneLabel}} <h3>{{localItem.name}}</h3> {{messages.deleteConfirmPopUp.messagePartTwoLabel}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-info" ng-click="confirmDelete()" data-dismiss="modal">{{messages.deleteConfirmPopUp.affermativeLabel}}</a>
+                        <a class="btn btn-info" data-dismiss="modal">{{messages.deleteConfirmPopUp.negativeLabel}}</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="modal fade" id="optionDialog" role="dialog" data-toggle="modal" data-backdrop="">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">&times;</a>
+                        <h3>{{messages.optionDialogPopUp.headerLabel}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal">
+                                        <div class="row format-row">
+                                            <div class="form-group">
+                                                <label for="publishField" class="col-sm-4 control-label">{{messages.optionDialogPopUp.publishLabel}} </label>
+                                                <div class="col-sm-8">
+                                                    <input id="publishField" ng-model="localItem.published" type="checkbox" class="checkbox"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row format-row">
+                                            <div class="form-group">
+                                                <label for="metadataField" class="col-sm-4 control-label">{{messages.optionDialogPopUp.tagsLabel}} </label>
+                                                <div class="col-sm-8">
+
+                                                    <ui-select id="metadataField" multiple="multiple"
+                                                               ng-model="localItem.metadata" theme="select2"
+                                                               class="form-control">
+                                                        <ui-select-match placeholder="{{messages.optionDialogPopUp.tagsPlaceholder}}">{{$item}}</ui-select-match>
+                                                        <ui-select-choices repeat="tag in tags | filter:$select.search">
+                                                            {{tag}}
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row format-row">
+                                            <div class="form-group">
+                                                <label for="authorField" class="col-sm-4 control-label">{{messages.optionDialogPopUp.authorLabel}}</label>
+                                                <div class="col-sm-8">
+                                                    <input id="authorField" class="form-control" ng-model="localItem.author"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row format-row">
+                                            <div class="form-group">
+                                                <label for="descriptionField" class="col-sm-4 control-label">{{messages.optionDialogPopUp.descrptionLabel}}</label>
+                                                <div class="col-sm-8">
+                                                    <textarea id="descriptionField" class="form-control" ng-model="localItem.description"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-info" ng-click="confirm()" data-dismiss="modal">{{messages.optionDialogPopUp.okLabel}}</a>
+                        <a class="btn btn-info" data-dismiss="modal">{{messages.optionDialogPopUp.closeLabel}}</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+</div>

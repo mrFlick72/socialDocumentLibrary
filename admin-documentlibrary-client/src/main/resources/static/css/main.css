@@ -1,0 +1,223 @@
+body{
+    margin-top: 2%;
+    margin-right: 5%;
+    margin-left: 5%;
+
+    background-color: #646464;
+}
+
+.align-right {
+    float: right;
+}
+
+.align-left {
+    float: left;
+}
+
+.library-background-container{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+
+.extra-space-left{
+    padding-right: 5px;
+}
+
+.extra-space-left{
+    padding-left: 5px;
+}
+
+.book-reader{
+    overflow: auto;
+    background-color: #646464;
+}
+
+.dark-background{
+    background-color: #646464;
+}
+
+.library-background{
+    background-color: #aa5231;
+}
+
+.header-background{
+    background-image:url("/@project.build.finalName@/img/header.jpg");
+    min-height: 139px;
+}
+
+.arrowsButton{
+    visibility: hidden;
+    position: absolute;
+}
+.menuReaderPopUp{
+    position: absolute;
+}
+
+.menuReaderPopUp.hide{
+    visibility: hidden;
+}
+
+.menuReaderPopUp.show{
+    visibility: visible;
+}
+.row.format-row{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 5px;
+}
+
+.mandatoy-flag{
+    font-size: large;
+    color: red;
+}
+.file-field-container{
+    background-color: #b5e6a6;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.book-metadata-container{
+    background-color: #adc4e6;
+
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -o-border-radius: 10px;
+    -ms-border-radius: 10px;
+
+    border-style: solid;
+    border-width: 1px;
+}
+
+.footer-style{
+    overflow: auto;
+
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius:  20px;
+    -moz-border-bottom-right-radius: 20px;
+    -moz-border-bottom-left-radius:  20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -webkit-border-bottom-left-radius:  20px;
+    -o-border-bottom-right-radius: 20px;
+    -o-border-bottom-left-radius:  20px;
+    -ms-border-bottom-right-radius: 20px;
+    -ms-border-bottom-left-radius:  20px;
+
+    margin-bottom: 2%;
+}
+
+.lastMenuItem.sxSide{
+    margin-left: 10px;
+}
+
+.lastMenuItem.dxSide{
+    margin-right: 10px;
+}
+
+.separator {
+    border: solid black 1px;
+}
+
+.row-group{
+    border: 3px;
+}
+
+.row-group:hover{
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -o-border-radius: 20px;
+    -ms-border-radius: 20px;
+
+    border-style: solid;
+    border-width: 3px;
+    border-color: #adc4e6;
+}
+
+.options-group{
+}
+
+.options-group:hover{
+    background-color: #bfd9ff;
+}
+
+.bookIsPublished {
+    background-color: #c5ffb8;
+}
+
+
+.round-disabled {
+    z-index: 1000;
+    background-color: lightgrey;
+    opacity: 0.6;
+    /*pointer-events: none;*/
+
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -o-border-radius: 20px;
+    -ms-border-radius: 20px;
+}
+
+.disabled {
+    z-index: 1000;
+    background-color: lightgrey;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.toolbox{
+    background-color: #aeaeae;
+}
+
+.tool-bar {
+}
+
+.tool-bar .items ul {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+
+    border: solid black 1px;
+    margin-right: 5px;
+    background-color: rgba(171, 171, 171, 0.24);
+}
+
+.tool-bar .active{
+    background-color: rgba(30, 144, 255, 0.24) !important;
+    border-bottom: solid dodgerblue 4px !important;
+}
+.tool-bar .tool-bar-footer{
+    margin-top: 2px;
+    height: 3px;
+    background-color: rgba(63, 63, 63, 0.89);
+}
+.tool-bar .items ul:hover{
+    background-color: rgba(160, 187, 213, 0.42);
+}
+
+.tool-bar .items:last-child{
+    margin-right: auto;
+}
+
+.tool-bar .glyphicon {
+    font-size: x-large;
+}
+
+.tool-bar .text {
+    font-size: large;
+}
+
+.tool-bar ul li a {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.loading-logo {
+    width: 70%;
+    height: 70%;
+}
