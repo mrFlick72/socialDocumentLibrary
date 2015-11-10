@@ -41,3 +41,13 @@ The application was developed for HCI exam for the Master Degree in "La Sapienza
     <li>Angular JS</li>
 </ul>
 
+# Building instructions
+For build project you have <a href="https://maven.apache.org/">Apache Maven</a> and <a href="http://gradle.org/">Gradle</a>.
+This project is based on Mongo DB, MySql and Active MQ, for this reason you have this components up and running in your machine.
+Being a Spring Boot centric projects all main configurations was present in the application.properties under src/main/resources directory of all projects.
+In this place you can find the basic properties for configure the project. Only for ActiveMQ and Mysql you can don't have up and running during the building becouse I used a in memory sql engine and 
+the in memory messaging broker for the test. However Mongo DB must has up and running even for test.
+After the building you have start all the microservice and access on the browser on the url http://localhost:9090/socialDocumentLibrary/bookUserList for final user application 
+and on http://localhost:7070/adminDocumentlibraryClient/bookList for the admin application.
+
+The admin user credential are: user:admin, password: admin. Indeed for the Final user you have create a new account.
