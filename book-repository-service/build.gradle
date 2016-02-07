@@ -17,15 +17,15 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
-        classpath("io.spring.gradle:dependency-management-plugin:0.5.0.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE")
 
         classpath 'net.saliman:gradle-cobertura-plugin:2.2.8'
     }
 }
 
 group = 'it.valeriovaudi.documentlibrary'
-version = '1.0.0-RELEASE'
+version = '2.0.0-SNAPSHOT'
 
 jar {
     baseName = 'book-repository-service'
@@ -76,14 +76,15 @@ dependencies {
 
 eclipse {
     classpath {
-         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '2.9'
 }
+
 
 
 sonarRunner {
@@ -91,8 +92,4 @@ sonarRunner {
 //        coberturaReportPath = file("$buildDir/reports/cobertura/cobertura.xml")
 //        property "sonar.surefire.reportsPath","$buildDir/test-results"
     }
-}
-
-task stampaPath << {
-    println "path: $buildDir"
 }
