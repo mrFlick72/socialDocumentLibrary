@@ -27,7 +27,7 @@ public class PdfBookMasterTestFactory {
             pdfBookMaster.setBookName(path.getFileName().toString());
             pdfBookMaster.setDescription("Description for test");
             pdfBookMaster.setAuthor("Author for test");
-            pdfBookMaster.setBookFile(new MockMultipartFile("bookFile",new FileInputStream(path.toFile())));
+            pdfBookMaster.setBookFile(new MockMultipartFile("bookFile",pdfFileName,"application/pdf",new FileInputStream(path.toFile())));
         } catch (URISyntaxException | IOException e) {
             LOGGER.error(e.getMessage());
         }

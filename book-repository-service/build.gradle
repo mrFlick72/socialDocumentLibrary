@@ -40,6 +40,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -65,6 +66,7 @@ dependencies {
     compile("org.glassfish:javax.json:1.0.4")
 
     compile("com.google.guava:guava:18.0")
+    compile("it.valeriovaudi:common-validator:1.0-SNAPSHOT")
 
     testCompile("org.apache.activemq:activemq-broker:5.10.0")
 

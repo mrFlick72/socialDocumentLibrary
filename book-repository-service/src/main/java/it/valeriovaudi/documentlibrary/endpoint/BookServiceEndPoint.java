@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.validation.Valid;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,9 +69,8 @@ public class BookServiceEndPoint {
         this.bookRepository = bookRepository;
     }
 
-
     @RequestMapping(value = "/book", method = RequestMethod.POST, consumes = "multipart/form-data")
-    public ResponseEntity saveBook(PdfBookMaster pdfBookMaster){
+    public ResponseEntity saveBook(@Valid PdfBookMaster pdfBookMaster){
         String uuid = UUID.randomUUID().toString();
         Map<String,Object> message = new HashMap<>();
         message.put(BookService.MAP_MESSAGE_PAYLOAD_KEY,pdfBookMaster);

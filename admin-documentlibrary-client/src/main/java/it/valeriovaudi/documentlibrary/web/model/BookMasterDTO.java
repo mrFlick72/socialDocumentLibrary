@@ -1,7 +1,7 @@
 package it.valeriovaudi.documentlibrary.web.model;
 
-import it.valeriovaudi.documentlibrary.validator.FileAllowedExtensions;
-import it.valeriovaudi.documentlibrary.validator.FileNotNull;
+import it.valeriovaudi.validator.FileAllowedExtensions;
+import it.valeriovaudi.validator.FileNotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
