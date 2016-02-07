@@ -16,18 +16,20 @@ angular.module('social-document-library',['bookListModule'])
         };
     });
 
-$(function(){
+function menuManage(){
     initMenu();
     $( window ).on('resize',  initMenu);
 
     function initMenu(){
-        resetMenuClass()
+        resetMenuClass();
         if($( document ).width() < 768){
             $("#collaspeMenuBody").addClass("show");
             $("#menuBody").addClass("hide");
+            $("#toolBox").addClass("hide");
         }else{
             $("#menuBody").addClass("show");
             $("#collaspeMenuBody").addClass("hide");
+            $("#toolBox").addClass("show");
         }
     }
     function resetMenuClass(){
@@ -36,7 +38,14 @@ $(function(){
 
         $("#collaspeMenuBody").removeClass("hide");
         $("#collaspeMenuBody").removeClass("show");
+
+        $("#toolBox").removeClass("show");
+        $("#toolBox").removeClass("hide");
     }
+}
+
+$(function(){
+    menuManage();
 
     $('[data-toggle="tooltip"]').tooltip()
 

@@ -66,7 +66,16 @@
                                     <span class="navbar-brand">Social Document Library </span>
                               </div>
                               <div class="collapse navbar-collapse">
-                                    <div class="tool-bar">
+                                    <div id="collaspeMenuBody">
+                                          <ul class="nav navbar-nav">
+                                                <li class="text"><a href="#" th:inline="text" th:href="@{/bookList}"> [[#{glyphicon-book.label}]]</a></li>
+                                                <li class="text"><a href="#" th:inline="text" th:href="@{/uploadBook}"> [[#{book.upload.label}]]</a></li>
+                                                <li class="text"><a href="#" th:inline="text" th:href="@{/help}">[[#{glyphicon-question-sign.label}]]</a></li>
+                                                <li><a href="#" th:inline="text" th:href="@{/logout}"> <span class="glyphicon glyphicon-off"></span></a></li>
+                                          </ul>
+                                    </div>
+
+                                    <div id="menuBody" class="tool-bar">
                                           <div class="row">
                                                 <ul class="nav navbar-nav navbar-left items">
                                                       <ul class="nav navbar-nav" th:classappend="${isActiveBookList==true}?'active': ''">
@@ -98,7 +107,7 @@
                                     </div>
 
 
-                                    <div class="row toolbox">
+                                    <div class="row toolbox" id="toolBox">
                                           <ul class="nav navbar-nav navbar-left">
                                                 <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Tool Box: </a></li>
                                           </ul>

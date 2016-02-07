@@ -26,7 +26,37 @@ angular.module('social-document-library',['adminBookListModule','notifyModule'])
     })(window.location.search.substr(1).split('&'))
 })(jQuery);
 
+function menuManage(){
+    initMenu();
+    $( window ).on('resize',  initMenu);
+
+    function initMenu(){
+        resetMenuClass();
+        if($( document ).width() < 768){
+            $("#collaspeMenuBody").addClass("show");
+            $("#menuBody").addClass("hide");
+            $("#toolBox").addClass("hide");
+        }else{
+            $("#menuBody").addClass("show");
+            $("#collaspeMenuBody").addClass("hide");
+            $("#toolBox").addClass("show");
+        }
+    }
+    function resetMenuClass(){
+        $("#menuBody").removeClass("hide");
+        $("#menuBody").removeClass("show");
+
+        $("#collaspeMenuBody").removeClass("hide");
+        $("#collaspeMenuBody").removeClass("show");
+
+        $("#toolBox").removeClass("show");
+        $("#toolBox").removeClass("hide");
+    }
+}
+
 $(function(){
+    menuManage();
+
     $('[data-toggle="tooltip"]').tooltip();
 
     $("[data-region]").each(function(index,value){
