@@ -1,18 +1,11 @@
 package it.valeriovaudi.documentlibrary.web.controller;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
-import org.apache.http.protocol.HTTP;
-import org.jboss.logging.annotations.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorController;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

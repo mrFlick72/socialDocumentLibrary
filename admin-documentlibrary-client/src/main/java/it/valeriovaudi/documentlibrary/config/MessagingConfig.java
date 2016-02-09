@@ -49,7 +49,6 @@ public class MessagingConfig {
 
     @Bean
     public MessagingTemplate messagingTemplate(){
-        MessagingTemplate messagingTemplate = new MessagingTemplate();
-        return messagingTemplate;
+        return new MessagingTemplate();
     }
 }

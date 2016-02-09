@@ -28,6 +28,7 @@ import java.util.UUID;
 /**
  * Created by Valerio on 30/04/2015.
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/bookService")
 public class BookServiceEndPoint {

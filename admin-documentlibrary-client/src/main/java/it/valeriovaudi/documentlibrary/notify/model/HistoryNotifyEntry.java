@@ -1,7 +1,5 @@
 package it.valeriovaudi.documentlibrary.notify.model;
 
-import org.springframework.boot.orm.jpa.EntityScan;
-
 import javax.persistence.*;
 import java.io.Serializable;
 

@@ -34,6 +34,7 @@ import javax.jms.Destination;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -109,17 +110,17 @@ public class BookService {
                                             Map<String, String> pdfMasterMetadata = new HashMap<>();
                                             pdfMasterMetadata.put(PDF_BOOK_MASTER_AUTHOR_HEADER_KEY, payload.getAuthor());
                                             pdfMasterMetadata.put(PDF_BOOK_MASTER_DESCRIPTION_HEADER_KEY, payload.getDescription());
-
-                                            pdfBookMastrId = pdfBookMasterRepository
-                                                    .savePdfMaster(payload.getBookFile().getInputStream(),
-                                                            payload.getBookName(),
-                                                            pdfMasterMetadata);
-                                            map = new HashMap<>();
-                                            map.put("pdfBookMasterId", pdfBookMastrId);
-                                            map.put("pdfBookMasterFileName", payload.getBookName());
-                                            map.put(PDF_BOOK_MASTER_AUTHOR_HEADER_KEY, payload.getAuthor());
-                                            map.put(PDF_BOOK_MASTER_DESCRIPTION_HEADER_KEY, payload.getDescription());
-
+                                            try(InputStream inputStream = payload.getBookFile().getInputStream()){
+                                                pdfBookMastrId = pdfBookMasterRepository
+                                                        .savePdfMaster(inputStream,
+                                                                payload.getBookName(),
+                                                                pdfMasterMetadata);
+                                                map = new HashMap<>();
+                                                map.put("pdfBookMasterId", pdfBookMastrId);
+                                                map.put("pdfBookMasterFileName", payload.getBookName());
+                                                map.put(PDF_BOOK_MASTER_AUTHOR_HEADER_KEY, payload.getAuthor());
+                                                map.put(PDF_BOOK_MASTER_DESCRIPTION_HEADER_KEY, payload.getDescription());
+                                            }
                                         } catch (IOException ioe) {
                                             LOGGER.error(ioe.getMessage());
                                             return new FileInteractionException(ioe);
@@ -163,7 +164,10 @@ public class BookService {
                     Path path = Paths.get(tempFilePathBaseDir);
                     try {
                         tempFile = Files.createTempFile(path, String.valueOf(pdfBookMasterInfoHeader.get(PDF_BOOK_MASTER_ID_HEADER_KEY)), ".pdf");
-                        Files.copy(new ByteArrayInputStream(bytes), tempFile, StandardCopyOption.REPLACE_EXISTING);
+                        try(InputStream inputStream = new ByteArrayInputStream(bytes)){
+                            Files.copy(inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+
+                        }
                     } catch (IOException ioe) {
                         LOGGER.error("ERRORE nella creazione del file temporaneo");
                         return new FileInteractionException(ioe);

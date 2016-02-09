@@ -30,7 +30,6 @@ public class FeedBack {
     private String feadbackTitle;
     private String feadbackBody;
 
-//    @JsonSerialize(using = JsonSerializerLocalDateTime.class)
     @JsonSerialize(using = com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer.class)
     @JsonDeserialize(using = com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer.class)
     private LocalDateTime dateTime;

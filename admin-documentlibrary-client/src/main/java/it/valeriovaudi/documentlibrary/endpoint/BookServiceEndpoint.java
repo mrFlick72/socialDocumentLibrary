@@ -1,27 +1,21 @@
 package it.valeriovaudi.documentlibrary.endpoint;
 
-import it.valeriovaudi.documentlibrary.notify.repository.HistoryNotifyEntryRepository;
 import it.valeriovaudi.documentlibrary.notify.service.HistoryNotifyEntryService;
 import it.valeriovaudi.documentlibrary.web.model.BookMasterDTO;
 import it.valeriovaudi.documentlibrary.web.model.BookModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.integration.core.MessagingTemplate;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.json.*;
 import java.io.StringReader;
 import java.net.URI;
-import java.security.Principal;
 
 /**
  * Created by Valerio on 17/06/2015.

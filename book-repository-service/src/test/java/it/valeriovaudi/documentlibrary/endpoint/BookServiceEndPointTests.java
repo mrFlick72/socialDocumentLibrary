@@ -1,7 +1,6 @@
 package it.valeriovaudi.documentlibrary.endpoint;
 
 import it.valeriovaudi.documentlibrary.MongoGridFsApplicationTests;
-import it.valeriovaudi.documentlibrary.builder.BuilderTests;
 import it.valeriovaudi.documentlibrary.model.*;
 import it.valeriovaudi.documentlibrary.repository.BookRepository;
 import org.junit.Test;

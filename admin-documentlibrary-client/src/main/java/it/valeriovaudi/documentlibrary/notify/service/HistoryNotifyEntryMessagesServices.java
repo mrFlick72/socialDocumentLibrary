@@ -1,17 +1,12 @@
 package it.valeriovaudi.documentlibrary.notify.service;
 
-import it.valeriovaudi.documentlibrary.notify.model.HistoryNotifyEntry;
-import it.valeriovaudi.documentlibrary.notify.repository.HistoryNotifyEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.json.Json;
-import java.util.List;
 import java.util.Locale;
 
 /**

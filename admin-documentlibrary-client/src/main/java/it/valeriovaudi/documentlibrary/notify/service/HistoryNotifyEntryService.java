@@ -5,9 +5,7 @@ import it.valeriovaudi.documentlibrary.notify.repository.HistoryNotifyEntryRepos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.json.Json;
 import java.util.List;
 
 /**
