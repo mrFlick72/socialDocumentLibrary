@@ -42,7 +42,8 @@ The application was developed for HCI exam for the Master Degree in "La Sapienza
 </ul>
 
 # Building instructions
-For build project you have <a href="https://maven.apache.org/">Apache Maven</a> and <a href="http://gradle.org/">Gradle</a>.
+First of all you have make mvn clean install of the common-validator project for have the library avaiable on th elocal maven repository.
+Then for build project you have <a href="https://maven.apache.org/">Apache Maven</a> and <a href="http://gradle.org/">Gradle</a>.
 This project is based on Mongo DB, MySql and Active MQ, for this reason you have this components up and running in your machine.
 Being a Spring Boot centric projects all main configurations was present in the application.properties under src/main/resources directory of all projects.
 In this place you can find the basic properties for configure the project. Only for ActiveMQ and Mysql you can don't have up and running during the building becouse I used a in memory sql engine and 
