@@ -1,5 +1,6 @@
 package it.valeriovaudi.documentlibrary.model;
 
+import it.valeriovaudi.validator.FileAllowedContentType;
 import it.valeriovaudi.validator.FileAllowedExtensions;
 import it.valeriovaudi.validator.FileNotNull;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +16,7 @@ public class PdfBookMaster implements Serializable{
     private String description;
 
     @FileNotNull
-    @FileAllowedExtensions(allowedExtensions = {"pdf"})
+    @FileAllowedContentType(allowedContentType = {"application/pdf"})
     private transient MultipartFile bookFile;
 
     public String getBookName() {

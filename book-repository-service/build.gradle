@@ -50,7 +50,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-integration")
 
-    compile("org.springframework.integration:spring-integration-java-dsl:1.0.1.RELEASE")
+    compile("org.springframework.integration:spring-integration-java-dsl:1.1.0.RELEASE")
     compile("org.springframework.integration:spring-integration-jms")
     compile("org.springframework.hateoas:spring-hateoas")
 

@@ -47,7 +47,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-integration")
     compile("org.springframework.integration:spring-integration-jms")
-    compile("org.springframework.integration:spring-integration-java-dsl:1.0.1.RELEASE")
+    compile("org.springframework.integration:spring-integration-java-dsl:1.1.0.RELEASE")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile 'org.apache.httpcomponents:httpclient'
     compile 'mysql:mysql-connector-java:5.1.22'
@@ -67,7 +67,6 @@ dependencies {
 
     compile("javax.json:javax.json-api:1.0")
     compile("org.glassfish:javax.json:1.0.4")
-
     compile("it.valeriovaudi:common-validator:1.0-SNAPSHOT")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")

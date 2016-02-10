@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.integration.core.MessagingTemplate;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
@@ -28,7 +29,6 @@ import java.util.UUID;
 /**
  * Created by Valerio on 30/04/2015.
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/bookService")
 public class BookServiceEndPoint {
@@ -71,14 +71,18 @@ public class BookServiceEndPoint {
     }
 
     @RequestMapping(value = "/book", method = RequestMethod.POST, consumes = "multipart/form-data")
-    public ResponseEntity saveBook(@Valid PdfBookMaster pdfBookMaster){
-        String uuid = UUID.randomUUID().toString();
-        Map<String,Object> message = new HashMap<>();
-        message.put(BookService.MAP_MESSAGE_PAYLOAD_KEY,pdfBookMaster);
-        message.put(BookService.MAP_MESSAGE_UUID_KEY,uuid);
+    public ResponseEntity saveBook(@Valid PdfBookMaster pdfBookMaster, BindingResult bindingResult){
+        if(!bindingResult.hasErrors()){
+            String uuid = UUID.randomUUID().toString();
+            Map<String,Object> message = new HashMap<>();
+            message.put(BookService.MAP_MESSAGE_PAYLOAD_KEY,pdfBookMaster);
+            message.put(BookService.MAP_MESSAGE_UUID_KEY,uuid);
 
-        messagingTemplate.convertAndSend(createBookByPdfInputChannel,message);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(uuid);
+            messagingTemplate.convertAndSend(createBookByPdfInputChannel,message);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(uuid);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 
