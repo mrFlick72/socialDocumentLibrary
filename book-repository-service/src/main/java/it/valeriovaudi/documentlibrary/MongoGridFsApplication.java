@@ -30,14 +30,6 @@ public class MongoGridFsApplication extends SpringBootServletInitializer {
     }
 
     @Bean
-    public FilterRegistrationBean multipartFilter(){
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter(new MultipartFilter());
-        filterRegistrationBean.addUrlPatterns("/*");
-        return filterRegistrationBean;
-    }
-
-    @Bean
     public static PlaceholderConfigurerSupport propertyPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
