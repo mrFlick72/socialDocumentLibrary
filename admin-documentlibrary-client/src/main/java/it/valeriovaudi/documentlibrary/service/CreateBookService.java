@@ -31,6 +31,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.jms.ConnectionFactory;
 import javax.json.Json;
@@ -144,9 +145,11 @@ public class CreateBookService {
 
         Path tempFile = Files.createTempFile("", "");
         bookMasterDTO.getFile().transferTo(tempFile.toFile());
-
         String originalFilename = bookMasterDTO.getFile().getOriginalFilename();
-        map.add("bookFile", new FileSystemResource(tempFile.toFile()));
+        FileSystemResource fileSystemResource = new FileSystemResource(tempFile.toFile());
+
+        map.add("bookFile",fileSystemResource);
+        map.add("contentType", bookMasterDTO.getFile().getContentType());
         map.add("bookName", originalFilename.substring(0, originalFilename.length()-4));
         map.add("author", bookMasterDTO.getAuthor());
         map.add("description", bookMasterDTO.getDescription());
