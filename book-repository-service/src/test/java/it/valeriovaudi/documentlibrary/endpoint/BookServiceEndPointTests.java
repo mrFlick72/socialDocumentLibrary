@@ -5,6 +5,7 @@ import it.valeriovaudi.documentlibrary.model.*;
 import it.valeriovaudi.documentlibrary.repository.BookRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.util.UriComponents;
@@ -65,7 +66,7 @@ public class BookServiceEndPointTests extends MongoGridFsApplicationTests {
     }
 
     @Test
-    public void saveBookTest() throws Exception {
+    public void successfulSaveBookTest() throws Exception {
         PdfBookMaster activeMqPdfBookMaster = PdfBookMasterTestFactory.pdfBookMaster(BookTestFactory.testBookWithExtensions);
         UriComponents uriComponents = fromPath("/bookService/book").build();
 
@@ -80,5 +81,19 @@ public class BookServiceEndPointTests extends MongoGridFsApplicationTests {
         LOGGER.info("please wait for the job completes");
         Message receiveMessage = jmsTemplate.receive("createBookResultQueue");
         LOGGER.info(receiveMessage.toString());
+    }
+
+    @Test
+    public void failSaveBookTest() throws Exception {
+        PdfBookMaster activeMqPdfBookMaster = PdfBookMasterTestFactory.notValidPdfBookMaster(BookTestFactory.testBookWithExtensions);
+        UriComponents uriComponents = fromPath("/bookService/book").build();
+
+        mockMvc.perform(fileUpload(uriComponents.toUri())
+                .file((MockMultipartFile) activeMqPdfBookMaster.getBookFile())
+                .param("bookName", activeMqPdfBookMaster.getBookName())
+                .param("author", activeMqPdfBookMaster.getAuthor())
+                .param("description", activeMqPdfBookMaster.getDescription())
+                .accept(MediaType.MULTIPART_FORM_DATA))
+                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     }
 }

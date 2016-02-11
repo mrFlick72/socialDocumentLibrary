@@ -18,6 +18,6 @@ public class FileUploadValidator implements ConstraintValidator<FileNotNull,Mult
 
     @Override
     public boolean isValid(MultipartFile value, ConstraintValidatorContext context) {
-        return !value.isEmpty();
+        return value!= null && !value.isEmpty();
     }
 }
