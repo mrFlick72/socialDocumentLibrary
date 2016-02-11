@@ -23,7 +23,6 @@ public class PdfBookMaster implements Serializable{
     private transient String contentType;
 
     @FileNotNull
-    @FileAllowedContentType(allowedContentType = {"application/pdf","application/octet-stream"})
     private transient MultipartFile bookFile;
 
     public String getBookName() {

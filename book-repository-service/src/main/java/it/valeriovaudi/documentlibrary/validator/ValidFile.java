@@ -21,5 +21,6 @@ public @interface ValidFile {
 
     Class<? extends Payload>[] payload() default {};
 
+    boolean useExplicitContentType() default true;
     String[] allowedContentType() default {};
 }

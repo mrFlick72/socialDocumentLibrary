@@ -93,7 +93,7 @@ public class BookServiceEndPointTests extends MongoGridFsApplicationTests {
                 .file((MockMultipartFile) activeMqPdfBookMaster.getBookFile())
                 .param("bookName", activeMqPdfBookMaster.getBookName())
                 .param("author", activeMqPdfBookMaster.getAuthor())
-                .param("contentType", activeMqPdfBookMaster.getBookFile().getContentType())
+                .param("contentType", "")
                 .param("description", activeMqPdfBookMaster.getDescription())
                 .accept(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
