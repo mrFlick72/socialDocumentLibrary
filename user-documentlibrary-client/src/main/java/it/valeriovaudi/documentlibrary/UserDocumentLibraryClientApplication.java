@@ -31,4 +31,5 @@ public class UserDocumentLibraryClientApplication {
     public EmbeddedServletContainerCustomizer exceptionHandling() {
         return container -> container.addErrorPages(new ErrorPage("/exception"));
     }
+
 }
