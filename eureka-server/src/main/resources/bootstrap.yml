@@ -1,0 +1,12 @@
+eureka:
+  instance:
+    hostname: @eureka.server.location@
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    enableSelfPreservation: false
+  client:
+    preferSameZoneEureka: false
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://@eureka.server.location@:@eureka.server.server.port@/eureka/

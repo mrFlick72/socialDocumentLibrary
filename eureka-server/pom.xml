@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>it.valeriovaudi.documentlibrary</groupId>
-	<artifactId>search-book-service</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
+	<artifactId>eureka-server</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>search-book-service</name>
-	<description>Social document library's Search Engine</description>
+	<name>eureka-server</name>
+	<description>Eureka Server </description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -19,54 +19,33 @@
 	</parent>
 
 	<properties>
+		<eureka.server.server.port>8761</eureka.server.server.port>
+		<eureka.server.location>127.0.0.1</eureka.server.location>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>it.valeriovaudi.documentlibrary.DemoApplication</start-class>
 		<java.version>1.8</java.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka-server</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>18.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.json</groupId>
-			<artifactId>javax.json-api</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.json</artifactId>
-			<version>1.0.4</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -78,9 +57,9 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
+	
 	<build>
-		<finalName>socialDocumentLibrarySearchBookService</finalName>
+		<finalName>socialDocumentLibraryEurekaServer</finalName>
 
 		<resources>
 			<resource>
@@ -91,17 +70,12 @@
 
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>2.6</version>
-			</plugin>
-
-			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
+
 
 	<repositories>
 		<repository>
@@ -121,4 +95,5 @@
 			</snapshots>
 		</repository>
 	</repositories>
+
 </project>
