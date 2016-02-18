@@ -14,6 +14,8 @@ buildscript {
 
     repositories {
         mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
     }
 
     dependencies {
@@ -44,6 +46,8 @@ repositories {
 }
 
 dependencies {
+    compile('org.springframework.cloud:spring-cloud-starter-eureka')
+
     compile ('org.springframework.boot:spring-boot-starter')
     compile ('org.springframework.boot:spring-boot-starter-web')
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
@@ -72,6 +76,12 @@ dependencies {
     testCompile 'org.apache.activemq:activemq-kahadb-store:5.10.0'
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Brixton.BUILD-SNAPSHOT"
+    }
 }
 
 eclipse {
