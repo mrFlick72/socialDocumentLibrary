@@ -1,3 +1,3 @@
 spring:
   application:
-    name: book-social-metadata-service
+    name: bookSocialMetadataService

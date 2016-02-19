@@ -1,3 +1,3 @@
 spring:
   application:
-    name: search-book-service
+    name: searchBookService
