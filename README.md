@@ -1,10 +1,12 @@
-# Social Document Library 1.0
+# Social Document Library 2.0
 
 The Software is been developed in a microservice architecture style.
 The main projectual philosophy was the User Centered Design (UCD).
 The application is a document Library for IT books, in the documentation I explain in more details the scope and the 
 developed life cycle of the project. Maninly it is composed by two app the app for final user and app for employee user.
-The application was developed for HCI exam for the Master Degree in "La Sapienza" of Rome
+The application was developed for HCI exam for the Master Degree in "La Sapienza" of Rome.
+
+In the new version I added the uso of Spring Cloud technology, for now the system could be instable becouse is under development
 
 # Main Technologies 
 <ul>
@@ -21,7 +23,8 @@ The application was developed for HCI exam for the Master Degree in "La Sapienza
     <li>Spring</li> 
     <li>Spring Boot</li>
     <li>Spring MVC</li>    
-    <li>Spring HATEOAS</li> 
+    <li>Spring Cloud</li> 
+    <li>Spring Cloud Netflix : Eureka, Zuul, Ribbon</li> 
     <li>Spring Security</li>
     <li>Spring Integration</li>
     <li>Spring Data JPA</li>
