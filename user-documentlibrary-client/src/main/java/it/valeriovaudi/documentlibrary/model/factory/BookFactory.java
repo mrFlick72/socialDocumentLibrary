@@ -22,8 +22,6 @@ import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 @Component
 public class BookFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookFactory.class);
-
     @Value("${searchBookService.searchBookService.baseUrl}")
     private String searchBookBaseUrl;
 
@@ -71,10 +69,6 @@ public class BookFactory {
     public JsonObject bookListJsonFactory(String bookId){
         BookUserInterfaceDTOBuilder bookUserInterfaceDTOBuilder = BookUserInterfaceDTOBuilder.newBookUserInterfaceDTOBuilder();
         String bookMetadataResponseEntity = bookMetadataServiceRestTemplate.exchange(fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri(), HttpMethod.GET, null, String.class).getBody();
-        LOGGER.info(bookMetadataResponseEntity);
-        LOGGER.info(bookMetadataResponseEntity);
-        LOGGER.info(bookMetadataResponseEntity);
-        LOGGER.info(bookMetadataResponseEntity);
         String bookRepositoryResponseEntity = bookRepositoryServiceRestTemplate.exchange(fromHttpUrl(String.format("%s/book/%s.json?startRecord=1&pageSize=1", bookRepositoryService, bookId)).build().toUri(), HttpMethod.GET, RequestEntity.EMPTY, String.class).getBody();
 
         bookUserInterfaceDTOBuilder
