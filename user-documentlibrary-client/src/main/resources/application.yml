@@ -1,5 +1,5 @@
 server:
-  context-path: @server.context@
+  context-path: /@server.context@
   port: 9090
 
 multipart:

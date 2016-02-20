@@ -38,6 +38,7 @@ public class FeedBackService {
     private DocumentLibraryUserRepository documentLibraryUserRepository;
 
     @Autowired
+    @LoadBalanced
     private RestTemplate bookMetadataServiceRestTemplate;
 
     public void setBookSocialMetadataBaseUrl(String bookSocialMetadataBaseUrl) {
@@ -227,6 +228,4 @@ class JsonUtility {
         }
         return result;
     }
-
-
 }

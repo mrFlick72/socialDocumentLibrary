@@ -37,7 +37,7 @@
 		<book-social-metadata-service.feedBackService.baseUrl>${book-social-metadata-service.server.location}/feedBack</book-social-metadata-service.feedBackService.baseUrl>
 
 		<!--<user-documentlibrary-client.server.location>http://localhost:9090/${server.context}</user-documentlibrary-client.server.location>-->
-		<user-documentlibrary-client.server.location>http://localhost:9090/${server.context}</user-documentlibrary-client.server.location>
+		<user-documentlibrary-client.server.location>http://localhost:9090</user-documentlibrary-client.server.location>
 		<user-documentlibrary-client.bookService.baseUrl>${user-documentlibrary-client.server.location}/bookService</user-documentlibrary-client.bookService.baseUrl>
 		<user-documentlibrary-client.bookReader.baseUrl>${user-documentlibrary-client.server.location}/bookReader</user-documentlibrary-client.bookReader.baseUrl>
 		<user-documentlibrary-client.bookMark.baseUrl>${user-documentlibrary-client.server.location}/bookMark</user-documentlibrary-client.bookMark.baseUrl>
