@@ -6,7 +6,7 @@ The application is a document Library for IT books, in the documentation I expla
 developed life cycle of the project. Maninly it is composed by two app the app for final user and app for employee user.
 The application was developed for HCI exam for the Master Degree in "La Sapienza" of Rome.
 
-In the new version I added the uso of Spring Cloud technology, for now the system could be instable becouse is under development
+# In the new version I added the uso of Spring Cloud technology, for now the system could be instable becouse is under development
 
 # Main Technologies 
 <ul>
