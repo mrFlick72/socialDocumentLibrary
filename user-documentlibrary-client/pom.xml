@@ -20,21 +20,24 @@
 	</parent>
 
 	<properties>
+		<!--<server.context>/${project.build.finalName}</server.context>-->
+		<server.context></server.context>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>it.valeriovaudi.documentlibrary.UserDocumentLibraryClientApplication</start-class>
 		<java.version>1.8</java.version>
 
-		<search-book-service.server.location>http://localhost:6061/socialDocumentLibrarySearchBookService</search-book-service.server.location>
+		<search-book-service.server.location>${user-documentlibrary-client.server.location}/search-book-service</search-book-service.server.location>
 		<search-book-service.searchBookService.baseUrl>${search-book-service.server.location}/searchBookIndex</search-book-service.searchBookService.baseUrl>
 		<search-book-service.searchMetadaTagService.baseUrl>${search-book-service.server.location}/searchMetadaTag</search-book-service.searchMetadaTagService.baseUrl>
 
-		<book-repository-service.server.location>http://localhost:8080/socialDocumentLibraryBookRepositoryService</book-repository-service.server.location>
+		<book-repository-service.server.location>${user-documentlibrary-client.server.location}/book-repository-service</book-repository-service.server.location>
 		<book-repository-service.bookServiceEndPoint.baseUrl>${book-repository-service.server.location}/bookService</book-repository-service.bookServiceEndPoint.baseUrl>
 
-		<book-social-metadata-service.server.location>http://localhost:6060/socialDocumentLibrarySocialMetadataService</book-social-metadata-service.server.location>
+		<book-social-metadata-service.server.location>${user-documentlibrary-client.server.location}/book-social-metadata-service</book-social-metadata-service.server.location>
 		<book-social-metadata-service.feedBackService.baseUrl>${book-social-metadata-service.server.location}/feedBack</book-social-metadata-service.feedBackService.baseUrl>
 
-		<user-documentlibrary-client.server.location>http://localhost:9090/${project.build.finalName}</user-documentlibrary-client.server.location>
+		<!--<user-documentlibrary-client.server.location>http://localhost:9090/${server.context}</user-documentlibrary-client.server.location>-->
+		<user-documentlibrary-client.server.location>http://localhost:9090/${server.context}</user-documentlibrary-client.server.location>
 		<user-documentlibrary-client.bookService.baseUrl>${user-documentlibrary-client.server.location}/bookService</user-documentlibrary-client.bookService.baseUrl>
 		<user-documentlibrary-client.bookReader.baseUrl>${user-documentlibrary-client.server.location}/bookReader</user-documentlibrary-client.bookReader.baseUrl>
 		<user-documentlibrary-client.bookMark.baseUrl>${user-documentlibrary-client.server.location}/bookMark</user-documentlibrary-client.bookMark.baseUrl>
@@ -42,8 +45,34 @@
 
 	<dependencies>
 		<dependency>
+			<!-- Spring Cloud starter -->
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-ribbon</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-feign</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-hystrix</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zuul</artifactId>
 		</dependency>
 
 		<dependency>
@@ -77,6 +106,11 @@
 		</dependency>
 
 		<!--static assets-->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>1.11.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>

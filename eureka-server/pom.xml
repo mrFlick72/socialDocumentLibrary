@@ -20,7 +20,7 @@
 
 	<properties>
 		<eureka.server.server.port>8761</eureka.server.server.port>
-		<eureka.server.location>127.0.0.1</eureka.server.location>
+		<eureka.server.location>localhost</eureka.server.location>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 	</properties>

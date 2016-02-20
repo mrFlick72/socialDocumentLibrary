@@ -1,0 +1,37 @@
+server:
+  context-path: @server.context@
+  port: 9090
+
+multipart:
+  max-file-size: 50Mb
+
+# DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/user_document_library_client
+    username: root
+    password: root
+    maximum-pool-size: 20
+  jpa:
+    hibernate:
+      ddl-auto: update
+  mvc:
+    locale: en
+
+error:
+  whitelabel:
+    enabled: false
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    searchService:
+      path: /search-book-service/**
+      serviceId: search-book-service
+    boockService:
+      path: /book-repository-service/**
+      serviceId: book-repository-service
+    boockSocialMetadataService:
+      path: /book-social-metadata-service/**
+      serviceId: book-social-metadata-service

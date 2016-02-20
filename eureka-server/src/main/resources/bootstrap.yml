@@ -1,3 +1,6 @@
+server:
+  port: @eureka.server.server.port@
+
 eureka:
   instance:
     hostname: @eureka.server.location@

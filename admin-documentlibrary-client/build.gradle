@@ -59,6 +59,7 @@ dependencies {
 
     compile("org.apache.activemq:activemq-client:5.10.0")
 
+    compile("org.webjars:jquery:1.11.1")
     compile("org.webjars:bootstrap:3.3.4")
 
     compile("org.webjars:select2:3.5.2")
