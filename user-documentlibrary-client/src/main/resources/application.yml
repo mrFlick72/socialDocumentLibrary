@@ -6,8 +6,6 @@ multipart:
 
 # DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
 spring:
-  profiles:
-   active: @profile.id@
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/user_document_library_client

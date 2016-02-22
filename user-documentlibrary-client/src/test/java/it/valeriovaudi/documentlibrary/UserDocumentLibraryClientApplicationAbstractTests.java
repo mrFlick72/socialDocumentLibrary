@@ -27,7 +27,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @SpringApplicationConfiguration(classes = UserDocumentLibraryClientApplication.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value = "standAlone")
 public abstract class UserDocumentLibraryClientApplicationAbstractTests {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(UserDocumentLibraryClientApplicationAbstractTests.class);

@@ -14,8 +14,6 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Created by Valerio on 16/06/2015.
  */
-@Configuration
-@Profile("standAlone")
 public class ServiceConfig {
 
     @Bean

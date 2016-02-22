@@ -19,6 +19,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
+@Configuration
+@EnableEurekaClient
+@RibbonClients
+@EnableCircuitBreaker
+@EnableZuulProxy
 @EnableJpaRepositories(basePackages = "it.valeriovaudi.documentlibrary.repository")
 @EnableTransactionManagement
 @PropertySource("classpath:restBaseUrl.properties")
@@ -38,24 +43,5 @@ public class UserDocumentLibraryClientApplication {
     public EmbeddedServletContainerCustomizer exceptionHandling() {
         return container -> container.addErrorPages(new ErrorPage("/exception"));
     }
-
-}
-
-@Profile("cloud")
-@Configuration
-@EnableEurekaClient
-@RibbonClients
-@EnableCircuitBreaker
-@EnableZuulProxy
-class CloudConfig{
-
-}
-
-@Profile("standALone")
-@EnableAutoConfiguration(exclude = {EnableDiscoveryClientImportSelector.class,
-                                    RibbonClientConfigurationRegistrar.class,
-                                    EnableCircuitBreakerImportSelector.class,
-                                    ZuulProxyConfiguration.class})
-class StandAloneConfig{
 
 }
