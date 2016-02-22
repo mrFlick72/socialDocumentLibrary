@@ -166,20 +166,20 @@
 			<properties>
 				<profile.id>standAlone</profile.id>
 
-				<server.context>/${project.build.finalName}</server.context>
+				<server.port>9090</server.port>
+				<server.host>localhost</server.host>
 
-				<search-book-service.server.location>${user-documentlibrary-client.server.location}/search-book-service</search-book-service.server.location>
+				<search-book-service.server.location>http://localhost:6061</search-book-service.server.location>
 				<search-book-service.searchBookService.baseUrl>${search-book-service.server.location}/searchBookIndex</search-book-service.searchBookService.baseUrl>
 				<search-book-service.searchMetadaTagService.baseUrl>${search-book-service.server.location}/searchMetadaTag</search-book-service.searchMetadaTagService.baseUrl>
 
-				<book-repository-service.server.location>${user-documentlibrary-client.server.location}/book-repository-service</book-repository-service.server.location>
+				<book-repository-service.server.location>http://localhost:8080</book-repository-service.server.location>
 				<book-repository-service.bookServiceEndPoint.baseUrl>${book-repository-service.server.location}/bookService</book-repository-service.bookServiceEndPoint.baseUrl>
 
-				<book-social-metadata-service.server.location>${user-documentlibrary-client.server.location}/book-social-metadata-service</book-social-metadata-service.server.location>
+				<book-social-metadata-service.server.location>http://localhost:6060</book-social-metadata-service.server.location>
 				<book-social-metadata-service.feedBackService.baseUrl>${book-social-metadata-service.server.location}/feedBack</book-social-metadata-service.feedBackService.baseUrl>
 
-				<!--<user-documentlibrary-client.server.location>http://localhost:9090/${server.context}</user-documentlibrary-client.server.location>-->
-				<user-documentlibrary-client.server.location>http://localhost:9090</user-documentlibrary-client.server.location>
+				<user-documentlibrary-client.server.location>http://${server.host}:${server.port}</user-documentlibrary-client.server.location>
 				<user-documentlibrary-client.bookService.baseUrl>${user-documentlibrary-client.server.location}/bookService</user-documentlibrary-client.bookService.baseUrl>
 				<user-documentlibrary-client.bookReader.baseUrl>${user-documentlibrary-client.server.location}/bookReader</user-documentlibrary-client.bookReader.baseUrl>
 				<user-documentlibrary-client.bookMark.baseUrl>${user-documentlibrary-client.server.location}/bookMark</user-documentlibrary-client.bookMark.baseUrl>
@@ -191,7 +191,8 @@
 			<properties>
 				<profile.id>cloud</profile.id>
 
-				<server.context></server.context>
+				<server.port>9090</server.port>
+				<server.host>localhost</server.host>
 
 				<search-book-service.server.location>${user-documentlibrary-client.server.location}/search-book-service</search-book-service.server.location>
 				<search-book-service.searchBookService.baseUrl>${search-book-service.server.location}/searchBookIndex</search-book-service.searchBookService.baseUrl>
@@ -203,8 +204,7 @@
 				<book-social-metadata-service.server.location>${user-documentlibrary-client.server.location}/book-social-metadata-service</book-social-metadata-service.server.location>
 				<book-social-metadata-service.feedBackService.baseUrl>${book-social-metadata-service.server.location}/feedBack</book-social-metadata-service.feedBackService.baseUrl>
 
-				<!--<user-documentlibrary-client.server.location>http://localhost:9090/${server.context}</user-documentlibrary-client.server.location>-->
-				<user-documentlibrary-client.server.location>http://localhost:9090</user-documentlibrary-client.server.location>
+				<user-documentlibrary-client.server.location>http://${server.host}:${server.port}</user-documentlibrary-client.server.location>
 				<user-documentlibrary-client.bookService.baseUrl>${user-documentlibrary-client.server.location}/bookService</user-documentlibrary-client.bookService.baseUrl>
 				<user-documentlibrary-client.bookReader.baseUrl>${user-documentlibrary-client.server.location}/bookReader</user-documentlibrary-client.bookReader.baseUrl>
 				<user-documentlibrary-client.bookMark.baseUrl>${user-documentlibrary-client.server.location}/bookMark</user-documentlibrary-client.bookMark.baseUrl>
@@ -212,7 +212,6 @@
 		</profile>
 	</profiles>
 	<build>
-
 		<finalName>socialDocumentLibrary</finalName>
 
 		<resources>

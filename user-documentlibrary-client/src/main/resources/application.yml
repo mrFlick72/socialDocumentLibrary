@@ -1,6 +1,5 @@
 server:
-  context-path: /@server.context@
-  port: 9090
+  port: @server.port@
 
 multipart:
   max-file-size: 50Mb
