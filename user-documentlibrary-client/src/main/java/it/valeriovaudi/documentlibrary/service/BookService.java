@@ -7,6 +7,7 @@ import it.valeriovaudi.documentlibrary.repository.BookRepository;
 import it.valeriovaudi.documentlibrary.repository.UserBookPreferedListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -41,6 +42,7 @@ public class BookService {
     private UserBookPreferedListRepository userBookPreferedListRepository;
 
     @Autowired
+    @LoadBalanced
     private RestTemplate searchBookServiceRestTemplate;
 
     @Autowired
