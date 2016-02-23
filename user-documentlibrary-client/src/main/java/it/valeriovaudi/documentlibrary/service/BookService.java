@@ -8,7 +8,7 @@ import it.valeriovaudi.documentlibrary.repository.UserBookPreferedListRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
@@ -153,6 +153,6 @@ public class BookService {
         }
 
         UriComponents build = fromHttpUrl(searchBookBaseUrl).queryParam("q", query.toString()).build();
-        return ResponseEntity.ok(searchBookServiceRestTemplate.getForObject(build.toUriString(), String.class));
+        return ResponseEntity.ok(searchBookServiceRestTemplate.exchange(build.toUri(), HttpMethod.GET, RequestEntity.get(build.toUri()).accept(MediaType.APPLICATION_JSON).build(),String.class).getBody());
     }
 }
