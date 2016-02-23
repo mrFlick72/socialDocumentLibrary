@@ -30,8 +30,6 @@ import java.util.List;
 @EnableWebSocketMessageBroker
 @EnableJpaRepositories(basePackages = "it.valeriovaudi.documentlibrary.notify.repository")
 @EnableTransactionManagement
-@EnableEurekaClient
-@EnableAspectJAutoProxy(proxyTargetClass = true) // without this declaration the RestTemplate injection wil be fails becouse spring cloud proxied this class for load balance with netflix ribbon
 public class AdminDocumentlibraryClientApplication {
 
     public static void main(String[] args) {
