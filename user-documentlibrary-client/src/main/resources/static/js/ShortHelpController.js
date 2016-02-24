@@ -18,7 +18,7 @@ angular.module("social-document-library")
         };
 
         $scope.initShortHelp = function(){
-            $http.get([socialDocumentLibraryLocationBaseUrl,"/preference/shortHelp"].join("/"))
+            $http.get([socialDocumentLibraryLocationBaseUrl,"preference/shortHelp"].join("/"))
                 .success(function(data){
                     $scope.noContentShortHelp();
                     $scope.shortHelp = data;
@@ -27,7 +27,7 @@ angular.module("social-document-library")
         };
 
         $scope.showShortHelp = function(){
-            $http.put([socialDocumentLibraryLocationBaseUrl,"/preference/shortHelp/show"].join("/"),{})
+            $http.put([socialDocumentLibraryLocationBaseUrl,"preference/shortHelp/show"].join("/"),{})
                 .success(function(data){
                     $scope.noContentShortHelp();
                     $scope.shortHelp = true;
