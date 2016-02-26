@@ -1,5 +1,6 @@
 package it.valeriovaudi.documentlibrary.model.factory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import it.valeriovaudi.documentlibrary.model.builder.BookUserInterfaceDTOBuilder;
 import it.valeriovaudi.documentlibrary.service.FeedBackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class BookFactory {
         this.bookRepositoryServiceRestTemplate = bookRepositoryServiceRestTemplate;
     }
 
-    public JsonObject bookListJsonFactory(String bookId){
+    public JsonObject bookListJsonFactory(String bookId) {
         BookUserInterfaceDTOBuilder bookUserInterfaceDTOBuilder = BookUserInterfaceDTOBuilder.newBookUserInterfaceDTOBuilder();
         String bookMetadataResponseEntity = bookMetadataServiceRestTemplate.exchange(fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri(), HttpMethod.GET, null, String.class).getBody();
         String bookRepositoryResponseEntity = bookRepositoryServiceRestTemplate.exchange(fromHttpUrl(String.format("%s/book/%s.json?startRecord=1&pageSize=1", bookRepositoryService, bookId)).build().toUri(), HttpMethod.GET, RequestEntity.EMPTY, String.class).getBody();

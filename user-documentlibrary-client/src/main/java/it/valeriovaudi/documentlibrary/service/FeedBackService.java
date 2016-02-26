@@ -64,9 +64,7 @@ public class FeedBackService {
     public ResponseEntity<String> getUserFeedBack(@PathVariable("bookId") String bookId) {
         URI uri = fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri();
         List<Map<String, String>> boby = bookMetadataServiceRestTemplate.getForEntity(uri, List.class).getBody();
-        String errorMessage;
         List<Map> reduce = boby.parallelStream().map(stringStringMap -> {
-            System.out.println("stringStringMap: " + stringStringMap);
             DocumentLibraryUser user = documentLibraryUserRepository.findByUserName(stringStringMap.get("userName"));
             return Arrays.asList(UiJsonFactory.newUiJsonFactory(stringStringMap)
                     .trasformPropertyKey("feadbackTitle", "title")
@@ -77,13 +75,14 @@ public class FeedBackService {
             maps.addAll(maps2);
             return maps;
         });
+
         try {
             return ResponseEntity.ok(objectMapper.writeValueAsString(reduce));
         } catch (JsonProcessingException e) {
-            errorMessage = e.getMessage();
+            e.printStackTrace();
         }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("{}");
     }
 
 
@@ -113,6 +112,7 @@ public class FeedBackService {
                 .trasformPropertyKey("body", "feadbackBody")
                 .putProperty("userName", principal.getName())
                 .build());
+
         URI uri = fromHttpUrl(String.format("%s/%s", bookSocialMetadataBaseUrl, feedBackId)).build().toUri();
         return bookMetadataServiceRestTemplate.exchange(uri,
                 HttpMethod.PUT,

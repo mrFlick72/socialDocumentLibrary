@@ -31,12 +31,7 @@ public class BookMarkService {
     public ResponseEntity getBookMark(@PathVariable("bookId") String bookId, Principal principal){
         UserBookPreferedList byUserName = userBookPreferedListRepository.findByUserName(principal.getName());
         Book bookAux = getBookById(byUserName, bookId);
-
-        if(bookAux!=null){
-            return ResponseEntity.ok(bookAux.getPageBookMark());
-        }
-
-        return ResponseEntity.notFound().build();
+        return bookAux!=null ? ResponseEntity.ok(bookAux.getPageBookMark()) : ResponseEntity.notFound().build();
     }
 
     @RequestMapping(value = "/{bookId}", method = RequestMethod.PUT)
