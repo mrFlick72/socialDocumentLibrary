@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import it.valeriovaudi.documentlibrary.model.DocumentLibraryUser;
 import it.valeriovaudi.documentlibrary.model.factory.UiJsonFactory;
 import it.valeriovaudi.documentlibrary.repository.DocumentLibraryUserRepository;
@@ -121,11 +122,8 @@ public class FeedBackService {
                 Void.class);
     }
 
-    private String userFirstNameAndLastName(String firstName, String lastName) {
-        return String.format("%s %s", nullStringToEmptyString(firstName), nullStringToEmptyString(lastName));
-    }
-
-    private String nullStringToEmptyString(String string) {
-        return Optional.ofNullable(string).orElse("");
+    @ExceptionHandler(value = IOException.class)
+    public ResponseEntity iOExceptionHandler(IOException e){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 }
