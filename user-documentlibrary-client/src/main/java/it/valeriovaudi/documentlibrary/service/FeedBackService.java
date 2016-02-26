@@ -112,7 +112,6 @@ public class FeedBackService {
                 .trasformPropertyKey("body", "feadbackBody")
                 .putProperty("userName", principal.getName())
                 .build());
-        System.out.println("requestBody: " + requestBody);
         URI uri = fromHttpUrl(String.format("%s/%s", bookSocialMetadataBaseUrl, feedBackId)).build().toUri();
         return bookMetadataServiceRestTemplate.exchange(uri,
                 HttpMethod.PUT,
