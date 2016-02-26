@@ -1,25 +1,28 @@
 package it.valeriovaudi.documentlibrary.service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import it.valeriovaudi.documentlibrary.model.DocumentLibraryUser;
+import it.valeriovaudi.documentlibrary.model.factory.UiJsonFactory;
 import it.valeriovaudi.documentlibrary.repository.DocumentLibraryUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.json.*;
+import java.io.IOException;
 import java.io.StringReader;
 import java.net.URI;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
@@ -30,6 +33,9 @@ import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 @RestController
 @RequestMapping("/bookService/feedBack")
 public class FeedBackService {
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Value("${bookSocialMetadataService.feedBackService.baseUrl}")
     private String bookSocialMetadataBaseUrl;
@@ -54,178 +60,73 @@ public class FeedBackService {
     }
 
     @RequestMapping(value = "/userFeedBasck/{bookId}", method = RequestMethod.GET)
-    public ResponseEntity<String> getUserFeedBack(@PathVariable("bookId") String bookId){
-        URI uri = fromHttpUrl(String.format("%s/bookId/%s/data",bookSocialMetadataBaseUrl,bookId)).build().toUri();
-        ResponseEntity<String> forEntity = bookMetadataServiceRestTemplate.getForEntity(uri, String.class);
-
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-
-        JsonArray jsonValues = Json.createReader(new StringReader(forEntity.getBody())).readArray();
-        FeedBackJsonBuilder feedBackJsonBuilder;
-        DocumentLibraryUser byUserName;
-        JsonObject jsonObjectAux;
-
-        for(int i = 0 ; i < jsonValues.size() ; i++){
-            jsonObjectAux = jsonValues.getJsonObject(i);
-            feedBackJsonBuilder = FeedBackJsonBuilder.newFeedBackJsonBuilder(jsonObjectAux);
-            byUserName = documentLibraryUserRepository.findByUserName(jsonObjectAux.getString("userName"));
-            feedBackJsonBuilder.userFirstNameAndLastName(byUserName.getFirstName(),byUserName.getLastName())
-                    .feadbackTitle(JsonUtility.getValueFromJson(jsonObjectAux,"feadbackTitle"))
-                    .feadbackBody(JsonUtility.getValueFromJson(jsonObjectAux, "feadbackBody"));
-
-            arrayBuilder.add(feedBackJsonBuilder.buildJson());
+    public ResponseEntity<String> getUserFeedBack(@PathVariable("bookId") String bookId) {
+        URI uri = fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri();
+        List<Map<String, String>> boby = bookMetadataServiceRestTemplate.getForEntity(uri, List.class).getBody();
+        String errorMessage;
+        List<Map> reduce = boby.parallelStream().map(stringStringMap -> {
+            System.out.println("stringStringMap: " + stringStringMap);
+            DocumentLibraryUser user = documentLibraryUserRepository.findByUserName(stringStringMap.get("userName"));
+            return Arrays.asList(UiJsonFactory.newUiJsonFactory(stringStringMap)
+                    .trasformPropertyKey("feadbackTitle", "title")
+                    .trasformPropertyKey("feadbackBody", "body")
+                    .trasformProperty("userName", "firstNameAndLastName", String.format("%s %s", user.getFirstName(), user.getFirstName()))
+                    .build());
+        }).reduce(new ArrayList<>(boby.size()), (maps, maps2) -> {
+            maps.addAll(maps2);
+            return maps;
+        });
+        try {
+            return ResponseEntity.ok(objectMapper.writeValueAsString(reduce));
+        } catch (JsonProcessingException e) {
+            errorMessage = e.getMessage();
         }
 
-        return ResponseEntity.ok(arrayBuilder.build().toString());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }
-
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createFeedBack(@RequestBody String body, Principal principal){
+    public ResponseEntity createFeedBack(@RequestBody String body, Principal principal) throws IOException {
+        Map map = objectMapper.readValue(body, HashMap.class);
+        String requestBody = objectMapper.writeValueAsString(UiJsonFactory.newUiJsonFactory(map)
+                .trasformPropertyKey("title", "feadbackTitle")
+                .trasformPropertyKey("body", "feadbackBody")
+                .putProperty("userName", principal.getName())
+                .build());
+
         URI uri = fromHttpUrl(bookSocialMetadataBaseUrl).build().toUri();
         return bookMetadataServiceRestTemplate.exchange(uri,
-                                                        HttpMethod.POST,
-                                                        RequestEntity.post(uri)
-                                                                .contentType(MediaType.APPLICATION_JSON)
-                                                                .body(getBodyJsonString(body,principal.getName())),
-                                                        Void.class);
+                HttpMethod.POST,
+                RequestEntity.post(uri)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(requestBody),
+                Void.class);
     }
 
     @RequestMapping(value = "/{feedBackId}", method = RequestMethod.PUT)
-    public ResponseEntity updateFeedBack(@PathVariable("feedBackId")String feedBackId, @RequestBody String body, Principal principal){
+    public ResponseEntity updateFeedBack(@PathVariable("feedBackId") String feedBackId, @RequestBody String body, Principal principal) throws IOException {
+        Map map = objectMapper.readValue(body, HashMap.class);
+        String requestBody = objectMapper.writeValueAsString(UiJsonFactory.newUiJsonFactory(map)
+                .trasformPropertyKey("title", "feadbackTitle")
+                .trasformPropertyKey("body", "feadbackBody")
+                .putProperty("userName", principal.getName())
+                .build());
+        System.out.println("requestBody: " + requestBody);
         URI uri = fromHttpUrl(String.format("%s/%s", bookSocialMetadataBaseUrl, feedBackId)).build().toUri();
         return bookMetadataServiceRestTemplate.exchange(uri,
                 HttpMethod.PUT,
                 RequestEntity.put(uri)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(getBodyJsonString(body, principal.getName())),
+                        .body(requestBody),
                 Void.class);
     }
 
-    private String getBodyJsonString(String body,String userName){
-        JsonObject jsonObject = FeedBackJsonBuilder.newFeedBackJsonBuilder(body)
-                .userName(userName)
-                .buildJson();
-        return jsonObject.toString();
+    private String userFirstNameAndLastName(String firstName, String lastName) {
+        return String.format("%s %s", nullStringToEmptyString(firstName), nullStringToEmptyString(lastName));
     }
 
-    static class FeedBackJsonBuilder{
-        private JsonObjectBuilder jsonObjectBuilder;
-        private JsonObject master;
-        private Set<String> actualFilds = new HashSet<>();
-        private Map<String,String> frontEndKeysMap;
-        private String[] frontEndKeys = new String[] {"id","bookId","userName","score","title","body","firstNameAndLastName"};
-
-        public FeedBackJsonBuilder() {
-            frontEndKeysMap = new HashMap<>();
-
-            frontEndKeysMap.put("id","id");
-            frontEndKeysMap.put("bookId","bookId");
-            frontEndKeysMap.put("userName","userName");
-            frontEndKeysMap.put("score","score");
-            frontEndKeysMap.put("title","feadbackTitle");
-            frontEndKeysMap.put("body","feadbackBody");
-            frontEndKeysMap.put("firstNameAndLastName","firstNameAndLastName");
-        }
-
-        private void setJsonObjectBuilder(JsonObjectBuilder jsonObjectBuilder) {
-            this.jsonObjectBuilder = jsonObjectBuilder;
-        }
-
-        private void setMaster(JsonObject master) {
-            this.master = master;
-        }
-
-        public static FeedBackJsonBuilder newFeedBackJsonBuilder(JsonObject master){
-            FeedBackJsonBuilder jsonObjectBuilder = new FeedBackJsonBuilder();
-            jsonObjectBuilder.setJsonObjectBuilder(Json.createObjectBuilder());
-
-            jsonObjectBuilder.setMaster(master);
-
-            return jsonObjectBuilder;
-        }
-
-        public static FeedBackJsonBuilder newFeedBackJsonBuilder(String body){
-            FeedBackJsonBuilder jsonObjectBuilder = new FeedBackJsonBuilder();
-            jsonObjectBuilder.setJsonObjectBuilder(Json.createObjectBuilder());
-
-            jsonObjectBuilder.setMaster(Json.createReader(new StringReader(body)).readObject());
-
-            return jsonObjectBuilder;
-        }
-
-        public FeedBackJsonBuilder id(String id){
-            jsonObjectBuilder.add("id", id);
-            actualFilds.add("id");
-            return this;
-        }
-
-        public FeedBackJsonBuilder bookId(String bookId){
-            jsonObjectBuilder.add("bookId",bookId);
-            actualFilds.add("bookId");
-            return this;
-        }
-
-        public FeedBackJsonBuilder userName(String userName){
-            jsonObjectBuilder.add("userName", userName);
-            actualFilds.add("userName");
-            return this;
-        }
-
-        public FeedBackJsonBuilder score(String score){
-            jsonObjectBuilder.add("score",score);
-            actualFilds.add("score");
-            return this;
-        }
-
-        public FeedBackJsonBuilder feadbackTitle(String feadbackTitle){
-            jsonObjectBuilder.add("feadbackTitle", feadbackTitle);
-            actualFilds.add("title");
-            return this;
-        }
-
-        public FeedBackJsonBuilder feadbackBody(String feadbackBody){
-            jsonObjectBuilder.add("feadbackBody",feadbackBody);
-            actualFilds.add("body");
-            return this;
-        }
-
-        public FeedBackJsonBuilder userFirstNameAndLastName(String firstName,String lastName){
-            jsonObjectBuilder.add("firstNameAndLastName",String.format("%s %s",firstName, lastName));
-            actualFilds.add("firstNameAndLastName");
-            return this;
-        }
-
-        public JsonObject buildJson(){
-            for (String key : frontEndKeys) {
-                if(!actualFilds.contains(key)){
-                    if(!String.valueOf(JsonUtility.getValueFromJson(master,key)).trim().equals("")){
-                        jsonObjectBuilder.add(frontEndKeysMap.get(key),JsonUtility.getValueFromJson(master,key));
-                    }
-                }
-            }
-            return jsonObjectBuilder.build();
-        }
-    }
-}
-class JsonUtility {
-    public static String getValueFromJson(JsonObject currentJsonObject,String key){
-        String result = "";
-        if(currentJsonObject.keySet().contains(key) ){
-            switch (currentJsonObject.get(key).getValueType()){
-                case STRING:
-                    result = currentJsonObject.getString(key);
-                break;
-                case NUMBER:
-                    result = String.valueOf(currentJsonObject.getInt(key));
-                break;
-                case NULL:
-                    result = "";
-                break;
-
-            }
-        }
-        return result;
+    private String nullStringToEmptyString(String string) {
+        return Optional.ofNullable(string).orElse("");
     }
 }
