@@ -52,12 +52,16 @@ public class FeedBackService {
         this.documentLibraryUserRepository = documentLibraryUserRepository;
     }
 
-    @RequestMapping(value = "/userFeedBasck/{bookId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/userFeedBack/{bookId}", method = RequestMethod.GET)
     public ResponseEntity<String> getUserFeedBack(@PathVariable("bookId") String bookId) {
         URI uri = fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri();
-        List<Map<String, String>> boby = bookMetadataServiceRestTemplate.getForEntity(uri, List.class).getBody();
+
+        List<Map<String, Object>> boby = bookMetadataServiceRestTemplate.getForEntity(uri, List.class).getBody();
+
+        System.out.println("ééééééééééééééééééééééé");
+        System.out.println(boby);
         List<Map> reduce = boby.parallelStream().map(stringStringMap -> {
-            DocumentLibraryUser user = documentLibraryUserRepository.findByUserName(stringStringMap.get("userName"));
+            DocumentLibraryUser user = documentLibraryUserRepository.findByUserName(String.valueOf(stringStringMap.get("userName")));
             return Arrays.asList(UiJsonFactory.newUiJsonFactory(stringStringMap)
                     .trasformProperty("userName", "firstNameAndLastName", String.format("%s %s", user.getFirstName(), user.getFirstName()))
                     .build());
@@ -78,6 +82,8 @@ public class FeedBackService {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createFeedBack(@RequestBody String body, Principal principal) {
+        System.out.println("createFeedBack");
+        System.out.println(body);
         String errorMessage = "";
         try {
             Map map = objectMapper.readValue(body, HashMap.class);
@@ -99,6 +105,8 @@ public class FeedBackService {
 
     @RequestMapping(value = "/{feedBackId}", method = RequestMethod.PUT)
     public ResponseEntity updateFeedBack(@PathVariable("feedBackId") String feedBackId, @RequestBody String body, Principal principal) {
+        System.out.println("updateFeedBack");
+        System.out.println(body);
         String errorMessage = "";
         try{
             Map map = objectMapper.readValue(body, HashMap.class);
@@ -118,5 +126,4 @@ public class FeedBackService {
     }
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }
-
 }

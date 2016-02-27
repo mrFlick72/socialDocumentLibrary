@@ -49,7 +49,7 @@ public class FeedBackServiceTests extends BookSocialMetadataServiceApplicationTe
         FeedBack feedBack = createFeedBack(USER_NAME, BOOK_ID);
         FeedBack save = feedBackRepository.save(feedBack);
 
-        feedBack.setFeadbackBody("new FeedBack body");
+        feedBack.setFeedbackBody("new FeedBack body");
 
         UriComponents updateFeedBackTestUriComponents = UriComponentsBuilder.fromPath("/feedBack/{feedBackId}").buildAndExpand(save.getId());
         mockMvc.perform(put(updateFeedBackTestUriComponents.toUri())
@@ -61,7 +61,7 @@ public class FeedBackServiceTests extends BookSocialMetadataServiceApplicationTe
         List<FeedBack> feedBackAux = feedBackRepository.getFeedBack(USER_NAME, BOOK_ID);
         assertNotNull(feedBackAux);
         assertEquals(1, feedBackAux.size());
-        assertEquals(feedBackAux.get(0).getFeadbackBody(), feedBack.getFeadbackBody());
+        assertEquals(feedBackAux.get(0).getFeedbackBody(), feedBack.getFeedbackBody());
 
         LOGGER.info(feedBackAux.toString());
     }

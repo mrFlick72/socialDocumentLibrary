@@ -71,8 +71,8 @@
                                                         </tr>
                                                         </tbody>
                                                     </table>
-                                                    <h5 class="title">{{userFeedBack.feadbackTitle}}</h5>
-                                                    <div class="text-justify well" ng-bind-html="userFeedBack.feadbackBody"></div>
+                                                    <h5 class="title">{{userFeedBack.feedbackTitle}}</h5>
+                                                    <div class="text-justify well" ng-bind-html="userFeedBack.feedbackBody"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,8 +93,8 @@
                                                     </div>
 
                                                     <div class="well">
-                                                        <h4>{{book.feedback.feadbackTitle}}</h4>
-                                                        <div ng-bind-html="book.feedback.feadbackBody"></div>
+                                                        <h4>{{book.feedback.feedbackTitle}}</h4>
+                                                        <div ng-bind-html="book.feedback.feedbackBody"></div>
                                                     </div>
                                                 </div>
                                                 <!--{{feedbackSectionSetting.feedBackSummitIsVisible}}-->
@@ -135,12 +135,12 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <label for="feedbackTitle">{{messages.feedbackPopUp.titleLabel}}</label>
-                            <input id="feedbackTitle" class="form-control" ng-model="localItem.feedback.title"/>
+                            <input id="feedbackTitle" class="form-control" ng-model="localItem.feedback.feedbackBodyTitle"/>
 
                             <hr/>
 
                             <label for="feedbackBody">{{messages.feedbackPopUp.bodyLabel}}</label>
-                            <div id="feedbackBody" data-editor="true" class="editor" contenteditable ng-model="localItem.feedback.body"></div>
+                            <div id="feedbackBody" data-editor="true" class="editor" contenteditable ng-model="localItem.feedback.feedbackBody"></div>
 
                             <label for="feedbackScore">{{messages.feedbackPopUp.scoreLabel}}</label>
                             <score-input ng-model="localItem.feedback.score" read-only="false"/>

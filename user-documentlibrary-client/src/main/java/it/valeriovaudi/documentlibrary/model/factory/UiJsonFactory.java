@@ -1,5 +1,7 @@
 package it.valeriovaudi.documentlibrary.model.factory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,15 +12,15 @@ public class UiJsonFactory {
 
     public static final String EMPTY_JOSON_OBJECT_AS_STRING ="{}";
     public static final Map EMPTY_JOSON_OBJECT =new HashMap<>();
-    private Map<String,String> instance = new HashMap<>();
+    private Map<String,Object> instance = new HashMap<>();
 
     private UiJsonFactory(){}
 
-    private void setInstance(Map<String, String> instance) {
+    private void setInstance(Map<String, Object> instance) {
         this.instance = instance;
     }
 
-    public static UiJsonFactory newUiJsonFactory(Map<String,String> instance){
+    public static UiJsonFactory newUiJsonFactory(Map<String,Object> instance){
         UiJsonFactory uiJsonFactory = new UiJsonFactory();
         uiJsonFactory.setInstance(instance);
         return uiJsonFactory;
@@ -29,13 +31,13 @@ public class UiJsonFactory {
         return uiJsonFactory;
     }
 
-    private void setMapValue(String key, String value){
+    private void setMapValue(String key, Object value){
         if(value!=null){
             instance.put(key,value);
         }
     }
 
-    public UiJsonFactory putProperty(String key, String value){
+    public UiJsonFactory putProperty(String key, Object value){
         setMapValue(key, value);
         return this;
     }
@@ -46,7 +48,7 @@ public class UiJsonFactory {
     }
 
     public UiJsonFactory trasformPropertyKey(String previousKey, String newKey){
-        String value;
+        Object value;
         if(instance.containsKey(previousKey)){
             value = instance.get(previousKey);
             instance.remove(previousKey);
@@ -56,7 +58,7 @@ public class UiJsonFactory {
         return this;
     }
 
-    public UiJsonFactory trasformProperty(String previousKey, String newKey,String value){
+    public UiJsonFactory trasformProperty(String previousKey, String newKey,Object value){
         if(instance.containsKey(previousKey)){
             instance.remove(previousKey);
             setMapValue(newKey, value);
@@ -65,7 +67,7 @@ public class UiJsonFactory {
         return this;
     }
 
-    public UiJsonFactory trasformPropertyValue(String key, String newValue){
+    public UiJsonFactory trasformPropertyValue(String key, Object newValue){
         setMapValue(key, newValue);
         return this;
     }

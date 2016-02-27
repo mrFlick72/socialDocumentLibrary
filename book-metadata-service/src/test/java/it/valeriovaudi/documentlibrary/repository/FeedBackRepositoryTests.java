@@ -63,8 +63,8 @@ public class FeedBackRepositoryTests extends BookSocialMetadataServiceApplicatio
         feedBack.setUserName(USER_NAME);
 
         feedBack.setDateTime(LocalDateTime.now());
-        feedBack.setFeadbackTitle("titolo di prova");
-        feedBack.setFeadbackBody("body di un commento");
+        feedBack.setFeedbackTitle("titolo di prova");
+        feedBack.setFeedbackBody("body di un commento");
         feedBack.setScore(150);
 
         return feedBack;

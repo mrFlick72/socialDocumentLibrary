@@ -69,8 +69,8 @@ public class BookUserInterfaceDTOBuilder {
                     map.put("id", getValueFromJson(jsonObject, "id"));
                     map.put("bookId", getValueFromJson(jsonObject, "bookId"));
                     map.put("userName", getValueFromJson(jsonObject, "userName"));
-                    map.put("title", getValueFromJson(jsonObject, "feadbackTitle"));
-                    map.put("body", getValueFromJson(jsonObject, "feadbackBody"));
+                    map.put("feedbackTitle", getValueFromJson(jsonObject, "feedbackTitle"));
+                    map.put("feedbackBody", getValueFromJson(jsonObject, "feedbackBody"));
                     map.put("score", getValueFromJson(jsonObject, "score"));
                 }
                 String scoreAux = getValueFromJson(jsonObject, "score");
@@ -81,7 +81,7 @@ public class BookUserInterfaceDTOBuilder {
             })
             .sequential()
             .reduce(new HashMap<>(), (op1, op2) -> {
-                String[] keySet = new String[]{"id", "bookId", "userName", "title", "body", "score"};
+                String[] keySet = new String[]{"id", "bookId", "userName", "feedbackTitle", "feedbackBody", "score"};
 
                 if (op2.keySet().contains("userName")) {
                     // when find the map with the user information I copy the information in the final map
@@ -108,8 +108,8 @@ public class BookUserInterfaceDTOBuilder {
                 jsonObjectBuilder.add("feedback", Json.createObjectBuilder()
                         .add("id", getValueFromMap(reduce, "id"))
                         .add("score", getValueFromMap(reduce, "score"))
-                        .add("title", getValueFromMap(reduce, "title"))
-                        .add("body", getValueFromMap(reduce, "body"))
+                        .add("feedbackTitle", getValueFromMap(reduce, "feedbackTitle"))
+                        .add("feedbackBody", getValueFromMap(reduce, "feedbackBody"))
                         .add("scores", Json.createObjectBuilder()
                                 .add("5", getValueFromMap(reduce, "5"))
                                 .add("4", getValueFromMap(reduce, "4"))

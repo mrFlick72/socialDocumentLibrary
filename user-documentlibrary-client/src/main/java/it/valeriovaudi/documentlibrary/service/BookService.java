@@ -36,9 +36,6 @@ public class BookService {
     private String searchBookBaseUrl;
 
     @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
     private UserBookPreferedListRepository userBookPreferedListRepository;
 
     @Autowired
@@ -47,10 +44,6 @@ public class BookService {
 
     @Autowired
     private BookFactory bookFactory;
-
-    public void setBookRepository(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
 
     public void setSearchBookBaseUrl(String searchBookBaseUrl) {
         this.searchBookBaseUrl = searchBookBaseUrl;
@@ -103,12 +96,10 @@ public class BookService {
     @RequestMapping(value = "/bookUserList/{bookId}",method = RequestMethod.DELETE)
     public ResponseEntity<Void> removeBookFromBookUserList(Principal principal, @PathVariable("bookId") String bookId){
         UserBookPreferedList byUserName = userBookPreferedListRepository.findByUserName(principal.getName());
-
-        Book userBook = byUserName.getBooksReadList().stream().filter(bookAux -> bookAux.getBookId().equals(bookId)).findFirst().orElse(null);
-
-        if(userBook!=null){
-            byUserName.getBooksReadList().remove(userBook);
-        }
+        byUserName.getBooksReadList().stream()
+                .filter(bookAux -> bookAux.getBookId().equals(bookId))
+                .findFirst()
+                .ifPresent(book ->  byUserName.getBooksReadList().remove(book));
 
         return ResponseEntity.noContent().build();
     }

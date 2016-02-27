@@ -27,12 +27,13 @@ public class FeedBack {
     private String userName;
     private int score;
 
-    private String feadbackTitle;
-    private String feadbackBody;
+    private String feedbackTitle;
+    private String feedbackBody;
 
     @JsonSerialize(using = com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer.class)
     @JsonDeserialize(using = com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer.class)
     private LocalDateTime dateTime;
+
 
     public String getId() {
         return id;
@@ -41,7 +42,6 @@ public class FeedBack {
     public void setId(String id) {
         this.id = id;
     }
-
 
     public String getBookId() {
         return bookId;
@@ -67,20 +67,20 @@ public class FeedBack {
         this.score = score;
     }
 
-    public String getFeadbackTitle() {
-        return feadbackTitle;
+    public String getFeedbackTitle() {
+        return feedbackTitle;
     }
 
-    public void setFeadbackTitle(String feadbackTitle) {
-        this.feadbackTitle = feadbackTitle;
+    public void setFeedbackTitle(String feedbackTitle) {
+        this.feedbackTitle = feedbackTitle;
     }
 
-    public String getFeadbackBody() {
-        return feadbackBody;
+    public String getFeedbackBody() {
+        return feedbackBody;
     }
 
-    public void setFeadbackBody(String feadbackBody) {
-        this.feadbackBody = feadbackBody;
+    public void setFeedbackBody(String feedbackBody) {
+        this.feedbackBody = feedbackBody;
     }
 
     public LocalDateTime getDateTime() {
@@ -89,18 +89,5 @@ public class FeedBack {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "FeedBack{" +
-                "id='" + id + '\'' +
-                ", bookId='" + bookId + '\'' +
-                ", userName='" + userName + '\'' +
-                ", score=" + score +
-                ", feadbackTitle='" + feadbackTitle + '\'' +
-                ", feadbackBody='" + feadbackBody + '\'' +
-                ", dateTime=" + dateTime +
-                '}';
     }
 }
