@@ -25,10 +25,13 @@ import java.net.URI;
 public class BookServiceEndpoint {
 
     @Autowired
+    @Qualifier("bookRepositoryServiceRestTemplate")
     private RestTemplate bookRepositoryServiceRestTemplate;
 
     @Autowired
+    @Qualifier("searchBookServiceRestTemplate")
     private RestTemplate searchBookServiceRestTemplate;
+
     @Autowired
     private MessagingTemplate messagingTemplate;
 

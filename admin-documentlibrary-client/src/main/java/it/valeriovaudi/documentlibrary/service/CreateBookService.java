@@ -3,29 +3,16 @@ package it.valeriovaudi.documentlibrary.service;
 import it.valeriovaudi.documentlibrary.config.MessagingConfig;
 import it.valeriovaudi.documentlibrary.notify.service.HistoryNotifyEntryService;
 import it.valeriovaudi.documentlibrary.web.model.BookMasterDTO;
-import org.apache.catalina.core.ApplicationPart;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.PathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.transformer.Transformer;
@@ -34,15 +21,11 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.jms.ConnectionFactory;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
-import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -77,11 +60,9 @@ public class CreateBookService {
     private String searchBookServiceBaseUrl;
 
     @Autowired
-    @LoadBalanced
     private RestTemplate bookRepositoryServiceRestTemplate;
 
     @Autowired
-    @LoadBalanced
     private RestTemplate searchBookServiceRestTemplate;
 
     @Autowired

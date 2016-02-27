@@ -76,11 +76,11 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
-dependencyManagement {
+/*dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:Brixton.BUILD-SNAPSHOT"
     }
-}
+}*/
 
 eclipse {
     classpath {
@@ -96,15 +96,14 @@ task wrapper(type: Wrapper) {
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
-def searchBookServiceServerLocation = 'http://localhost:6061/socialDocumentLibrarySearchBookService';
-def bookSocialMetadataServiceServerLocation = 'http://localhost:6060/socialDocumentLibrarySocialMetadataService';
-def bookRepositoryServiceServerLocation = 'http://localhost:8080/socialDocumentLibraryBookRepositoryService';
+def searchBookServiceServerLocation = 'http://localhost:6061';
+def bookSocialMetadataServiceServerLocation = 'http://localhost:6060';
+def bookRepositoryServiceServerLocation = 'http://localhost:8080';
 
-def adminDocumentlibraryClientServerLocation = 'http://localhost:7070/' + project.property('archivesBaseName');
+def adminDocumentlibraryClientServerLocation = 'http://localhost:7070';
 
 processResources {
-    def mappings = ["project.build.finalName": project.property('archivesBaseName'),
-                    "book-repository-service.bookServiceEndPoint.baseUrl":bookRepositoryServiceServerLocation+"/bookService",
+    def mappings = ["book-repository-service.bookServiceEndPoint.baseUrl":bookRepositoryServiceServerLocation+"/bookService",
                     "search-book-service.searchBookService.baseUrl":searchBookServiceServerLocation + "/searchBookIndex",
                     "search-book-service.searchMetadaTagService.baseUrl":searchBookServiceServerLocation + "/searchMetadaTag",
                     "admin-documentlibrary-client.bookServiceEndPoint.baseUrl":adminDocumentlibraryClientServerLocation+"/bookService",
