@@ -5,11 +5,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+
+import static it.valeriovaudi.documentlibrary.utility.JsonUtility.getValueFromJson;
+import static it.valeriovaudi.documentlibrary.utility.JsonUtility.getValueFromMap;
 
 /**
  * Created by Valerio on 24/06/2015.
@@ -123,7 +128,7 @@ public class BookUserInterfaceDTOBuilder {
     public BookUserInterfaceDTOBuilder description(String bookRepositoryJsonString){
         String descrizioneKey = "description";
         JsonObject bookRepositoryJson = Json.createReader(new StringReader(bookRepositoryJsonString)).readObject();
-        jsonObjectBuilder.add(descrizioneKey, String.valueOf(getValueFromJson(bookRepositoryJson,descrizioneKey)));
+        jsonObjectBuilder.add(descrizioneKey, getValueFromJson(bookRepositoryJson, descrizioneKey));
         return this;
     }
 
@@ -141,20 +146,4 @@ public class BookUserInterfaceDTOBuilder {
         return jsonObjectBuilder.build().toString();
     }
 
-    private String getValueFromMap(Map<String,String> map,String key){
-        return Optional.ofNullable(map.get(key)).orElse("");
-    }
-    private String getValueFromJson(JsonObject currentJsonObject,String key){
-        String result = "";
-        if(!currentJsonObject.isNull(key)){
-            JsonValue jsonValue = currentJsonObject.get(key);
-            if(jsonValue.getValueType().compareTo(JsonValue.ValueType.NUMBER) == 0){
-                result = String.valueOf(currentJsonObject.getInt(key));
-            } else {
-                result = currentJsonObject.getString(key);
-            }
-        }
-
-        return result;
-    }
 }

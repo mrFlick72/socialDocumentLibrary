@@ -2,6 +2,7 @@ package it.valeriovaudi.documentlibrary.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import it.valeriovaudi.documentlibrary.model.DocumentLibraryUser;
 import it.valeriovaudi.documentlibrary.model.factory.UiJsonFactory;
 import it.valeriovaudi.documentlibrary.repository.DocumentLibraryUserRepository;
@@ -25,10 +26,7 @@ import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
 @RestController
 @RequestMapping("/bookService/feedBack")
-public class FeedBackService {
-
-    @Autowired
-    private ObjectMapper objectMapper;
+public class FeedBackService extends AbstractService{
 
     @Value("${bookSocialMetadataService.feedBackService.baseUrl}")
     private String bookSocialMetadataBaseUrl;
@@ -52,6 +50,7 @@ public class FeedBackService {
         this.documentLibraryUserRepository = documentLibraryUserRepository;
     }
 
+    @HystrixCommand(commandKey="getUserFeedBack", fallbackMethod = "getEmptyJsonObject")
     @RequestMapping(value = "/userFeedBack/{bookId}", method = RequestMethod.GET)
     public ResponseEntity<String> getUserFeedBack(@PathVariable("bookId") String bookId) {
         URI uri = fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri();
@@ -69,7 +68,7 @@ public class FeedBackService {
         try {
             return ResponseEntity.ok(objectMapper.writeValueAsString(reduce));
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("{}");
