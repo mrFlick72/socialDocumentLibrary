@@ -1,12 +1,10 @@
 angular.module("social-document-library")
     .controller("helpController",function($http,$scope,socialDocumentLibraryLocationBaseUrl){
         $scope.adminBookListHelpContent = function(){
-            console.log("adminBookListHelpContent")
             $scope.helpContent = [socialDocumentLibraryLocationBaseUrl,"help/adminBookListHelpContent"].join("/");
         };
 
         $scope.uploadBookHelpContent = function(){
-            console.log("uploadBookHelpContent")
             $scope.helpContent = [socialDocumentLibraryLocationBaseUrl,"help/uploadBookHelpContent"].join("/");
         }
 })

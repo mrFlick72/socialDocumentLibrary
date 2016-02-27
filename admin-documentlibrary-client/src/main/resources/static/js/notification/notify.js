@@ -77,12 +77,12 @@ angular.module("notifyModule",[])
         templateUrl : "js/notification/notify-container.html",
         controller:function($scope, $rootScope, $http){
             $scope.notifyContainer = {isInvisible:true,isVisible:false};
-                $http.get("http://localhost:7070/@project.build.finalName@/historyNotifyEntity/messages")
+                $http.get("http://localhost:7070/historyNotifyEntity/messages")
                     .success(function(data){
                         $scope.messages  = data;
                     });
 
-            $http.get("http://localhost:7070/@project.build.finalName@/historyNotifyEntity")
+            $http.get("http://localhost:7070/historyNotifyEntity")
                 .success(function(data){
                     $scope.notifyData = data;
                     sendEnableNotifyService(data);
@@ -151,7 +151,7 @@ angular.module("notifyModule",[])
 
             $scope.deleteNotify = function(item,callable){
                 if(callable){
-                    $http.delete("http://localhost:7070/@project.build.finalName@/historyNotifyEntity/"+item.bookId);
+                    $http.delete("http://localhost:7070/historyNotifyEntity/"+item.bookId);
                 }
             };
 
