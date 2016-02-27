@@ -80,17 +80,13 @@ public class BookService {
 
     @RequestMapping("/bookUserList")
     public ResponseEntity getUserBookList(Principal principal){
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        final JsonArrayBuilder[] arrayBuilder = {Json.createArrayBuilder()};
+        Optional.ofNullable(userBookPreferedListRepository.findByUserName(principal.getName()))
+                .ifPresent(userBookPreferedListRepository -> arrayBuilder[0] = userBookPreferedListRepository.getBooksReadList().stream()
+                .map(book -> Json.createArrayBuilder().add(bookFactory.bookListJsonFactory(book.getBookId())))
+                .reduce(Json.createArrayBuilder(), (jsonArrayBuilder, jsonArrayBuilder2) -> jsonArrayBuilder.add(jsonArrayBuilder2.build().getJsonObject(0))));
 
-        UserBookPreferedList userBookPreferredList = userBookPreferedListRepository.findByUserName(principal.getName());
-        if(userBookPreferredList!=null){
-            List<Book> booksReadList = userBookPreferredList.getBooksReadList();
-            for (Book book : booksReadList) {
-                arrayBuilder.add(bookFactory.bookListJsonFactory(book.getBookId()));
-            }
-        }
-
-        return ResponseEntity.ok(arrayBuilder.build().toString());
+        return ResponseEntity.ok(arrayBuilder[0].build().toString());
     }
 
     @RequestMapping(value = "/bookUserList/{bookId}",method = RequestMethod.DELETE)
