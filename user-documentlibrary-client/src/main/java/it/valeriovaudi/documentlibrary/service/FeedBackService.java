@@ -67,8 +67,6 @@ public class FeedBackService {
         List<Map> reduce = boby.parallelStream().map(stringStringMap -> {
             DocumentLibraryUser user = documentLibraryUserRepository.findByUserName(stringStringMap.get("userName"));
             return Arrays.asList(UiJsonFactory.newUiJsonFactory(stringStringMap)
-                    .trasformPropertyKey("feadbackTitle", "title")
-                    .trasformPropertyKey("feadbackBody", "body")
                     .trasformProperty("userName", "firstNameAndLastName", String.format("%s %s", user.getFirstName(), user.getFirstName()))
                     .build());
         }).reduce(new ArrayList<>(boby.size()), (maps, maps2) -> {
@@ -87,43 +85,54 @@ public class FeedBackService {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createFeedBack(@RequestBody String body, Principal principal) throws IOException {
-        Map map = objectMapper.readValue(body, HashMap.class);
-        String requestBody = objectMapper.writeValueAsString(UiJsonFactory.newUiJsonFactory(map)
-                .trasformPropertyKey("title", "feadbackTitle")
-                .trasformPropertyKey("body", "feadbackBody")
-                .putProperty("userName", principal.getName())
-                .build());
-
-        URI uri = fromHttpUrl(bookSocialMetadataBaseUrl).build().toUri();
-        return bookMetadataServiceRestTemplate.exchange(uri,
-                HttpMethod.POST,
-                RequestEntity.post(uri)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(requestBody),
-                Void.class);
+    public ResponseEntity createFeedBack(@RequestBody String body, Principal principal) {
+        String errorMessage = "";
+        try {
+            Map map = objectMapper.readValue(body, HashMap.class);
+            String requestBody = objectMapper.writeValueAsString(UiJsonFactory.newUiJsonFactory(map)
+                    .trasformPropertyKey("title", "feadbackTitle")
+                    .trasformPropertyKey("body", "feadbackBody")
+                    .putProperty("userName", principal.getName())
+                    .build());
+            URI uri = fromHttpUrl(bookSocialMetadataBaseUrl).build().toUri();
+            return bookMetadataServiceRestTemplate.exchange(uri,
+                    HttpMethod.POST,
+                    RequestEntity.post(uri)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(requestBody),
+                    Void.class);
+        } catch (JsonProcessingException e) {
+            errorMessage+=e.getMessage();
+        } catch (IOException e) {
+            errorMessage+=e.getMessage();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }
 
     @RequestMapping(value = "/{feedBackId}", method = RequestMethod.PUT)
-    public ResponseEntity updateFeedBack(@PathVariable("feedBackId") String feedBackId, @RequestBody String body, Principal principal) throws IOException {
-        Map map = objectMapper.readValue(body, HashMap.class);
-        String requestBody = objectMapper.writeValueAsString(UiJsonFactory.newUiJsonFactory(map)
-                .trasformPropertyKey("title", "feadbackTitle")
-                .trasformPropertyKey("body", "feadbackBody")
-                .putProperty("userName", principal.getName())
-                .build());
+    public ResponseEntity updateFeedBack(@PathVariable("feedBackId") String feedBackId, @RequestBody String body, Principal principal) {
+        String errorMessage = "";
+        try{
+            Map map = objectMapper.readValue(body, HashMap.class);
+            String requestBody = objectMapper.writeValueAsString(UiJsonFactory.newUiJsonFactory(map)
+                    .trasformPropertyKey("title", "feadbackTitle")
+                    .trasformPropertyKey("body", "feadbackBody")
+                    .putProperty("userName", principal.getName())
+                    .build());
 
-        URI uri = fromHttpUrl(String.format("%s/%s", bookSocialMetadataBaseUrl, feedBackId)).build().toUri();
-        return bookMetadataServiceRestTemplate.exchange(uri,
-                HttpMethod.PUT,
-                RequestEntity.put(uri)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(requestBody),
-                Void.class);
+            URI uri = fromHttpUrl(String.format("%s/%s", bookSocialMetadataBaseUrl, feedBackId)).build().toUri();
+            return bookMetadataServiceRestTemplate.exchange(uri,
+                    HttpMethod.PUT,
+                    RequestEntity.put(uri)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(requestBody),
+                    Void.class);
+    } catch (JsonProcessingException e) {
+        errorMessage+=e.getMessage();
+    } catch (IOException e) {
+        errorMessage+=e.getMessage();
+    }
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }
 
-    @ExceptionHandler(value = IOException.class)
-    public ResponseEntity iOExceptionHandler(IOException e){
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-    }
 }
