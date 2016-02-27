@@ -21,6 +21,8 @@ import javax.transaction.Transactional;
 import java.io.StringReader;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
@@ -64,18 +66,16 @@ public class BookService {
     @RequestMapping("/books")
     public ResponseEntity getUserBooks(@RequestParam("bookName") String bookName, Principal principal){
         UserBookPreferedList userBookPreferredList = userBookPreferedListRepository.findByUserName(principal.getName());
-        JsonArrayBuilder jsonArrayBuildeResult = Json.createArrayBuilder();
-        if(userBookPreferredList!=null){
-            jsonArrayBuildeResult = userBookPreferredList.getBooksReadList().stream()
+        final JsonArrayBuilder[] jsonArrayBuildeResult = {Json.createArrayBuilder()};
+        Optional.ofNullable(userBookPreferredList).ifPresent(userBookPreferedList ->
+                jsonArrayBuildeResult[0] = userBookPreferredList.getBooksReadList().stream()
                         .<Book>filter(bookAux -> {
                             String bookNameAux = bookAux.getBookName();
                             return bookNameAux != null && bookNameAux.toUpperCase().contains(bookName.toUpperCase());
                         })
                         .<JsonArrayBuilder>map(mapBookAux -> Json.createArrayBuilder().add(bookFactory.bookListJsonFactory(mapBookAux.getBookId())))
-                        .reduce(Json.createArrayBuilder(), (finalJsonArrayBuilder, jsonArrayBuilder) -> finalJsonArrayBuilder.add(jsonArrayBuilder.build().get(0)));
-        }
-
-        return ResponseEntity.ok(jsonArrayBuildeResult.build().toString());
+                        .reduce(Json.createArrayBuilder(), (jsonArrayBuilder, jsonArrayBuilder2) -> jsonArrayBuilder.add(jsonArrayBuilder2.build().getJsonObject(0))));
+        return ResponseEntity.ok(jsonArrayBuildeResult[0].build().toString());
     }
 
     @RequestMapping("/bookUserList")
@@ -99,7 +99,7 @@ public class BookService {
         byUserName.getBooksReadList().stream()
                 .filter(bookAux -> bookAux.getBookId().equals(bookId))
                 .findFirst()
-                .ifPresent(book ->  byUserName.getBooksReadList().remove(book));
+                .ifPresent(book -> byUserName.getBooksReadList().remove(book));
 
         return ResponseEntity.noContent().build();
     }
@@ -107,43 +107,22 @@ public class BookService {
     @RequestMapping
     public ResponseEntity searchBook(@RequestParam(value = "bookName",required = false,defaultValue = "") String bookName,
                                      @RequestParam(value = "searchTags",required = false,defaultValue = "") List<String> searchTags){
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        JsonObject searchBookJsonValue;
-        String bookId;
-        // search section
         ResponseEntity<String> searchBookResponseEntity = searchBookFromSearchService(bookName, searchTags);
-
-        JsonArray searchBookJsonValues = Json.createReader(new StringReader(searchBookResponseEntity.getBody())).readArray();
-
-        for(int i = 0 ; i < searchBookJsonValues.size() ; i++){
-            searchBookJsonValue = searchBookJsonValues.getJsonObject(i);
-            bookId = searchBookJsonValue.getString("bookId");
-            arrayBuilder.add(bookFactory.bookListJsonFactory(bookId));
-        }
-
+        JsonArrayBuilder arrayBuilder = Json.createReader(new StringReader(searchBookResponseEntity.getBody())).readArray().stream()
+                .map(jsonValue -> Json.createArrayBuilder().add(bookFactory.bookListJsonFactory(((JsonObject) jsonValue).getString("bookId"))))
+                .reduce(Json.createArrayBuilder(), (jsonArrayBuilder, jsonArrayBuilder2) -> jsonArrayBuilder.add(jsonArrayBuilder2.build().getJsonObject(0)));
         return ResponseEntity.ok(arrayBuilder.build().toString());
     }
 
     public ResponseEntity<String> searchBookFromSearchService(String bookName, List<String> searchTags){
-        // search section
         StringBuilder query = new StringBuilder();
-        if(bookName!=null){
-            query.append("bookName=").append(bookName);
-        }
-        if(searchTags!=null && !searchTags.isEmpty()){
-            StringBuilder searchTagQuery = new StringBuilder();
-            searchTagQuery.append("searchTags=");
-            for (String searchTag : searchTags) {
-                searchTagQuery.append(searchTag);
-                searchTagQuery.append(",");
-            }
 
-            // delete the last comma
-            searchTagQuery.deleteCharAt(searchTagQuery.length()-1);
-            query.append(";").append(searchTagQuery.toString());
-        }
-
-        UriComponents build = fromHttpUrl(searchBookBaseUrl).queryParam("q", query.toString()).build();
+        Optional.ofNullable(bookName).ifPresent(bookNameValue -> query.append("bookName=").append(bookNameValue));
+        Optional.ofNullable(searchTags)
+                .ifPresent(searchTagsValues -> query.append(";searchTags=").append(searchTagsValues.stream()
+                        .map(searchTagValue -> new StringBuilder().append(searchTagValue).append(","))
+                        .reduce(new StringBuilder(), StringBuilder::append)));
+        UriComponents build = fromHttpUrl(searchBookBaseUrl).queryParam("q", query.substring(0, query.length() - 1)).build();
         return ResponseEntity.ok(searchBookServiceRestTemplate.exchange(build.toUri(), HttpMethod.GET, RequestEntity.get(build.toUri()).accept(MediaType.APPLICATION_JSON).build(),String.class).getBody());
     }
 }
