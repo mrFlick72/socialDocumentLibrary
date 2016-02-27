@@ -8,8 +8,10 @@ import java.util.Map;
  */
 public class UiJsonFactory {
 
+    public static final String EMPTY_JOSON_OBJECT_AS_STRING ="{}";
+    public static final Map EMPTY_JOSON_OBJECT =new HashMap<>();
     private Map<String,String> instance = new HashMap<>();
-    public static final String EMPTY_JOSON_OBJECT ="{}";
+
     private UiJsonFactory(){}
 
     private void setInstance(Map<String, String> instance) {
