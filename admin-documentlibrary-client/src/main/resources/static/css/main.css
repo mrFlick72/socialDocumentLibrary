@@ -43,7 +43,7 @@ body{
 }
 
 .header-background{
-    background-image:url("/@project.build.finalName@/img/header.jpg");
+    background-image:url("/img/header.jpg");
     min-height: 139px;
 }
 

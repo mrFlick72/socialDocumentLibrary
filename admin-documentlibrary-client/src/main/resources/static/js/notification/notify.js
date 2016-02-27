@@ -10,7 +10,7 @@ angular.module("notifyModule",[])
             templateUrl : "js/notification/notify.html",
             controller:function($scope,$rootScope){
                 $scope.notificationSize;
-                window.onload = connect("/@project.build.finalName@/createBookJob");
+                window.onload = connect("/createBookJob");
                 function connect(messageRequestUrl) {
                     var socket = new SockJS(messageRequestUrl);
                     stompClient = Stomp.over(socket);
@@ -112,7 +112,7 @@ angular.module("notifyModule",[])
                     });
 
 
-                $http.put("http://localhost:7070/@project.build.finalName@/historyNotifyEntity/"+item.bookId+"/pubishBook")
+                $http.put("http://localhost:7070/historyNotifyEntity/"+item.bookId+"/pubishBook")
                     .success(function(){
                         $rootScope.$broadcast("adminBookList.bookChangeStatus.published",{bookId:item.bookId})
                     })
@@ -126,7 +126,7 @@ angular.module("notifyModule",[])
             $scope.deleteBookByNotify = function(item){
                 $http.get(["@search-book-service.searchBookService.baseUrl@",item.bookId].join("/"))
                     .success(function(){
-                        $http.delete("http://localhost:7070/@project.build.finalName@/historyNotifyEntity/"+item.bookId+"/deleteBook")
+                        $http.delete("http://localhost:7070/historyNotifyEntity/"+item.bookId+"/deleteBook")
                             .success(function(){
                                 $rootScope.$broadcast("adminBookList.bookChangeStatus.delete",{bookId:item.bookId});
                             })
