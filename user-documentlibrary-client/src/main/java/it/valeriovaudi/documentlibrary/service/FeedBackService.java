@@ -1,11 +1,7 @@
 package it.valeriovaudi.documentlibrary.service;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import it.valeriovaudi.documentlibrary.model.DocumentLibraryUser;
 import it.valeriovaudi.documentlibrary.model.factory.UiJsonFactory;
 import it.valeriovaudi.documentlibrary.repository.DocumentLibraryUserRepository;
@@ -16,14 +12,10 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.json.*;
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.URI;
 import java.security.Principal;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
@@ -90,8 +82,6 @@ public class FeedBackService {
         try {
             Map map = objectMapper.readValue(body, HashMap.class);
             String requestBody = objectMapper.writeValueAsString(UiJsonFactory.newUiJsonFactory(map)
-                    .trasformPropertyKey("title", "feadbackTitle")
-                    .trasformPropertyKey("body", "feadbackBody")
                     .putProperty("userName", principal.getName())
                     .build());
             URI uri = fromHttpUrl(bookSocialMetadataBaseUrl).build().toUri();
@@ -101,8 +91,6 @@ public class FeedBackService {
                             .contentType(MediaType.APPLICATION_JSON)
                             .body(requestBody),
                     Void.class);
-        } catch (JsonProcessingException e) {
-            errorMessage+=e.getMessage();
         } catch (IOException e) {
             errorMessage+=e.getMessage();
         }
@@ -115,8 +103,6 @@ public class FeedBackService {
         try{
             Map map = objectMapper.readValue(body, HashMap.class);
             String requestBody = objectMapper.writeValueAsString(UiJsonFactory.newUiJsonFactory(map)
-                    .trasformPropertyKey("title", "feadbackTitle")
-                    .trasformPropertyKey("body", "feadbackBody")
                     .putProperty("userName", principal.getName())
                     .build());
 
@@ -127,8 +113,6 @@ public class FeedBackService {
                             .contentType(MediaType.APPLICATION_JSON)
                             .body(requestBody),
                     Void.class);
-    } catch (JsonProcessingException e) {
-        errorMessage+=e.getMessage();
     } catch (IOException e) {
         errorMessage+=e.getMessage();
     }

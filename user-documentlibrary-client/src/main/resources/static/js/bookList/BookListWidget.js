@@ -75,14 +75,14 @@ angular.module("bookListModule",['ngSanitize'])
                 };
 
                 $scope.confirm = function(){
-                    $scope.itemRef.feedback.title = $scope.localItem.feedback.title;
-                    $scope.itemRef.feedback.body = $scope.localItem.feedback.body;
+                    $scope.itemRef.feedback.feadbackTitle = $scope.localItem.feedback.feadbackTitle;
+                    $scope.itemRef.feedback.feadbackBody = $scope.localItem.feedback.feadbackBody;
                     $scope.itemRef.feedback.score = $scope.localItem.feedback.score;
 
                     var body = {
                                 "bookId": $scope.itemRef.bookId,
-                                "title": $scope.localItem.feedback.title,
-                                "body": $scope.localItem.feedback.body,
+                                "feadbackTitle": $scope.localItem.feedback.feadbackTitle,
+                                "feadbackBody": $scope.localItem.feedback.feadbackBody,
                                 "score": $scope.localItem.feedback.score
                             };
 
