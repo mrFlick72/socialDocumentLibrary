@@ -12,6 +12,7 @@ import javax.json.JsonObject;
 import javax.json.JsonValue;
 import java.io.StringReader;
 import java.security.Principal;
+import java.util.Optional;
 
 /**
  * Created by Valerio on 29/06/2015.
@@ -55,7 +56,12 @@ public class BookMarkService {
     }
 
     private Book getBookById(UserBookPreferedList byUserName,String bookId){
-        return byUserName!= null ? byUserName.getBooksReadList().stream().filter(filteredBook -> filteredBook.getBookId().equals(bookId)).findFirst().get() : null;
+        final Book[] book = {null};
+        Optional.ofNullable(byUserName)
+                .ifPresent(userBookPreferedList -> book[0] = userBookPreferedList.getBooksReadList().stream()
+                        .filter(filteredBook -> filteredBook.getBookId().equals(bookId))
+                            .findFirst().orElse(null));
+        return book[0];
     }
 }
 

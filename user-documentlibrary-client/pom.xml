@@ -24,6 +24,8 @@
 		<start-class>it.valeriovaudi.documentlibrary.UserDocumentLibraryClientApplication</start-class>
 		<java.version>1.8</java.version>
 
+		<docker.image.prefix>socialDocumetLibrary</docker.image.prefix>
+
 		<server.port>9090</server.port>
 		<server.host>localhost</server.host>
 

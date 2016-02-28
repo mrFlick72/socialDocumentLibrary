@@ -50,7 +50,6 @@ public class FeedBackService extends AbstractService{
         this.documentLibraryUserRepository = documentLibraryUserRepository;
     }
 
-    @HystrixCommand(commandKey="getUserFeedBack", fallbackMethod = "getEmptyJsonObject")
     @RequestMapping(value = "/userFeedBack/{bookId}", method = RequestMethod.GET)
     public ResponseEntity<String> getUserFeedBack(@PathVariable("bookId") String bookId) {
         URI uri = fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri();
@@ -60,7 +59,8 @@ public class FeedBackService extends AbstractService{
             return Arrays.asList(UiJsonFactory.newUiJsonFactory(stringStringMap)
                     .trasformProperty("userName", "firstNameAndLastName", String.format("%s %s", user.getFirstName(), user.getFirstName()))
                     .build());
-        }).reduce(new ArrayList<>(boby.size()), (maps, maps2) -> {
+        }).sequential()
+          .reduce(new ArrayList<>(boby.size()), (maps, maps2) -> {
             maps.addAll(maps2);
             return maps;
         });
@@ -73,7 +73,6 @@ public class FeedBackService extends AbstractService{
 
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("{}");
     }
-
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createFeedBack(@RequestBody String body, Principal principal) {
@@ -90,9 +89,9 @@ public class FeedBackService extends AbstractService{
                             .contentType(MediaType.APPLICATION_JSON)
                             .body(requestBody),
                     Void.class);
-        } catch (IOException e) {
-            errorMessage+=e.getMessage();
-        }
+            } catch (IOException e) {
+                errorMessage+=e.getMessage();
+            }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }
 
@@ -112,9 +111,9 @@ public class FeedBackService extends AbstractService{
                             .contentType(MediaType.APPLICATION_JSON)
                             .body(requestBody),
                     Void.class);
-    } catch (IOException e) {
-        errorMessage+=e.getMessage();
-    }
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            } catch (IOException e) {
+                errorMessage+=e.getMessage();
+            }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }
 }
