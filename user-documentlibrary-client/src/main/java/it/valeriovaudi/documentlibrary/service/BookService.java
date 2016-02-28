@@ -3,18 +3,19 @@ package it.valeriovaudi.documentlibrary.service;
 import it.valeriovaudi.documentlibrary.model.Book;
 import it.valeriovaudi.documentlibrary.model.UserBookPreferedList;
 import it.valeriovaudi.documentlibrary.model.factory.BookFactory;
-import it.valeriovaudi.documentlibrary.repository.BookRepository;
 import it.valeriovaudi.documentlibrary.repository.UserBookPreferedListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.http.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.transaction.Transactional;
@@ -22,7 +23,6 @@ import java.io.StringReader;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 

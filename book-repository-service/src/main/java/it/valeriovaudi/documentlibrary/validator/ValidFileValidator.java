@@ -1,8 +1,6 @@
 package it.valeriovaudi.documentlibrary.validator;
 
 import it.valeriovaudi.documentlibrary.model.PdfBookMaster;
-import it.valeriovaudi.validator.FileAllowedContentType;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

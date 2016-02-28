@@ -1,7 +1,5 @@
 package it.valeriovaudi.documentlibrary.model.factory;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.HashMap;
 import java.util.Map;
 

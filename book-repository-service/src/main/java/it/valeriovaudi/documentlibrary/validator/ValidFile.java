@@ -1,7 +1,5 @@
 package it.valeriovaudi.documentlibrary.validator;
 
-import it.valeriovaudi.validator.FileAllowedContentTypeValidator;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;

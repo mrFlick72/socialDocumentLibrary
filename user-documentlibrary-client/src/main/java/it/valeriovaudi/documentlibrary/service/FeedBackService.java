@@ -1,8 +1,6 @@
 package it.valeriovaudi.documentlibrary.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import it.valeriovaudi.documentlibrary.model.DocumentLibraryUser;
 import it.valeriovaudi.documentlibrary.model.factory.UiJsonFactory;
 import it.valeriovaudi.documentlibrary.repository.DocumentLibraryUserRepository;
@@ -61,9 +59,9 @@ public class FeedBackService extends AbstractService{
                     .build());
         }).sequential()
           .reduce(new ArrayList<>(boby.size()), (maps, maps2) -> {
-            maps.addAll(maps2);
-            return maps;
-        });
+              maps.addAll(maps2);
+              return maps;
+          });
 
         try {
             return ResponseEntity.ok(objectMapper.writeValueAsString(reduce));

@@ -1,8 +1,6 @@
 package it.valeriovaudi.documentlibrary.model;
 
 import it.valeriovaudi.documentlibrary.validator.ValidFile;
-import it.valeriovaudi.validator.FileAllowedContentType;
-import it.valeriovaudi.validator.FileAllowedExtensions;
 import it.valeriovaudi.validator.FileNotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;

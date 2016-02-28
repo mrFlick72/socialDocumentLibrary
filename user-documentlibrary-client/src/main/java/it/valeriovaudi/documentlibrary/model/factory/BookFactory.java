@@ -1,6 +1,5 @@
 package it.valeriovaudi.documentlibrary.model.factory;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import it.valeriovaudi.documentlibrary.model.builder.BookUserInterfaceDTOBuilder;
 import it.valeriovaudi.documentlibrary.service.FeedBackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import rx.Observable;
 
 import javax.json.JsonObject;
 
