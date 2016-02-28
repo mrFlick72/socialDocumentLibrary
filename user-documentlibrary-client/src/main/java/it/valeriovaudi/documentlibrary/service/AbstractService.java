@@ -19,7 +19,8 @@ public class AbstractService {
     protected ResponseEntity<String> getEmptyJsonObject(){
         return ResponseEntity.ok("{}");
     }
+
     protected ResponseEntity<String> getEmptyJsonArray(){
-        return ResponseEntity.ok("{}");
+        return ResponseEntity.ok("[]");
     }
 }
