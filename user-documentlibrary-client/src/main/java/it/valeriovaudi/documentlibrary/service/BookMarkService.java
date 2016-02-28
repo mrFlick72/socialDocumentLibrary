@@ -42,7 +42,7 @@ public class BookMarkService {
         Optional.ofNullable(getBookById(byUserName, bookId))
                 .ifPresent(book -> {Json.createReader(new StringReader(body)).readObject();
                             JsonObject jsonObject = Json.createReader(new StringReader(body)).readObject();
-                            int page = Integer.parseInt(JsonUtility.getValueFromJson(jsonObject, "page"));
+                            int page =  Integer.parseInt(JsonUtility.getValueFromJson(jsonObject, "page"));
                             book.setPageBookMark(page);
                             userBookPreferedListRepository.save(byUserName);
                         }
