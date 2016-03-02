@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodName;
 
@@ -115,7 +116,7 @@ public class FeedBackService {
     @RequestMapping(value = "/{feedBackId}", method = RequestMethod.PUT)
     public ResponseEntity<Void> updateFeedBack(@PathVariable("feedBackId") String feedBackId, @Valid @RequestBody FeedBack feedBack){
         FeedBack one = feedBackRepository.findOne(feedBackId);
-        if(one!=null){
+        return Optional.ofNullable(one).map(feedBackAux -> {
             if(feedBack.getDateTime()==null){
                 feedBack.setDateTime(LocalDateTime.now());
             }
@@ -123,8 +124,7 @@ public class FeedBackService {
             feedBack.setId(feedBackId);
             feedBackRepository.save(feedBack);
             return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @RequestMapping(method = RequestMethod.POST)
