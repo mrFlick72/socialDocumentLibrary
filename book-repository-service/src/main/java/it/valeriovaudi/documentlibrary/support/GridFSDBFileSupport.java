@@ -17,14 +17,14 @@ public abstract class GridFSDBFileSupport {
     }
 
     public static byte[] gridFSDBFile2ByteArray(GridFSDBFile gridFSDBFile) {
-        ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
-        try {
+        byte[] bytes;
+        try (ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream()) {
             gridFSDBFile.writeTo(byteArrayOutputStream1);
+            bytes = byteArrayOutputStream1.toByteArray();
         } catch (IOException | NullPointerException e) {
             LOGGER.error(e.getMessage());
             return null;
         }
-
-        return byteArrayOutputStream1.toByteArray();
+        return bytes;
     }
 }

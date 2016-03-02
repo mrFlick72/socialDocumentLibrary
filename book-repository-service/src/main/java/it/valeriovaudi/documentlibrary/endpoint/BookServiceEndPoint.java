@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -117,16 +118,8 @@ public class BookServiceEndPoint {
     public ResponseEntity updateBookAuthor(@PathVariable("bookId") String bookId, @RequestBody String body){
         Book book = bookRepository.readBook(bookId, BookRepositoryMongoImpl.INVALID_PAGINATION_PARAMITER, BookRepositoryMongoImpl.INVALID_PAGINATION_PARAMITER);
         JsonObject readBody = Json.createReader(new StringReader(body)).readObject();
-
-        String author = readBody.getString("author");
-        if(author!=null){
-            book.setAuthor(author);
-        }
-
-        String description = readBody.getString("description");
-        if(author!=null){
-            book.setDescription(description);
-        }
+        Optional.ofNullable(readBody.getString("author")).ifPresent(book::setAuthor);
+        Optional.ofNullable(readBody.getString("description")).ifPresent(book::setDescription);
         bookRepository.updateBook(book);
         return ResponseEntity.noContent().build();
     }

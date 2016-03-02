@@ -181,13 +181,15 @@ public class BookService {
                     try {
                         PDDocument load = PDDocument.load(source.toFile(), new RandomAccessBuffer());
                         allPages = load.getDocumentCatalog().getAllPages();
-
-                        for (PDPage page : allPages) {
+                        allPages.stream().forEach(pdPage -> {
                             try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-                                ImageIO.write(page.convertToImage(), bookPageFileFormat, byteArrayOutputStream);
+                                ImageIO.write(pdPage.convertToImage(), bookPageFileFormat, byteArrayOutputStream);
                                 result.add(byteArrayOutputStream.toByteArray());
+                            } catch (IOException e) {
+                                LOGGER.error(e.getMessage());
+                                throw new PdfInteractionAndManipulation(e);
                             }
-                        }
+                        });
                     } catch (IOException e) {
                         LOGGER.error(e.getMessage());
                         throw new PdfInteractionAndManipulation(e);
