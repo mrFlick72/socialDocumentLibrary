@@ -66,27 +66,27 @@ public class BookService {
     @RequestMapping("/books")
     public ResponseEntity getUserBooks(@RequestParam("bookName") String bookName, Principal principal){
         UserBookPreferedList userBookPreferredList = userBookPreferedListRepository.findByUserName(principal.getName());
-        final JsonArrayBuilder[] jsonArrayBuildeResult = {Json.createArrayBuilder()};
-        Optional.ofNullable(userBookPreferredList).ifPresent(userBookPreferedList ->
-                jsonArrayBuildeResult[0] = userBookPreferredList.getBooksReadList().stream()
+        JsonArrayBuilder jsonArrayBuilderAux =Optional.ofNullable(userBookPreferredList).map(userBookPreferedList ->
+                 userBookPreferredList.getBooksReadList().stream()
                         .<Book>filter(bookAux -> {
                             String bookNameAux = bookAux.getBookName();
                             return bookNameAux != null && bookNameAux.toUpperCase().contains(bookName.toUpperCase());
                         })
                         .<JsonArrayBuilder>map(mapBookAux -> Json.createArrayBuilder().add(bookFactory.bookListJsonFactory(mapBookAux.getBookId())))
-                        .reduce(Json.createArrayBuilder(), (jsonArrayBuilder, jsonArrayBuilder2) -> jsonArrayBuilder.add(jsonArrayBuilder2.build().getJsonObject(0))));
-        return ResponseEntity.ok(jsonArrayBuildeResult[0].build().toString());
+                        .reduce(Json.createArrayBuilder(), (jsonArrayBuilder, jsonArrayBuilder2) -> jsonArrayBuilder.add(jsonArrayBuilder2.build().getJsonObject(0))))
+        .get();
+        return ResponseEntity.ok(jsonArrayBuilderAux.build().toString());
     }
 
     @RequestMapping("/bookUserList")
     public ResponseEntity getUserBookList(Principal principal){
-        final JsonArrayBuilder[] arrayBuilder = {Json.createArrayBuilder()};
-        Optional.ofNullable(userBookPreferedListRepository.findByUserName(principal.getName()))
-                .ifPresent(userBookPreferedListRepository -> arrayBuilder[0] = userBookPreferedListRepository.getBooksReadList().stream()
-                .map(book -> Json.createArrayBuilder().add(bookFactory.bookListJsonFactory(book.getBookId())))
-                .reduce(Json.createArrayBuilder(), (jsonArrayBuilder, jsonArrayBuilder2) -> jsonArrayBuilder.add(jsonArrayBuilder2.build().getJsonObject(0))));
+        JsonArrayBuilder jsonArrayBuilderAux = Optional.ofNullable(userBookPreferedListRepository.findByUserName(principal.getName()))
+                .map(userBookPreferedListRepository -> userBookPreferedListRepository.getBooksReadList().stream()
+                        .map(book -> Json.createArrayBuilder().add(bookFactory.bookListJsonFactory(book.getBookId())))
+                        .reduce(Json.createArrayBuilder(), (jsonArrayBuilder, jsonArrayBuilder2) -> jsonArrayBuilder.add(jsonArrayBuilder2.build().getJsonObject(0)))).
+                        get();
 
-        return ResponseEntity.ok(arrayBuilder[0].build().toString());
+        return ResponseEntity.ok(jsonArrayBuilderAux.build().toString());
     }
 
     @RequestMapping(value = "/bookUserList/{bookId}",method = RequestMethod.DELETE)

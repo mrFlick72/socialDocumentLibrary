@@ -40,9 +40,10 @@ public class BookMarkService {
     public ResponseEntity updateBookMark(@PathVariable("bookId") String bookId, @RequestBody String body, Principal principal){
         UserBookPreferedList byUserName = userBookPreferedListRepository.findByUserName(principal.getName());
         Optional.ofNullable(getBookById(byUserName, bookId))
-                .ifPresent(book -> {Json.createReader(new StringReader(body)).readObject();
+                .ifPresent(book -> {
+                            Json.createReader(new StringReader(body)).readObject();
                             JsonObject jsonObject = Json.createReader(new StringReader(body)).readObject();
-                            int page =  Integer.parseInt(JsonUtility.getValueFromJson(jsonObject, "page"));
+                            int page = Integer.parseInt(JsonUtility.getValueFromJson(jsonObject, "page"));
                             book.setPageBookMark(page);
                             userBookPreferedListRepository.save(byUserName);
                         }
@@ -51,12 +52,10 @@ public class BookMarkService {
     }
 
     private Book getBookById(UserBookPreferedList byUserName,String bookId){
-        final Book[] book = {null};
-        Optional.ofNullable(byUserName)
-                .ifPresent(userBookPreferedList -> book[0] = userBookPreferedList.getBooksReadList().stream()
+         return Optional.ofNullable(byUserName)
+                .map(userBookPreferedList -> userBookPreferedList.getBooksReadList().stream()
                         .filter(filteredBook -> filteredBook.getBookId().equals(bookId))
-                        .findFirst().orElse(null));
-        return book[0];
+                        .findFirst()).orElse(null).get();
     }
 }
 

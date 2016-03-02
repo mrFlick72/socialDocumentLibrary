@@ -12,6 +12,7 @@ import javax.json.JsonObjectBuilder;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static it.valeriovaudi.documentlibrary.utility.JsonUtility.getValueFromJson;
 import static it.valeriovaudi.documentlibrary.utility.JsonUtility.getValueFromMap;
@@ -64,64 +65,66 @@ public class BookUserInterfaceDTOBuilder {
 
     public BookUserInterfaceDTOBuilder feedBack(String feedBackJsonString){
         JsonArray bookRepositoryJson = Json.createReader(new StringReader(feedBackJsonString)).readArray();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication!=null){
+        Optional.of(SecurityContextHolder.getContext().getAuthentication()).ifPresent(authentication -> {
             String userName = authentication.getName();
-            Map<String, String> reduce = bookRepositoryJson.parallelStream().map(jsonValue -> {
-                Map<String, String> map = new HashMap<>();
+            Map<String, String> reduce = bookRepositoryJson.parallelStream().filter(jsonValue -> {
                 JsonObject jsonObject = (JsonObject) jsonValue;
-                if (jsonObject.getString("userName").equals(userName)) {
-                    map.put("id", getValueFromJson(jsonObject, "id"));
-                    map.put("bookId", getValueFromJson(jsonObject, "bookId"));
-                    map.put("userName", getValueFromJson(jsonObject, "userName"));
-                    map.put("feedbackTitle", getValueFromJson(jsonObject, "feedbackTitle"));
-                    map.put("feedbackBody", getValueFromJson(jsonObject, "feedbackBody"));
-                    map.put("score", getValueFromJson(jsonObject, "score"));
-                }
-                String scoreAux = getValueFromJson(jsonObject, "score");
+                return jsonObject.getString("userName").equals(userName);
+            }).map(jsonValueAux -> {
+                Map<String, String> map = new HashMap<>();
+                JsonObject jsonObjectAux = (JsonObject) jsonValueAux;
+                map.put("id", getValueFromJson(jsonObjectAux, "id"));
+                map.put("bookId", getValueFromJson(jsonObjectAux, "bookId"));
+                map.put("userName", getValueFromJson(jsonObjectAux, "userName"));
+                map.put("feedbackTitle", getValueFromJson(jsonObjectAux, "feedbackTitle"));
+                map.put("feedbackBody", getValueFromJson(jsonObjectAux, "feedbackBody"));
+                map.put("score", getValueFromJson(jsonObjectAux, "score"));
+
+                String scoreAux = getValueFromJson(jsonObjectAux, "score");
                 if (!scoreAux.equals("")) {
                     map.put("scoreCount", scoreAux);
                 }
                 return map;
             })
-            .sequential()
-            .reduce(new HashMap<>(), (op1, op2) -> {
-                String[] keySet = new String[]{"id", "bookId", "userName", "feedbackTitle", "feedbackBody", "score"};
+                    .sequential()
+                    .reduce(new HashMap<>(), (op1, op2) -> {
+                        String[] keySet = new String[]{"id", "bookId", "userName", "feedbackTitle", "feedbackBody", "score"};
 
-                if (op2.keySet().contains("userName")) {
-                    // when find the map with the user information I copy the information in the final map
-                    for (String key : keySet) {
-                        if (op2.keySet().contains(key)) {
-                            op1.put(key, op2.get(key));
+                        if (op2.keySet().contains("userName")) {
+                            // when find the map with the user information I copy the information in the final map
+                            for (String key : keySet) {
+                                if (op2.keySet().contains(key)) {
+                                    op1.put(key, op2.get(key));
+                                }
+                            }
                         }
-                    }
-                }
 
-                // count the score amount
-                String op2Score = op2.get("scoreCount");
-                String op1Score = op1.get(op2Score);
+                        // count the score amount
+                        String op2Score = op2.get("scoreCount");
+                        String op1Score = op1.get(op2Score);
 
-                if(op1Score==null){
-                    op1.put(op2Score,"1");
-                } else {
-                    op1.remove(op2Score);
-                    op1.put(op2Score,String.valueOf(Integer.parseInt(op1Score) + 1));
-                }
-                return op1;
-            });
+                        if (op1Score == null) {
+                            op1.put(op2Score, "1");
+                        } else {
+                            op1.remove(op2Score);
+                            op1.put(op2Score, String.valueOf(Integer.parseInt(op1Score) + 1));
+                        }
+                        return op1;
+                    });
 
-                jsonObjectBuilder.add("feedback", Json.createObjectBuilder()
-                        .add("id", getValueFromMap(reduce, "id"))
-                        .add("score", getValueFromMap(reduce, "score"))
-                        .add("feedbackTitle", getValueFromMap(reduce, "feedbackTitle"))
-                        .add("feedbackBody", getValueFromMap(reduce, "feedbackBody"))
-                        .add("scores", Json.createObjectBuilder()
-                                .add("5", getValueFromMap(reduce, "5"))
-                                .add("4", getValueFromMap(reduce, "4"))
-                                .add("3", getValueFromMap(reduce, "3"))
-                                .add("2", getValueFromMap(reduce, "2"))
-                                .add("1", getValueFromMap(reduce, "1"))));
-        }
+            jsonObjectBuilder.add("feedback", Json.createObjectBuilder()
+                    .add("id", getValueFromMap(reduce, "id"))
+                    .add("score", getValueFromMap(reduce, "score"))
+                    .add("feedbackTitle", getValueFromMap(reduce, "feedbackTitle"))
+                    .add("feedbackBody", getValueFromMap(reduce, "feedbackBody"))
+                    .add("scores", Json.createObjectBuilder()
+                            .add("5", getValueFromMap(reduce, "5"))
+                            .add("4", getValueFromMap(reduce, "4"))
+                            .add("3", getValueFromMap(reduce, "3"))
+                            .add("2", getValueFromMap(reduce, "2"))
+                            .add("1", getValueFromMap(reduce, "1"))));
+        });
+
         return this;
     }
 

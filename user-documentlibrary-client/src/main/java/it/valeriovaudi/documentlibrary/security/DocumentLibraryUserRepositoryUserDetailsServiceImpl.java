@@ -5,6 +5,8 @@ import it.valeriovaudi.documentlibrary.repository.DocumentLibraryUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.Optional;
+
 /**
  * Created by Valerio on 27/05/2015.
  */
@@ -24,12 +26,8 @@ public class DocumentLibraryUserRepositoryUserDetailsServiceImpl implements Docu
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        UserDetails user = null;
-        DocumentLibraryUser byUserName = documentLibraryUserRepository.findByUserName(userName);
-        if(byUserName!=null){
-            user = documentLibraryUserSecurityUserFactory.createUser(byUserName);
-        }
-
-        return user;
+        return Optional.ofNullable(documentLibraryUserRepository.findByUserName(userName))
+                .map(documentLibraryUserSecurityUserFactory::createUser)
+                .orElse(null);
     }
 }
