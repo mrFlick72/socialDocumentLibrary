@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
@@ -27,23 +28,10 @@ public class FeedBackRepositoryImpl implements FeedBackCustomOperationRepository
 
     @Override
     public List<FeedBack> getFeedBack(String userName, String bookId) {
-        Criteria criteria = null;
-        List<FeedBack> result = new ArrayList<>();
-        if(userName != null){
-            criteria = where("userName").is(userName);
-        }
-
+        Criteria criteria = Optional.ofNullable(userName).map(userNameAux -> where("userName").is(userNameAux)).orElse(null);
         if(bookId !=null){
-            if(criteria==null){
-                criteria = where("bookId").is(bookId);
-            } else {
-                criteria = criteria.and("bookId").is(bookId);
-            }
+            criteria = criteria == null ? where("bookId").is(bookId) : criteria.and("bookId").is(bookId);
         }
-        if(criteria!=null){
-            result = mongoTemplate.find(Query.query(criteria),FeedBack.class);
-        }
-
-        return result;
+        return  Optional.ofNullable(criteria).map(criteriaAux -> mongoTemplate.find(Query.query(criteriaAux),FeedBack.class)).orElse(new ArrayList<>());
     }
 }
