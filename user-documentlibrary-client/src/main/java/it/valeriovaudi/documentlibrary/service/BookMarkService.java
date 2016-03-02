@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonValue;
 import java.io.StringReader;
 import java.security.Principal;
 import java.util.Optional;
