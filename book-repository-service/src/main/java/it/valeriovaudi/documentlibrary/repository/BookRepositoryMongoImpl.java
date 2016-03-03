@@ -1,6 +1,7 @@
 package it.valeriovaudi.documentlibrary.repository;
 
 
+import com.google.common.collect.Maps;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
 import it.valeriovaudi.documentlibrary.builder.BookBuilder;
@@ -18,14 +19,17 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
 
 import static it.valeriovaudi.documentlibrary.support.GridFSDBFileSupport.gridFSDBFile2ByteArray;
 import static it.valeriovaudi.documentlibrary.support.MongoDbCommonQueryFactory.createQueryFindById;
 import static it.valeriovaudi.documentlibrary.support.PageSupport.fileNameToindex;
+import static java.util.stream.Collectors.reducing;
+import static java.util.stream.Collectors.toCollection;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by Valerio on 29/04/2015.
@@ -49,6 +53,19 @@ public class BookRepositoryMongoImpl implements BookRepository {
         this.gridFsTemplate = gridFsTemplate;
     }
 
+/*    @Override
+    public Book save(Book book,List<Page> pageList) {
+        return Optional.ofNullable(book)
+                .<BookBuilder>map(BookBuilder::newBookBuilder)
+                .map(bookBuilder ->
+                        Optional.ofNullable(pageList).orElse(new ArrayList<>())
+                                .stream().map(page -> {
+                            GridFSFile store = gridFsTemplate.store(new ByteArrayInputStream(page.getBytes()), page.getFileName());
+                            return Maps.immutableEntry(fileNameToindex(page), String.valueOf(store.getId()));
+                        }).map(integerStringEntry -> bookBuilder.addPage(integerStringEntry.getKey(), integerStringEntry.getValue())))
+                .get().findFirst().map(BookBuilder::build).map(buildBook -> {mongoTemplate.save(buildBook); return buildBook;}).orElse(null);
+    }*/
+
     @Override
     public Book save(Book book,List<Page> pageList) {
         assert book!=null;
@@ -69,19 +86,13 @@ public class BookRepositoryMongoImpl implements BookRepository {
     @Override
     public List<Book> readAllBooks(int pageNumber, int pageSize) {
         Query skip = Query.query(Criteria.where("")).limit(pageSize).skip(pageNumber * pageSize);
-        List<Book> books = mongoTemplate.find(skip, Book.class);
-        List<Book> bookList = new ArrayList<>();
-        for (Book book : books) {
-            bookList.add(bookPageIdPaginator(book,0,0));
-        }
-
-        return bookList;
+        return mongoTemplate.find(skip, Book.class).stream().map(bookAux -> Collections.singletonList(bookPageIdPaginator(bookAux, 0, 0)))
+                        .reduce(new ArrayList<>(),(bookList1, bookList2) -> {bookList1.addAll(bookList2); return bookList1;});
     }
 
     @Override
     public Book readBook(String id,int startRecord,int pageWindowSize) {
-        Book book = mongoTemplate.findById(id, Book.class);
-        return bookPageIdPaginator(book, startRecord, pageWindowSize);
+        return bookPageIdPaginator(mongoTemplate.findById(id, Book.class), startRecord, pageWindowSize);
     }
 
     @Override
@@ -91,16 +102,20 @@ public class BookRepositoryMongoImpl implements BookRepository {
 
     @Override
     public List<Page> read(String bookId,int pageStart,int pageEnd) {
-        assert bookId!=null;
-        Book byId = mongoTemplate.findById(bookId, Book.class);
-        return byId!=null ? readPageSet(byId.getPageId(), pageStart, pageEnd) : new ArrayList<>();
+        return Optional.ofNullable(bookId)
+                .map(bookIdAux -> mongoTemplate.findById(bookIdAux, Book.class))
+                .map(book -> readPageSet(book.getPageId(), pageStart, pageEnd))
+                .orElse(new ArrayList<>());
     }
 
     @Override
     public Page read(String bookId,int pageIndex) {
-        assert bookId != null;
-        Book byId = mongoTemplate.findById(bookId, Book.class);
-        return readPageSet(byId.getPageId(), pageIndex, pageIndex).get(0);
+        return Optional.ofNullable(bookId)
+                .map(bookIdAux -> mongoTemplate.findById(bookIdAux, Book.class))
+                .map(book -> readPageSet(book.getPageId(), pageIndex, pageIndex))
+                .get().stream()
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -115,9 +130,7 @@ public class BookRepositoryMongoImpl implements BookRepository {
 
     @Override
     public Book updateBook(Book book) {
-        Assert.notNull(book.getId());
-        mongoTemplate.save(book);
-        return book;
+        return Optional.ofNullable(book).map(bookAux -> {mongoTemplate.save(book); return bookAux;}).orElse(null);
     }
 
     private List<Page> readPageSet(Map<Integer, Object> pageId,int pageStart,int pageEnd) {

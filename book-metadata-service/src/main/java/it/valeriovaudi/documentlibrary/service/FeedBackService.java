@@ -117,10 +117,7 @@ public class FeedBackService {
     public ResponseEntity<Void> updateFeedBack(@PathVariable("feedBackId") String feedBackId, @Valid @RequestBody FeedBack feedBack){
         FeedBack one = feedBackRepository.findOne(feedBackId);
         return Optional.ofNullable(one).map(feedBackAux -> {
-            if(feedBack.getDateTime()==null){
-                feedBack.setDateTime(LocalDateTime.now());
-            }
-
+            feedBack.setDateTime(Optional.ofNullable(feedBack.getDateTime()).orElse(LocalDateTime.now()));
             feedBack.setId(feedBackId);
             feedBackRepository.save(feedBack);
             return ResponseEntity.noContent().build();
@@ -129,10 +126,7 @@ public class FeedBackService {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> addFeedBack(@Valid @RequestBody FeedBack feedBack){
-        if(feedBack.getDateTime()==null){
-            feedBack.setDateTime(LocalDateTime.now());
-        }
-
+        feedBack.setDateTime(Optional.ofNullable(feedBack.getDateTime()).orElse(LocalDateTime.now()));
         FeedBack save = feedBackRepository.save(feedBack);
         URI getFeedBackLocation = fromMethodName(FeedBackService.class, "getFeedBackById", new Object[]{save.getId(),null}).build().toUri();
         return ResponseEntity.created(getFeedBackLocation).build();
