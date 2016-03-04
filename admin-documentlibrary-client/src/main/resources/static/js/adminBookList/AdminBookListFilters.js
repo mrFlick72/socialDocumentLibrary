@@ -13,7 +13,6 @@ angular.module("adminBookListModule")
             } else{
                 result = value;
             }
-
             return result;
         }
     })

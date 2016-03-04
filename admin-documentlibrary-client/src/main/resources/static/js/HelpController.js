@@ -23,8 +23,6 @@ angular.module("social-document-library")
             } else{
                 ++$scope.tipCode;
             }
-            console.log($scope.tipCode)
-
         };
 
         $scope.previousTip = function(tipNumber){
@@ -36,6 +34,5 @@ angular.module("social-document-library")
             } else{
                 --$scope.tipCode;
             }
-            console.log($scope.tipCode)
         }
     });

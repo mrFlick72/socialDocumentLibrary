@@ -4,6 +4,7 @@ import it.valeriovaudi.documentlibrary.endpoint.BookServiceEndpoint;
 import it.valeriovaudi.documentlibrary.web.model.BookMasterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,15 +25,22 @@ import java.util.List;
 public class UploadBooksPageController {
 
     @Autowired
+    @LoadBalanced
+    private RestTemplate restTemplate;
+
+    @Autowired
     private BookServiceEndpoint serviceEndpoint;
 
     public void setServiceEndpoint(BookServiceEndpoint serviceEndpoint) {
         this.serviceEndpoint = serviceEndpoint;
     }
 
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
     @ModelAttribute("searchTags")
     public List<String> searchTags(@Value("${search-book-service.searchMetadaTagService.baseUrl}") String searchMetadaTagServiceBaseUrl){
-        RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(searchMetadaTagServiceBaseUrl,List.class);
     }
 

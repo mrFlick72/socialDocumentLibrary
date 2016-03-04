@@ -4,7 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.ErrorPage;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.netflix.ribbon.RibbonClients;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -20,6 +26,10 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 @EnableWebSocketMessageBroker
 @EnableJpaRepositories(basePackages = "it.valeriovaudi.documentlibrary.notify.repository")
 @EnableTransactionManagement
+@EnableEurekaClient
+@EnableCircuitBreaker
+@EnableZuulProxy
+@EnableAspectJAutoProxy(proxyTargetClass = true) // without this declaration the RestTemplate injection will be fails becouse spring cloud proxied this class for load balance with netflix ribbon
 public class AdminDocumentlibraryClientApplication {
 
     public static void main(String[] args) {
