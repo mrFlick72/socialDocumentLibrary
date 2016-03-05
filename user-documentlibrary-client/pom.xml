@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.2.RELEASE</version>
+		<version>1.3.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -26,23 +26,19 @@
 
 		<docker.image.prefix>socialDocumetLibrary</docker.image.prefix>
 
-		<server.port>9090</server.port>
-		<server.host>localhost</server.host>
-
-		<search-book-service.server.location>${user-documentlibrary-client.server.location}/search-book-service</search-book-service.server.location>
+		<search-book-service.server.location>/search-book-service</search-book-service.server.location>
 		<search-book-service.searchBookService.baseUrl>${search-book-service.server.location}/searchBookIndex</search-book-service.searchBookService.baseUrl>
 		<search-book-service.searchMetadaTagService.baseUrl>${search-book-service.server.location}/searchMetadaTag</search-book-service.searchMetadaTagService.baseUrl>
 
-		<book-repository-service.server.location>${user-documentlibrary-client.server.location}/book-repository-service</book-repository-service.server.location>
+		<book-repository-service.server.location>/book-repository-service</book-repository-service.server.location>
 		<book-repository-service.bookServiceEndPoint.baseUrl>${book-repository-service.server.location}/bookService</book-repository-service.bookServiceEndPoint.baseUrl>
 
-		<book-social-metadata-service.server.location>${user-documentlibrary-client.server.location}/book-social-metadata-service</book-social-metadata-service.server.location>
+		<book-social-metadata-service.server.location>/book-social-metadata-service</book-social-metadata-service.server.location>
 		<book-social-metadata-service.feedBackService.baseUrl>${book-social-metadata-service.server.location}/feedBack</book-social-metadata-service.feedBackService.baseUrl>
 
-		<user-documentlibrary-client.server.location>http://${server.host}:${server.port}</user-documentlibrary-client.server.location>
-		<user-documentlibrary-client.bookService.baseUrl>${user-documentlibrary-client.server.location}/bookService</user-documentlibrary-client.bookService.baseUrl>
-		<user-documentlibrary-client.bookReader.baseUrl>${user-documentlibrary-client.server.location}/bookReader</user-documentlibrary-client.bookReader.baseUrl>
-		<user-documentlibrary-client.bookMark.baseUrl>${user-documentlibrary-client.server.location}/bookMark</user-documentlibrary-client.bookMark.baseUrl>
+		<user-documentlibrary-client.bookService.baseUrl>/bookService</user-documentlibrary-client.bookService.baseUrl>
+		<user-documentlibrary-client.bookReader.baseUrl>/bookReader</user-documentlibrary-client.bookReader.baseUrl>
+		<user-documentlibrary-client.bookMark.baseUrl>/bookMark</user-documentlibrary-client.bookMark.baseUrl>
 
 	</properties>
 
@@ -88,6 +84,15 @@
 			<groupId>com.netflix.spectator</groupId>
 			<artifactId>spectator-api</artifactId>
 			<version>0.35.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-redis</artifactId>
 		</dependency>
 
 		<dependency>

@@ -1,5 +1,5 @@
 angular.module('social-document-library',['bookListModule'])
-    .value("socialDocumentLibraryLocationBaseUrl","${user-documentlibrary-client.server.location}")
+    .value("socialDocumentLibraryLocationBaseUrl","/")
     .value("searchMetadaTagServiceBaseUrl","${search-book-service.searchMetadaTagService.baseUrl}")
     .value("userInterfaceBookServiceBaseUrl","${user-documentlibrary-client.bookService.baseUrl}")
     .config(function(bookListConfigurationServiceProvider){
@@ -9,11 +9,17 @@ angular.module('social-document-library',['bookListModule'])
            .setSearchMetadaTagServiceBaseUrl("${search-book-service.searchMetadaTagService.baseUrl}")
            .setUserInterfaceEndPointBaseUrl("${user-documentlibrary-client.bookService.baseUrl}")
            .setUserInterfaceBookReaderEndPointBaseUrl("${user-documentlibrary-client.bookReader.baseUrl}");
-    }).controller("rootController",function($window,$scope,$rootScope){
+    }).controller("rootController",function($window,$location,$http,$scope,$rootScope){
         $scope.backFunction = function(){
             localStorage.back="true";
             $window.history.back();
         };
+
+        $scope.logout =function() {
+            $http.post('logout', {}).finally(function() {
+                $window.location="signin";
+            });
+        }
     });
 
 function menuManage(){

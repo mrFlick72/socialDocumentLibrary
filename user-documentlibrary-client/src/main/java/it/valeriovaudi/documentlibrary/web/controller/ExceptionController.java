@@ -27,6 +27,8 @@ public class ExceptionController {
     @RequestMapping("/exception")
     public String exception(Model model,Exception ex,Locale locale,HttpServletRequest httpRequest,HttpServletResponse httpResponse){
 
+        ex.printStackTrace();
+
         model.addAttribute("templatePath", "exception/exception");
         model.addAttribute("template", "content");
         try{

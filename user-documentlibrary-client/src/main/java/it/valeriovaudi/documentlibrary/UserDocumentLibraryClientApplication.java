@@ -14,7 +14,11 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
 @Configuration
@@ -24,6 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableZuulProxy
 @EnableJpaRepositories(basePackages = "it.valeriovaudi.documentlibrary.repository")
 @EnableTransactionManagement
+@EnableRedisHttpSession
 @PropertySource("classpath:restBaseUrl.properties")
 @EnableAspectJAutoProxy(proxyTargetClass = true) // without this declaration the RestTemplate injection wil be fails becouse spring cloud proxied this class for load balance with netflix ribbon
 public class UserDocumentLibraryClientApplication {
@@ -37,9 +42,18 @@ public class UserDocumentLibraryClientApplication {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean
+ /*   @Bean
     public EmbeddedServletContainerCustomizer exceptionHandling() {
         return container -> container.addErrorPages(new ErrorPage("/exception"));
-    }
+    }*/
 
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**");
+            }
+        };
+    }
 }

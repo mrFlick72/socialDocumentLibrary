@@ -63,7 +63,7 @@
                                                       <li class="text"><a href="#" th:inline="text" th:href="@{/bookSearch}">[[#{glyphicon-search.label}]]</a></li>
                                                       <li class="text" ng-click="backFunction()"><a>Back</a></li>
                                                       <li class="text"><a href="#" th:inline="text"> [[#{glyphicon-question-sign.label}]]</a></li>
-                                                      <li><a href="#" th:inline="text" th:href="@{/logout}"> <span class="glyphicon glyphicon-off"></span></a></li>
+                                                      <li ng-click="logout()"><a href="#" th:inline="text"> <span class="glyphicon glyphicon-off"></span></a></li>
                                                 </ul>
                                           </div>
 
@@ -91,8 +91,8 @@
                                                                   <li class="text"><a href="#" th:inline="text"> [[#{glyphicon-question-sign.label}]]</a></li>
                                                             </ul>
                                                             <ul class="nav navbar-nav lastMenuItem dxSide">
-                                                                  <li class="text"><a href="#" th:inline="text" th:href="@{/logout}">[[#{glyphicon-off.label}]]</a></li>
-                                                                  <li><a href="#" th:inline="text" th:href="@{/logout}"> <span class="glyphicon glyphicon-off"></span></a></li>
+                                                                  <li class="text"><a href="#" th:inline="text"  ng-click="logout()">[[#{glyphicon-off.label}]]</a></li>
+                                                                  <li ng-click="logout()"><a href="#" th:inline="text"> <span class="glyphicon glyphicon-off"></span></a></li>
                                                             </ul>
 
                                                       </ul><!--/.navbar-collapse -->

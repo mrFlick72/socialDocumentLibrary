@@ -1,7 +1,6 @@
 angular.module('social-document-library')
     .controller("bookUserListPageController", function($scope,$http,
-                                                       userInterfaceBookServiceBaseUrl,
-                                                       socialDocumentLibraryLocationBaseUrl){
+                                                       userInterfaceBookServiceBaseUrl){
 
         $scope.searchInList = true;
         $scope.feedbackSectionSetting = {
@@ -18,7 +17,7 @@ angular.module('social-document-library')
 
         }
 
-        $http.get([socialDocumentLibraryLocationBaseUrl,"bookList/messages"].join("/"))
+        $http.get("bookList/messages")
             .success(function (data) {
                 $scope.messages=data;
             });
