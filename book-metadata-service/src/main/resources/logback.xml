@@ -1,4 +1,7 @@
 <configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <jmxConfigurator/>
+
     <property name="LOGGER_HOME" value="C:/logs" />
 
     <!-- definition of appender STDOUT -->

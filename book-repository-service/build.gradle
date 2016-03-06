@@ -69,6 +69,7 @@ dependencies {
 
     compile("com.google.guava:guava:18.0")
     compile("it.valeriovaudi:common-validator:1.0-SNAPSHOT")
+    compile("org.jolokia:jolokia-core")
 
     testCompile("org.apache.activemq:activemq-broker:5.10.0")
 
