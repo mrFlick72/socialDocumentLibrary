@@ -29,6 +29,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 @EnableEurekaClient
 @EnableCircuitBreaker
 @EnableZuulProxy
+@RibbonClients
 @EnableAspectJAutoProxy(proxyTargetClass = true) // without this declaration the RestTemplate injection will be fails becouse spring cloud proxied this class for load balance with netflix ribbon
 public class AdminDocumentlibraryClientApplication {
 

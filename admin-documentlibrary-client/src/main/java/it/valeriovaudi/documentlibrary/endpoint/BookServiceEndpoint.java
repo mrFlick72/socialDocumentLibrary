@@ -6,6 +6,7 @@ import it.valeriovaudi.documentlibrary.web.model.BookModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.integration.core.MessagingTemplate;
@@ -25,10 +26,12 @@ import java.net.URI;
 public class BookServiceEndpoint {
 
     @Autowired
+    @LoadBalanced
     @Qualifier("bookRepositoryServiceRestTemplate")
     private RestTemplate bookRepositoryServiceRestTemplate;
 
     @Autowired
+    @LoadBalanced
     @Qualifier("searchBookServiceRestTemplate")
     private RestTemplate searchBookServiceRestTemplate;
 

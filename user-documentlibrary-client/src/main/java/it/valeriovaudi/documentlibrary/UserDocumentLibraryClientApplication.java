@@ -42,10 +42,10 @@ public class UserDocumentLibraryClientApplication {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
- /*   @Bean
+    @Bean
     public EmbeddedServletContainerCustomizer exceptionHandling() {
         return container -> container.addErrorPages(new ErrorPage("/exception"));
-    }*/
+    }
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

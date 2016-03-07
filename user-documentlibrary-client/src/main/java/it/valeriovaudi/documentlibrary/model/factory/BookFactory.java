@@ -3,6 +3,7 @@ package it.valeriovaudi.documentlibrary.model.factory;
 import it.valeriovaudi.documentlibrary.model.builder.BookUserInterfaceDTOBuilder;
 import it.valeriovaudi.documentlibrary.service.FeedBackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.HttpMethod;
@@ -31,10 +32,12 @@ public class BookFactory {
 
     @Autowired
     @LoadBalanced
+    @Qualifier("bookMetadataServiceRestTemplate")
     private RestTemplate bookMetadataServiceRestTemplate;
 
     @Autowired
     @LoadBalanced
+    @Qualifier("bookRepositoryServiceRestTemplate")
     private RestTemplate bookRepositoryServiceRestTemplate;
 
     @Autowired

@@ -1,58 +1,37 @@
 package it.valeriovaudi.documentlibrary.config;
 
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.netflix.ribbon.RibbonClientHttpRequestFactory;
 import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by Valerio on 16/06/2015.
  */
+@Configuration
 public class ServiceConfig {
 
     @Bean
-    public RestTemplate bookRepositoryServiceRestTemplate(SpringClientFactory springClientFactory, LoadBalancerClient loadBalancerClient){
-        PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
-        cm.setMaxTotal(100);
-        cm.closeExpiredConnections();
-
-        CloseableHttpClient httpclient = HttpClients.custom().setConnectionManager(cm).build();
-
-        HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        httpComponentsClientHttpRequestFactory.setHttpClient(httpclient);
-
-        return new RestTemplate(httpComponentsClientHttpRequestFactory);
+    @LoadBalanced
+    public RestTemplate bookRepositoryServiceRestTemplate(SpringClientFactory clientFactory, LoadBalancerClient loadBalancer){
+        RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory,loadBalancer);
+        return new RestTemplate(ribbonClientHttpRequestFactory);
     }
 
     @Bean
-    public RestTemplate bookMetadataServiceRestTemplate(SpringClientFactory springClientFactory, LoadBalancerClient loadBalancerClient){
-        PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
-        cm.setMaxTotal(100);
-        cm.closeExpiredConnections();
-
-        CloseableHttpClient httpclient = HttpClients.custom().setConnectionManager(cm).build();
-
-        HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        httpComponentsClientHttpRequestFactory.setHttpClient(httpclient);
-
-        return new RestTemplate(httpComponentsClientHttpRequestFactory);
+    @LoadBalanced
+    public RestTemplate bookMetadataServiceRestTemplate(SpringClientFactory clientFactory, LoadBalancerClient loadBalancer){
+        RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory,loadBalancer);
+        return new RestTemplate(ribbonClientHttpRequestFactory);
     }
 
     @Bean
-    public RestTemplate searchBookServiceRestTemplate(SpringClientFactory springClientFactory, LoadBalancerClient loadBalancerClient){
-        PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
-        cm.setMaxTotal(100);
-        cm.closeExpiredConnections();
-
-        CloseableHttpClient httpclient = HttpClients.custom().setConnectionManager(cm).build();
-
-        HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        httpComponentsClientHttpRequestFactory.setHttpClient(httpclient);
-
-        return new RestTemplate(httpComponentsClientHttpRequestFactory);
+    @LoadBalanced
+    public RestTemplate searchBookServiceRestTemplate(SpringClientFactory clientFactory, LoadBalancerClient loadBalancer){
+        RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory,loadBalancer);
+        return new RestTemplate(ribbonClientHttpRequestFactory);
     }
 }
