@@ -24,7 +24,6 @@ public class HelpController {
         this.documentLibraryUserRepository = documentLibraryUserRepository;
     }
 
-
     @RequestMapping("/shortHelp")
     public String showShortHelp(){
         return "help/help";

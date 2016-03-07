@@ -27,12 +27,10 @@ public class BookServiceEndpoint {
 
     @Autowired
     @LoadBalanced
-    @Qualifier("bookRepositoryServiceRestTemplate")
     private RestTemplate bookRepositoryServiceRestTemplate;
 
     @Autowired
     @LoadBalanced
-    @Qualifier("searchBookServiceRestTemplate")
     private RestTemplate searchBookServiceRestTemplate;
 
     @Autowired
@@ -45,15 +43,8 @@ public class BookServiceEndpoint {
     private String searchBookServiceBaseUrl;
 
     @Autowired
-    private HistoryNotifyEntryService historyNotifyEntryService;
-
-    @Autowired
     @Qualifier("uploadBookInChannel")
     private MessageChannel uploadBookInChannel;
-
-    public void setHistoryNotifyEntryService(HistoryNotifyEntryService historyNotifyEntryService) {
-        this.historyNotifyEntryService = historyNotifyEntryService;
-    }
 
     public void setMessagingTemplate(MessagingTemplate messagingTemplate) {
         this.messagingTemplate = messagingTemplate;

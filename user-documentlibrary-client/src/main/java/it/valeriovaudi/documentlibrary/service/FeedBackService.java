@@ -35,7 +35,6 @@ public class FeedBackService extends AbstractService{
 
     @Autowired
     @LoadBalanced
-    @Qualifier("bookMetadataServiceRestTemplate")
     private RestTemplate bookMetadataServiceRestTemplate;
 
     public void setBookSocialMetadataBaseUrl(String bookSocialMetadataBaseUrl) {

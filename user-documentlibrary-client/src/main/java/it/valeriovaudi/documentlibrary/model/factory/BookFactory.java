@@ -32,12 +32,10 @@ public class BookFactory {
 
     @Autowired
     @LoadBalanced
-    @Qualifier("bookMetadataServiceRestTemplate")
     private RestTemplate bookMetadataServiceRestTemplate;
 
     @Autowired
     @LoadBalanced
-    @Qualifier("bookRepositoryServiceRestTemplate")
     private RestTemplate bookRepositoryServiceRestTemplate;
 
     @Autowired

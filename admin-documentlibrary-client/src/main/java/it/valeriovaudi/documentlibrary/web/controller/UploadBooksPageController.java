@@ -26,7 +26,7 @@ public class UploadBooksPageController {
 
     @Autowired
     @LoadBalanced
-    private RestTemplate restTemplate;
+    private RestTemplate searchBookServiceRestTemplate;
 
     @Autowired
     private BookServiceEndpoint serviceEndpoint;
@@ -35,13 +35,13 @@ public class UploadBooksPageController {
         this.serviceEndpoint = serviceEndpoint;
     }
 
-    public void setRestTemplate(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public void setSearchBookServiceRestTemplate(RestTemplate searchBookServiceRestTemplate) {
+        this.searchBookServiceRestTemplate = searchBookServiceRestTemplate;
     }
 
     @ModelAttribute("searchTags")
     public List<String> searchTags(@Value("${search-book-service.searchMetadaTagService.baseUrl}") String searchMetadaTagServiceBaseUrl){
-        return restTemplate.getForObject(searchMetadaTagServiceBaseUrl,List.class);
+        return searchBookServiceRestTemplate.getForObject(searchMetadaTagServiceBaseUrl,List.class);
     }
 
     @ModelAttribute("templatePath")

@@ -1,8 +1,8 @@
 package it.valeriovaudi.documentlibrary.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.netflix.ribbon.RibbonClientHttpRequestFactory;
-import org.springframework.cloud.netflix.ribbon.RibbonLoadBalancerClient;
 import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,15 +16,17 @@ public class ServiceConfig {
 
     @Bean
     @LoadBalanced
-    public RestTemplate bookRepositoryServiceRestTemplate(SpringClientFactory clientFactory, RibbonLoadBalancerClient loadBalancer){
+    public RestTemplate bookRepositoryServiceRestTemplate(SpringClientFactory clientFactory, LoadBalancerClient loadBalancer){
         RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory,loadBalancer);
         return new RestTemplate(ribbonClientHttpRequestFactory);
     }
 
+
     @Bean
     @LoadBalanced
-    public RestTemplate searchBookServiceRestTemplate(SpringClientFactory clientFactory, RibbonLoadBalancerClient loadBalancer){
+    public RestTemplate searchBookServiceRestTemplate(SpringClientFactory clientFactory, LoadBalancerClient loadBalancer){
         RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory,loadBalancer);
         return new RestTemplate(ribbonClientHttpRequestFactory);
     }
+
 }
