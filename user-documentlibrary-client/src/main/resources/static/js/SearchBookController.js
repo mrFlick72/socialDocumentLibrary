@@ -5,7 +5,7 @@ angular.module('social-document-library')
                                                      socialDocumentLibraryLocationBaseUrl){
         $scope.searchInList = false;
 
-        $http.get([socialDocumentLibraryLocationBaseUrl,"bookList/messages"].join("/"))
+        $http.get("bookList/messages")
             .success(function (data) {
                 $scope.messages=data;
             });
