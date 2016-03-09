@@ -1,6 +1,6 @@
 angular.module("social-document-library")
     .controller("homeController",function($scope,$http,adminBookListConfigurationService){
-        $http.get(["@admin-documentlibrary-client.serverLocation@","adminBookList/messages"].join("/"))
+        $http.get("adminBookList/messages")
             .success(function (data) {
                 $scope.messages=data;
             });

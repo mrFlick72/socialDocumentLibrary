@@ -5,7 +5,7 @@ angular.module("notifyModule",[])
 .directive("notify",function(){
         return {
             compile : function(element,attrs){
-                document.getElementById("notifyAudioFeedBack").setAttribute("src","@admin-documentlibrary-client.serverLocation@/js/notification/notify.mp3");
+                document.getElementById("notifyAudioFeedBack").setAttribute("src","js/notification/notify.mp3");
             },
             templateUrl : "js/notification/notify.html",
             controller:function($scope,$rootScope){
@@ -77,12 +77,12 @@ angular.module("notifyModule",[])
         templateUrl : "js/notification/notify-container.html",
         controller:function($scope, $rootScope, $http){
             $scope.notifyContainer = {isInvisible:true,isVisible:false};
-                $http.get("http://localhost:7070/historyNotifyEntity/messages")
+                $http.get("historyNotifyEntity/messages")
                     .success(function(data){
                         $scope.messages  = data;
                     });
 
-            $http.get("http://localhost:7070/historyNotifyEntity")
+            $http.get("historyNotifyEntity")
                 .success(function(data){
                     $scope.notifyData = data;
                     sendEnableNotifyService(data);
@@ -126,7 +126,7 @@ angular.module("notifyModule",[])
             $scope.deleteBookByNotify = function(item){
                 $http.get(["@search-book-service.searchBookService.baseUrl@",item.bookId].join("/"))
                     .success(function(){
-                        $http.delete("http://localhost:7070/historyNotifyEntity/"+item.bookId+"/deleteBook")
+                        $http.delete("historyNotifyEntity/"+item.bookId+"/deleteBook")
                             .success(function(){
                                 $rootScope.$broadcast("adminBookList.bookChangeStatus.delete",{bookId:item.bookId});
                             })
@@ -151,7 +151,7 @@ angular.module("notifyModule",[])
 
             $scope.deleteNotify = function(item,callable){
                 if(callable){
-                    $http.delete("http://localhost:7070/historyNotifyEntity/"+item.bookId);
+                    $http.delete("historyNotifyEntity/"+item.bookId);
                 }
             };
 

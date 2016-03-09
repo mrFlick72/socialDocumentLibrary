@@ -1,11 +1,11 @@
 angular.module("social-document-library")
     .controller("helpController",function($http,$scope,socialDocumentLibraryLocationBaseUrl){
         $scope.adminBookListHelpContent = function(){
-            $scope.helpContent = [socialDocumentLibraryLocationBaseUrl,"help/adminBookListHelpContent"].join("/");
+            $scope.helpContent = "help/adminBookListHelpContent";
         };
 
         $scope.uploadBookHelpContent = function(){
-            $scope.helpContent = [socialDocumentLibraryLocationBaseUrl,"help/uploadBookHelpContent"].join("/");
+            $scope.helpContent = "help/uploadBookHelpContent";
         }
 })
 .controller("changeTipShortHelpCtrl",function($scope){
@@ -15,9 +15,6 @@ angular.module("social-document-library")
         };
 
         $scope.nextTip = function(tipNumber){
-            console.log($scope.tipCode)
-            console.log(tipNumber)
-
             if($scope.tipCode == tipNumber){
                 $scope.tipCode = 0;
             } else{
@@ -26,9 +23,6 @@ angular.module("social-document-library")
         };
 
         $scope.previousTip = function(tipNumber){
-            console.log($scope.tipCode)
-            console.log(tipNumber)
-
             if($scope.tipCode == 0){
                 $scope.tipCode = tipNumber;
             } else{
