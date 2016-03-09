@@ -1,5 +1,5 @@
 angular.module("social-document-library")
-    .controller("helpController",function($http,$scope,socialDocumentLibraryLocationBaseUrl){
+    .controller("helpController",function($http,$scope){
         $scope.adminBookListHelpContent = function(){
             $scope.helpContent = "help/adminBookListHelpContent";
         };

@@ -2,8 +2,8 @@ angular.module('social-document-library',['adminBookListModule','notifyModule'])
     .value("socialDocumentLibraryLocationBaseUrl","@admin-documentlibrary-client.serverLocation@")
     .config(function(adminBookListConfigurationServiceProvider){
        adminBookListConfigurationServiceProvider
-           .setSearchBookServiceBaseUrl("@search-book-service.searchBookService.baseUrl@")
-           .setSearchMetadaTagServiceBaseUrl("@search-book-service.searchMetadaTagService.baseUrl@")
+           .setSearchBookServiceBaseUrl("search-book-service/searchBookIndex")
+           .setSearchMetadaTagServiceBaseUrl("search-book-service/searchMetadaTag")
            .setUserInterfaceEndPointBaseUrl("@admin-documentlibrary-client.bookServiceEndPoint.baseUrl@");
     }).controller("rootController",function($window,$scope,$rootScope){
         $scope.backFunction = function(){

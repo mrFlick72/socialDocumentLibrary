@@ -4,17 +4,19 @@ $(function(){
         $("#completUploadBookDialog").modal("show");
     }
 
-    console.log("uploadBookFormSubmitButton: " + document.getElementById("uploadBookFormSubmitButton"))
+    var uploadBookFormSubmitButton = document.getElementById("uploadBookFormSubmitButton");
+    if(uploadBookFormSubmitButton){
+        uploadBookFormSubmitButton.addEventListener("click",function(event){
+            event.preventDefault();
+            event.stopPropagation();
 
-    document.getElementById("uploadBookFormSubmitButton").addEventListener("click",function(event){
-        event.preventDefault();
-        event.stopPropagation();
+            document.getElementById("uploadBookForm").submit();
+            $("#loadingUploadBookDialog").modal("show");
 
-        document.getElementById("uploadBookForm").submit();
-        $("#loadingUploadBookDialog").modal("show");
+            return false;
+        })
+    }
 
-        return false;
-    })
 });
 
 

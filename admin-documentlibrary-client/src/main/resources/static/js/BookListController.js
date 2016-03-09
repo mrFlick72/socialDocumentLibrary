@@ -1,7 +1,7 @@
 angular.module("social-document-library")
     .controller("bookListController",function($scope,$http,adminBookListConfigurationService){
         $scope.filterIfPublished = false;
-        $http.get(["@admin-documentlibrary-client.serverLocation@","adminBookList/messages"].join("/"))
+        $http.get("adminBookList/messages")
                 .success(function (data) {
                 $scope.messages=data;
                 $scope.messages.deleteBookToolTipContent="Se un libro è pubblicato allora non può essere cancellato"
