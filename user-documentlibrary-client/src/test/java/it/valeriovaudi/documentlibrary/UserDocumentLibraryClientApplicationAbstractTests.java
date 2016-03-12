@@ -34,11 +34,11 @@ public abstract class UserDocumentLibraryClientApplicationAbstractTests {
 	protected WebApplicationContext wac;
 	protected MockMvc mockMvc;
 
+	@Autowired
 	protected ObjectMapper objectMapper;
 
 	@Before
 	public void before() {
-		objectMapper = new ObjectMapper();
 		this.mockMvc = webAppContextSetup(this.wac).build();
 	}
 
