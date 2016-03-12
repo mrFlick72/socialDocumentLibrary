@@ -65,8 +65,7 @@ mysql -h 192.168.99.100 -u root -proot
 create database user_document_library_client;
 create database admin_document_library_client;
 
-the default ip of docker in my machine is 192.168.99.100 for this reason please keep actentions becouse if your machine pubblised a different ip you have update the referece in the 
-projects.
+the default ip of docker in my machine is 192.168.99.100 for this reason please keep caution becouse if your machine will pubblish a different ip you have update the reference in the projects.
 
 
 The admin user credential are: user:admin, password: admin.
