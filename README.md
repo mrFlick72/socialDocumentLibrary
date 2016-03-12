@@ -16,6 +16,7 @@ The application was developed for HCI exam for the Master Degree in "La Sapienza
     <li>EIP: Spring integration</li>
     <li>Microservice architecture</li>
     <li>NoSql: MongoDB</li>
+    <li>Docker</li>
 </ul>
 
 # Spring Projects
@@ -47,11 +48,26 @@ The application was developed for HCI exam for the Master Degree in "La Sapienza
 # Building instructions
 First of all you have make mvn clean install of the common-validator project for have the library avaiable on the local maven repository.
 Then for build project you have <a href="https://maven.apache.org/">Apache Maven</a> and <a href="http://gradle.org/">Gradle</a>.
-This project is based on Mongo DB, MySql and Active MQ, for this reason you have this components up and running in your machine.
-Being a Spring Boot centric projects all main configurations was present in the application.properties under src/main/resources directory of all projects.
-In this place you can find the basic properties for configure the project. Only for ActiveMQ and Mysql you can don't have up and running during the building becouse I used a in memory sql engine and 
-the in memory messaging broker for the test. However Mongo DB must has up and running even for test.
-After the building you have start all the microservice and access on the browser on the url http://localhost:9090/socialDocumentLibrary/bookUserList for final user application 
-and on http://localhost:7070/adminDocumentlibraryClient/bookList for the admin application.
+In this version I start to integrate docker. Now the main configuration suppose that you use docker for redis server, mongo, activeMQ and MySql.
+The use the final project you have installed on your pc docker. For this propouse you can follow this link <a href="https://docs.docker.com/mac/">hear</a>.
+After that you have installed Docker on your pc you can start the Docker Toolbox and use this subsequnt command:
+<ul>
+    <li>docker run -p 6379:6379 redis</li> 
+    <li>docker run -p 27017:27017 mongo</li> 
+    <li>docker run -d -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql</li> 
+    <li>docker run --name='activemq' -p 8161:8161 -p 61616:61616 -p 61613:61613 webcenter/activemq:5.13.1</li> 
+</ul>
 
-The admin user credential are: user:admin, password: admin. Indeed for the Final user you have create a new account.
+For Mysql after that the docker conteiner is up you must create the mysql schema for the app. For this propuse you can typing 
+
+mysql -h 192.168.99.100 -u root -proot
+
+create database user_document_library_client
+create database admin_document_library_client
+
+the default ip of docker in my machine is 192.168.99.100 for this reason please keep actentions becouse if your machine pubblised a different ip you have update the referece in the 
+projects.
+
+
+The admin user credential are: user:admin, password: admin.
+Indeed for the Final user you have create a new account.
