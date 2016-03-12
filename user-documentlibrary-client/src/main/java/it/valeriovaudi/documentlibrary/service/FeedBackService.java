@@ -5,7 +5,6 @@ import it.valeriovaudi.documentlibrary.model.DocumentLibraryUser;
 import it.valeriovaudi.documentlibrary.model.factory.UiJsonFactory;
 import it.valeriovaudi.documentlibrary.repository.DocumentLibraryUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.*;

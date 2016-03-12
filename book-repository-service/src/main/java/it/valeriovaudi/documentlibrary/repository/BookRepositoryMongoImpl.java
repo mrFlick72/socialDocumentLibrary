@@ -1,7 +1,6 @@
 package it.valeriovaudi.documentlibrary.repository;
 
 
-import com.google.common.collect.Maps;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
 import it.valeriovaudi.documentlibrary.builder.BookBuilder;
@@ -16,20 +15,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
 
 import java.io.ByteArrayInputStream;
 import java.util.*;
-import java.util.function.BinaryOperator;
-import java.util.stream.Collector;
-import java.util.stream.Stream;
 
 import static it.valeriovaudi.documentlibrary.support.GridFSDBFileSupport.gridFSDBFile2ByteArray;
 import static it.valeriovaudi.documentlibrary.support.MongoDbCommonQueryFactory.createQueryFindById;
 import static it.valeriovaudi.documentlibrary.support.PageSupport.fileNameToindex;
-import static java.util.stream.Collectors.reducing;
-import static java.util.stream.Collectors.toCollection;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Created by Valerio on 29/04/2015.

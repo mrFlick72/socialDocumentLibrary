@@ -6,13 +6,17 @@ buildscript {
         mavenCentral()
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
+        maven { url 'http://repo.spring.io/plugins-release' }
     }
 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE")
+        classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
     }
 }
+apply plugin: 'propdeps'
+
 apply plugin: "sonar-runner"
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -35,6 +39,7 @@ targetCompatibility = 1.8
 repositories {
     mavenCentral()
     mavenLocal()
+    maven { url 'http://repo.spring.io/plugins-release' }
 }
 
 dependencies {
@@ -79,9 +84,16 @@ dependencies {
     compile("javax.json:javax.json-api:1.0")
     compile("org.glassfish:javax.json:1.0.4")
     compile("it.valeriovaudi:common-validator:1.0-SNAPSHOT")
+    compile "org.projectlombok:lombok:1.16.8"
+
+    optional "org.springframework.boot:spring-boot-configuration-processor"
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("com.h2database:h2")
 }
+
+compileJava.dependsOn(processResources)
+
 
 dependencyManagement {
     imports {

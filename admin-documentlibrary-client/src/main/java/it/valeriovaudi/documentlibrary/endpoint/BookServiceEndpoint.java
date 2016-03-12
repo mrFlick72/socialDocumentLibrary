@@ -1,6 +1,5 @@
 package it.valeriovaudi.documentlibrary.endpoint;
 
-import it.valeriovaudi.documentlibrary.notify.service.HistoryNotifyEntryService;
 import it.valeriovaudi.documentlibrary.web.model.BookMasterDTO;
 import it.valeriovaudi.documentlibrary.web.model.BookModel;
 import org.springframework.beans.factory.annotation.Autowired;

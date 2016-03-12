@@ -5,7 +5,6 @@ import it.valeriovaudi.documentlibrary.notify.service.HistoryNotifyEntryService;
 import it.valeriovaudi.documentlibrary.web.model.BookMasterDTO;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

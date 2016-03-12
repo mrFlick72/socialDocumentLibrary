@@ -15,13 +15,10 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.jms.annotation.EnableJms;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.server.jetty.JettyRequestUpgradeStrategy;
-import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 @SpringBootApplication
 @PropertySource("classpath:restBaseUrl.properties")
@@ -35,7 +32,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 @EnableCircuitBreaker
 @EnableZuulProxy
 @RibbonClients
-@EnableAsync
+//@EnableAsync
 @EnableAspectJAutoProxy(proxyTargetClass = true) // without this declaration the RestTemplate injection will be fails becouse spring cloud proxied this class for load balance with netflix ribbon
 public class AdminDocumentlibraryClientApplication {
 
