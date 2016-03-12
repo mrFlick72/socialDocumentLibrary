@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,9 +48,6 @@ public class WebSecurityContext extends WebSecurityConfigurerAdapter {
     private static final String LOG_OUT_URL_PAGE = "/logout";
     private static final String LOG_OUT_SUCCESS_URL = "/signin";
 
-
-    @Autowired
-    private RedisTemplate<String, String> template;
 
     @Bean
     public DocumentLibraryUserRepositoryUserDetailsServiceImpl documentLibraryUserRepositoryUserDetailsService(DocumentLibraryUserRepository documentLibraryUserRepository){

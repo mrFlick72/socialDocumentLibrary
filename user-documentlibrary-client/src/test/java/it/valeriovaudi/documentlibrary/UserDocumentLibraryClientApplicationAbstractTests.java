@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = UserDocumentLibraryClientApplicationTestContext.class)
+@SpringApplicationConfiguration(classes = UserDocumentLibraryClientApplication.class)
 @WebAppConfiguration
 @Transactional
 public abstract class UserDocumentLibraryClientApplicationAbstractTests {
