@@ -75,9 +75,9 @@ public class WebSecurityContext extends WebSecurityConfigurerAdapter {
                     .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
                     .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
                     .loginProcessingUrl("/j_spring_security_check")
-                    .loginPage(LOG_IN_URL_PAGE)
-                    .defaultSuccessUrl(DEFAULT_TARGET_URL_PAGE)
-                    .failureUrl(AUTHENTICATION_FAILURE_URL_PAGE)
+                .loginPage(LOG_IN_URL_PAGE)
+                .defaultSuccessUrl(DEFAULT_TARGET_URL_PAGE)
+                .failureUrl(AUTHENTICATION_FAILURE_URL_PAGE)
             .and()
                 .logout()
                 .logoutUrl(LOG_OUT_URL_PAGE)
@@ -94,7 +94,7 @@ public class WebSecurityContext extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "/signup").permitAll()
                              .antMatchers("/**").fullyAuthenticated()
-                             .anyRequest().authenticated()
+                .anyRequest().authenticated()
             .and()
                 .addFilterAfter(csrfHeaderFilter(), SessionManagementFilter.class);
      }

@@ -77,6 +77,6 @@ public class SingUpController {
             return SIGNUP_VIEW_NAME;
         }
 
-        return String.format("redirect:/%s", WebSecurityContext.DEFAULT_TARGET_URL_PAGE);
+        return String.format("redirect:%s", WebSecurityContext.DEFAULT_TARGET_URL_PAGE);
     }
 }
