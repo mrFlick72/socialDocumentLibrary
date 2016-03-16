@@ -8,7 +8,7 @@ multipart:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/user_document_library_client
+    url: jdbc:mysql://192.168.99.100:3306/user_document_library_client
     username: root
     password: root
     maximum-pool-size: 20
