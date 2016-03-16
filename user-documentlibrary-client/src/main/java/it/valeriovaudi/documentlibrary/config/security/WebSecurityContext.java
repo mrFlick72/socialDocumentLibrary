@@ -122,18 +122,6 @@ public class WebSecurityContext extends WebSecurityConfigurerAdapter {
         };
     }
 
-    private LogoutHandler logoutHandler(){
-        return new LogoutHandler() {
-            @Override
-            public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-                try {
-                    request.logout();
-                } catch (ServletException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-    }
     private CsrfTokenRepository csrfTokenRepository() {
         HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
         repository.setHeaderName("X-XSRF-TOKEN");

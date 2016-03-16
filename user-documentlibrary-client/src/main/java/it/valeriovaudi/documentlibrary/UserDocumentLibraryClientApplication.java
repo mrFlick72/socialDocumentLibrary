@@ -22,13 +22,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @SpringBootApplication
 @Configuration
-@EnableEurekaClient
-@RibbonClients
-@EnableCircuitBreaker
-@EnableZuulProxy
+//@EnableEurekaClient
+//@RibbonClients
+//@EnableCircuitBreaker
+//@EnableZuulProxy
 @EnableJpaRepositories(basePackages = "it.valeriovaudi.documentlibrary.repository")
 @EnableTransactionManagement
-@EnableRedisHttpSession
+//@EnableRedisHttpSession
 @PropertySource("classpath:restBaseUrl.properties")
 @EnableAspectJAutoProxy(proxyTargetClass = true) // without this declaration the RestTemplate injection wil be fails becouse spring cloud proxied this class for load balance with netflix ribbon
 public class UserDocumentLibraryClientApplication {
