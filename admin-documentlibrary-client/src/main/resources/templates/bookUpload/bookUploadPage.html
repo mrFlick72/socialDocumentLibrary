@@ -19,7 +19,7 @@
                                 <div class="row format-row file-field-container">
                                     <label for="fileField" class="col-sm-2 control-label" th:text="#{fileField.label}">File: </label>
                                     <div class="col-sm-6">
-                                        <input id="fileField" class="form-control filestyle" th:field="*{{file}}" type="file" data-buttonBefore="true"/>
+                                        <input id="fileField" class="form-control filestyle" th:field="*{file}" type="file" data-buttonBefore="true"/>
                                     </div>
                                     <div th:if="${#fields.hasErrors('file')}" class="col-sm-2">
                                         <span class="label label-danger" th:errors="*{file}" >Incorrect LP</span>
@@ -52,14 +52,14 @@
                                     <div class="row format-row">
                                         <label for="authorField" class="col-sm-2 control-label" th:text="#{authorField.label}">Author: </label>
                                         <div class="col-sm-6">
-                                            <input id="authorField" class="form-control"  th:field="*{{author}}"/>
+                                            <input id="authorField" class="form-control"  th:field="*{author}"/>
                                         </div>
                                     </div>
 
                                     <div class="row format-row">
                                         <label for="metadataField" class="col-sm-2 control-label" th:text="#{metadataField.label}">Add metadata </label>
                                         <div class="col-sm-6">
-                                            <select id="metadataField" class="form-control" th:field="*{{metadata}}"
+                                            <select id="metadataField" class="form-control" th:field="*{metadata}"
                                                     multiple="multiple" data-select2DataMarker="true" th:placeholder="#{bookUploadPage.tags.placeholder}" placeholder="Choose your hint tag">
                                                 <option th:each="searchTag : ${searchTags}" th:text="${searchTag}" th:value="${searchTag}"></option>
                                             </select>
@@ -68,7 +68,7 @@
                                     <div class="row format-row">
                                         <label for="descriptionField" class="col-sm-2 control-label" th:text="#{descriptionField.label}">Description: </label>
                                         <div class="col-sm-6">
-                                            <textarea id="descriptionField" class="form-control"  th:field="*{{description}}"/>
+                                            <textarea id="descriptionField" class="form-control"  th:field="*{description}"/>
                                         </div>
                                     </div>
                                 </div>
