@@ -37,10 +37,8 @@ public class BookRepositoryService extends AbstractService {
         this.bookRepositoryServiceRestTemplate = bookRepositoryServiceRestTemplate;
     }
 
-    @HystrixCommand(fallbackMethod = "getBookDataByIdFallbackMethod",  commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000"),
-            @HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE")
-    })    public Observable<String> getBookDataById(String bookId){
+    @HystrixCommand(fallbackMethod = "getBookDataByIdFallbackMethod")
+    public Observable<String> getBookDataById(String bookId){
         return new ObservableResult<String>() {
             @Override
             public String invoke() {
@@ -49,7 +47,7 @@ public class BookRepositoryService extends AbstractService {
         };
     }
 
-    public String getBookDataByIdFallbackMethod(String bookId){
+    private String getBookDataByIdFallbackMethod(String bookId){
         log.error("bookId: " + bookId);
         log.error("Fail");
          new ObservableResult<String>() {
