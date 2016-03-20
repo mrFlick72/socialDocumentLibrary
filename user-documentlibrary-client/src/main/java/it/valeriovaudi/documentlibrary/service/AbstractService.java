@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 /**
  * Created by Valerio on 28/02/2016.
  */
-public class AbstractService {
+public abstract class AbstractService {
 
     protected Logger log = LoggerFactory.getLogger(getClass());
 

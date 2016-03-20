@@ -23,7 +23,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 @Configuration
 @EnableEurekaClient
-@RibbonClients
 @EnableCircuitBreaker
 @EnableZuulProxy
 @EnableJpaRepositories(basePackages = "it.valeriovaudi.documentlibrary.repository")
