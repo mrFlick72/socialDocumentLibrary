@@ -81,8 +81,9 @@ public class BookService {
     @RequestMapping("/bookUserList")
     public ResponseEntity getUserBookList(Principal principal){
         JsonArrayBuilder jsonArrayBuilderAux = Optional.ofNullable(userBookPreferedListRepository.findByUserName(principal.getName()))
-                .map(userBookPreferedListRepository -> userBookPreferedListRepository.getBooksReadList().stream()
+                .map(userBookPreferedListRepository -> userBookPreferedListRepository.getBooksReadList().parallelStream()
                         .map(book -> Json.createArrayBuilder().add(bookFactory.bookListJsonFactory(book.getBookId())))
+                        .sequential()
                         .reduce(Json.createArrayBuilder(), (jsonArrayBuilder, jsonArrayBuilder2) -> jsonArrayBuilder.add(jsonArrayBuilder2.build().getJsonObject(0)))).
                         get();
 

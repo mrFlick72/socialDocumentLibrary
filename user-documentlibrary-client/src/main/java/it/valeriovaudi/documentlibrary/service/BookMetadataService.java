@@ -49,9 +49,10 @@ public class BookMetadataService extends AbstractService {
         };
     }
 
-    private Observable<String> getSocialMetadataByBookIdFallbackMethod(String bookId){
+    private String getSocialMetadataByBookIdFallbackMethod(String bookId){
         log.error("bookId: " + bookId);
         log.error("Fail");
-        return Observable.just(getEmptyJsonArray().getBody());
+        return getEmptyJsonArray().getBody();
+
     }
 }

@@ -39,13 +39,15 @@ public class BookUserInterfaceDTOBuilder {
 
     public BookUserInterfaceDTOBuilder bookName(String bookRepositoryJsonString){
         JsonObject bookRepositoryJson = Json.createReader(new StringReader(bookRepositoryJsonString)).readObject();
-        jsonObjectBuilder.add("bookName", bookRepositoryJson.getString("name"));
+//        jsonObjectBuilder.add("bookName", bookRepositoryJson.getString("name"));
+        jsonObjectBuilder.add("bookName", JsonUtility.getValueFromJsonString(bookRepositoryJsonString,"name"));
         return this;
     }
 
     public BookUserInterfaceDTOBuilder bookId(String bookRepositoryJsonString){
         JsonObject bookRepositoryJson = Json.createReader(new StringReader(bookRepositoryJsonString)).readObject();
-        jsonObjectBuilder.add("bookId", bookRepositoryJson.getString("id"));
+//        jsonObjectBuilder.add("bookId", bookRepositoryJson.getString("id"));
+        jsonObjectBuilder.add("bookId", JsonUtility.getValueFromJsonString(bookRepositoryJsonString, "id"));
         return this;
     }
 
@@ -55,7 +57,7 @@ public class BookUserInterfaceDTOBuilder {
         try{
             thumbnail = bookRepositoryJson.getJsonObject("pageId").getJsonObject("1").getJsonArray("links").getJsonObject(0).getString("href");
         } catch (NullPointerException e){
-            LOGGER.info(e.getMessage());
+            LOGGER.warn(e.getMessage());
         }
 
         jsonObjectBuilder.add("thumbnail", thumbnail);
@@ -131,7 +133,8 @@ public class BookUserInterfaceDTOBuilder {
     public BookUserInterfaceDTOBuilder description(String bookRepositoryJsonString){
         String descrizioneKey = "description";
         JsonObject bookRepositoryJson = Json.createReader(new StringReader(bookRepositoryJsonString)).readObject();
-        jsonObjectBuilder.add(descrizioneKey, getValueFromJson(bookRepositoryJson, descrizioneKey));
+//        jsonObjectBuilder.add(descrizioneKey, getValueFromJson(bookRepositoryJson, descrizioneKey));
+        jsonObjectBuilder.add(descrizioneKey, JsonUtility.getValueFromJsonString(bookRepositoryJsonString, descrizioneKey));
         return this;
     }
 
