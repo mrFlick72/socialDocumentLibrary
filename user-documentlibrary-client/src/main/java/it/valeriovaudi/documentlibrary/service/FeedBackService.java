@@ -55,12 +55,9 @@ public class FeedBackService extends AbstractService{
 
     @RequestMapping(value = "/userFeedBasck/{bookId}", method = RequestMethod.GET)
     public ResponseEntity<String> getUserFeedBack(@PathVariable("bookId") String bookId){
-     /*   URI uri = fromHttpUrl(String.format("%s/bookId/%s/data",bookSocialMetadataBaseUrl,bookId)).build().toUri();
-        ResponseEntity<String> forEntity = bookMetadataServiceRestTemplate.getForEntity(uri, String.class);*/
-
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
 
-        JsonArray jsonValues = Json.createReader(new StringReader(bookMetadataService.getSocialMetadataByBookId(bookId).toBlocking().single())).readArray();
+        JsonArray jsonValues = Json.createReader(new StringReader(bookMetadataService.getSocialMetadataByBookId(bookId).toBlocking().single().getBody())).readArray();
         FeedBackJsonBuilder feedBackJsonBuilder;
         DocumentLibraryUser byUserName;
         JsonObject jsonObjectAux;

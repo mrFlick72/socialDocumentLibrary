@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import rx.Observable;
@@ -39,20 +40,19 @@ public class BookMetadataService extends AbstractService {
     }
 
     @HystrixCommand(fallbackMethod = "getSocialMetadataByBookIdFallbackMethod")
-    public Observable<String> getSocialMetadataByBookId(String bookId){
-        return new ObservableResult<String>() {
+    public Observable<ResponseEntity<String>> getSocialMetadataByBookId(String bookId){
+        return new ObservableResult<ResponseEntity<String>>() {
             @Override
-            public String invoke() {
+            public ResponseEntity<String> invoke() {
                 URI uri = fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri();
-                return bookMetadataServiceRestTemplate.getForEntity(uri, String.class).getBody();
+                return bookMetadataServiceRestTemplate.getForEntity(uri, String.class);
             }
         };
     }
 
-    private String getSocialMetadataByBookIdFallbackMethod(String bookId){
+    private ResponseEntity<String> getSocialMetadataByBookIdFallbackMethod(String bookId){
         log.error("bookId: " + bookId);
         log.error("Fail");
-        return getEmptyJsonArray().getBody();
-
+        return getEmptyJsonArray();
     }
 }

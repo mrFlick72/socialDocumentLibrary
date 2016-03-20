@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import rx.Observable;
 import rx.Subscriber;
+
+import java.net.URI;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
@@ -38,16 +41,17 @@ public class BookRepositoryService extends AbstractService {
     }
 
     @HystrixCommand(fallbackMethod = "getBookDataByIdFallbackMethod")
-    public Observable<String> getBookDataById(String bookId){
-        return new ObservableResult<String>() {
+    public Observable<ResponseEntity<String>> getBookDataById(String bookId){
+        return new ObservableResult<ResponseEntity<String>>() {
             @Override
-            public String invoke() {
-                return bookRepositoryServiceRestTemplate.exchange(fromHttpUrl(String.format("%s/book/%s.json?startRecord=1&pageSize=1", bookRepositoryService, bookId)).build().toUri(), HttpMethod.GET, RequestEntity.EMPTY, String.class).getBody();
+            public ResponseEntity<String> invoke() {
+                URI uri = fromHttpUrl(String.format("%s/book/%s.json?startRecord=1&pageSize=1", bookRepositoryService, bookId)).build().toUri();
+                return bookRepositoryServiceRestTemplate.exchange(uri, HttpMethod.GET, RequestEntity.EMPTY, String.class);
             }
         };
     }
 
-    private String getBookDataByIdFallbackMethod(String bookId){
+    private ResponseEntity<String> getBookDataByIdFallbackMethod(String bookId){
         log.error("bookId: " + bookId);
         log.error("Fail");
          new ObservableResult<String>() {
@@ -57,6 +61,6 @@ public class BookRepositoryService extends AbstractService {
             }
         };
 
-        return getEmptyJsonObject().getBody();
+        return getEmptyJsonObject();
     }
 }

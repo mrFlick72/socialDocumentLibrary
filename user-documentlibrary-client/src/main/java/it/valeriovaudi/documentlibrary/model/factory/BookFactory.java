@@ -45,8 +45,8 @@ public class BookFactory {
     public JsonObject bookListJsonFactory(String bookId) {
         BookUserInterfaceDTOBuilder bookUserInterfaceDTOBuilder = BookUserInterfaceDTOBuilder.newBookUserInterfaceDTOBuilder();
 
-        String bookMetadataResponseEntity = bookMetadataService.getSocialMetadataByBookId(bookId).toBlocking().single();
-        String bookRepositoryResponseEntity = bookRepositoryService.getBookDataById(bookId).toBlocking().single();
+        String bookMetadataResponseEntity = bookMetadataService.getSocialMetadataByBookId(bookId).toBlocking().single().getBody();
+        String bookRepositoryResponseEntity = bookRepositoryService.getBookDataById(bookId).toBlocking().single().getBody();
 
 
         bookUserInterfaceDTOBuilder
