@@ -15,29 +15,6 @@ public class JsonUtility {
     private JsonUtility(){
 
     }
-    public static String getValueFromJson(JsonObject currentJsonObject,String key){
-//        String result = "";
-        return Optional.ofNullable(currentJsonObject)
-                .filter(jsonObject -> jsonObject!=null)
-                .filter(jsonObjectAux -> jsonObjectAux.containsKey(key))
-                .map(jsonObjectAux -> jsonObjectAux.get(key))
-                .map(jsonValue ->
-                     jsonValue.getValueType().compareTo(JsonValue.ValueType.NUMBER) == 0 ?
-                             String.valueOf(currentJsonObject.getInt(key)) :
-                             currentJsonObject.getString(key)
-                ).orElse("");
-
- /*       if(!currentJsonObject.isNull(key)){
-            JsonValue jsonValue = currentJsonObject.get(key);
-            if(jsonValue.getValueType().compareTo(JsonValue.ValueType.NUMBER) == 0){
-                result = String.valueOf(currentJsonObject.getInt(key));
-            } else {
-                result = currentJsonObject.getString(key);
-            }
-        }*/
-
-//        return result;
-    }
 
     public static String getValueFromMap(Map<String,String> map,String key){
         return Optional.ofNullable(map.get(key)).orElse("");
@@ -50,5 +27,24 @@ public class JsonUtility {
                 .filter(jsonObject -> jsonObject.containsKey(key))
                 .map(jsonObjectAux -> jsonObjectAux.getString(key))
                 .orElse("");
+    }
+
+    public static String getValueFromJson(JsonObject currentJsonObject,String key){
+        String result = "";
+        if(currentJsonObject.containsKey(key) ){
+            switch (currentJsonObject.get(key).getValueType()){
+                case STRING:
+                    result = currentJsonObject.getString(key);
+                    break;
+                case NUMBER:
+                    result = String.valueOf(currentJsonObject.getInt(key));
+                    break;
+                case NULL:
+                    result = "";
+                    break;
+
+            }
+        }
+        return result;
     }
 }
