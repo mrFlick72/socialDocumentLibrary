@@ -242,6 +242,25 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+
+
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.1</version>
+				<configuration>
+					<imageName>socialDocumentLibrary.user-docuemntlibrary-client</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
