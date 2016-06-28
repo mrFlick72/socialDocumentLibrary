@@ -16,22 +16,22 @@ public class ServiceConfig {
 
     @Bean
     @LoadBalanced
-    public RestTemplate bookRepositoryServiceRestTemplate(SpringClientFactory clientFactory, LoadBalancerClient loadBalancer){
-        RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory,loadBalancer);
+    public RestTemplate bookRepositoryServiceRestTemplate(SpringClientFactory clientFactory){
+        RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory);
         return new RestTemplate(ribbonClientHttpRequestFactory);
     }
 
     @Bean
     @LoadBalanced
-    public RestTemplate bookMetadataServiceRestTemplate(SpringClientFactory clientFactory, LoadBalancerClient loadBalancer){
-        RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory,loadBalancer);
+    public RestTemplate bookMetadataServiceRestTemplate(SpringClientFactory clientFactory){
+        RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory);
         return new RestTemplate(ribbonClientHttpRequestFactory);
     }
 
     @Bean
     @LoadBalanced
-    public RestTemplate searchBookServiceRestTemplate(SpringClientFactory clientFactory, LoadBalancerClient loadBalancer){
-        RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory,loadBalancer);
+    public RestTemplate searchBookServiceRestTemplate(SpringClientFactory clientFactory){
+        RibbonClientHttpRequestFactory ribbonClientHttpRequestFactory = new RibbonClientHttpRequestFactory(clientFactory);
         return new RestTemplate(ribbonClientHttpRequestFactory);
     }
 }

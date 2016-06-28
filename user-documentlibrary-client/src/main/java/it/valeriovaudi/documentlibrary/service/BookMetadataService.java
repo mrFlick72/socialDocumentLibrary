@@ -1,7 +1,6 @@
 package it.valeriovaudi.documentlibrary.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.command.ObservableResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -41,18 +40,20 @@ public class BookMetadataService extends AbstractService {
 
     @HystrixCommand(fallbackMethod = "getSocialMetadataByBookIdFallbackMethod")
     public Observable<ResponseEntity<String>> getSocialMetadataByBookId(String bookId){
-        return new ObservableResult<ResponseEntity<String>>() {
-            @Override
-            public ResponseEntity<String> invoke() {
-                URI uri = fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri();
-                return bookMetadataServiceRestTemplate.getForEntity(uri, String.class);
+        return Observable.create(subscriber -> {
+            try {
+                if (!subscriber.isUnsubscribed()) {
+                    URI uri = fromHttpUrl(String.format("%s/bookId/%s/data", bookSocialMetadataBaseUrl, bookId)).build().toUri();
+                    subscriber.onNext( bookMetadataServiceRestTemplate.getForEntity(uri, String.class));
+                    subscriber.onCompleted();
+                }
+            } catch (Exception e) {
+                subscriber.onError(e);
             }
-        };
+        });
     }
 
     private ResponseEntity<String> getSocialMetadataByBookIdFallbackMethod(String bookId){
-        log.error("bookId: " + bookId);
-        log.error("Fail");
         return getEmptyJsonArray();
     }
 }
