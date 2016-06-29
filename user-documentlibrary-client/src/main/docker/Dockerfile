@@ -1,5 +1,5 @@
 FROM frolvlad/alpine-oraclejdk8:slim
-VOLUME /tmp/socialDocumentLibrary/clientUI/
-ADD socialDocumentLibrary.jar app.jar
+ADD socialDocumentLibrary.jar /opt/socialDocumentLibrary/clientUI/
 EXPOSE 9090-9099
-ENTRYPOINT ["java","-jar","/app.jar"]
+WORKDIR /opt/socialDocumentLibrary/clientUI/
+CMD ["java", "-Xms512m", "-Xmx1g", "-jar", "socialDocumentLibrary.jar"]
