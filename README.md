@@ -55,9 +55,11 @@ After that you have installed Docker on your pc you can start the Docker Toolbox
     <li>docker run -d -p 6379:6379 -name redisHost --name redisHost redis</li> 
     <li>docker run -d -v /data/db:/data/db  -p 27017:27017 --name mongoHost  mongo</li> 
     <li>docker run -d -v /var/lib/mysql:/var/lib/mysql -d -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 --name databaseHost mysql</li> 
-    <li>docker run --name='activemq' -d -p 8161:8161 -p 61616:61616 -p 61613:61613 webcenter/activemq:5.13.1</li> 
-    
-    <li>docker run -p 9090:9090 -e server.port=9090 --link databaseHost:databaseHost --link redisHost:redisHost  --name user-documentlibrary-client social-documet-library/user-documentlibrary-client</li> 
+    <li>docker run --name activeMQHost -d -p 8161:8161 -p 61616:61616 -p 61613:61613 webcenter/activemq:5.13.1</li>
+    <li>docker run -d -p 9090:9090 -e server.port=9090 --link databaseHost:databaseHost --link redisHost:redisHost  --name user-documentlibrary-client social-documet-library/user-documentlibrary-client</li> 
+    <li>docker run -p 6060:6060 -e server.port=6060 --link mongoHost:mongoHost --link eureka-server:eureka-server --name search-book-service social-documet-library/search-book-service</li> 
+    <li>docker run -p 8761:8761 -e server.port=8761 --name eureka-server social-documet-library/eureka-server</li> 
+    <li>docker run --name some-nginx -v ${yourbasecode}/src/main/ngnix/ngnix.conf:/etc/nginx/nginx.conf:ro -p 80:80 -d --link user-documentlibrary-client:user-documentlibrary-client --link user-documentlibrary-client2:user-documentlibrary-client2 nginx</li> 
 </ul>
 
 For Mysql after that the docker conteiner is up you must create the mysql schema for the app. For this propuse you can typing 
@@ -66,9 +68,6 @@ mysql -h 192.168.99.100 -u root -proot
 
 create database user_document_library_client;
 create database admin_document_library_client;
-
-the default ip of docker in my machine is 192.168.99.100 for this reason please keep caution becouse if your machine will pubblish a different ip you have update the reference in the projects.
-
 
 The admin user credential are: user:admin, password: admin.
 Indeed for the Final user you have create a new account.
