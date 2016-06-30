@@ -52,12 +52,12 @@ In this version I start to integrate docker. Now the main configuration suppose 
 The use the final project you have installed on your pc docker. For this propouse you can follow this link <a href="https://docs.docker.com/mac/">hear</a>.
 After that you have installed Docker on your pc you can start the Docker Toolbox and use this subsequnt command:
 <ul>
-    <li>docker run -d -p 6379:6379 redis</li> 
-    <li>docker run -d -v /data/db:/data/db  -p 27017:27017 mongo</li> 
-    <li>docker run -d -v /var/lib/mysql:/var/lib/mysql -d -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql</li> 
+    <li>docker run -d -p 6379:6379 -name redisHost --name redisHost redis</li> 
+    <li>docker run -d -v /data/db:/data/db  -p 27017:27017 --name mongoHost  mongo</li> 
+    <li>docker run -d -v /var/lib/mysql:/var/lib/mysql -d -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 --name databaseHost mysql</li> 
     <li>docker run --name='activemq' -d -p 8161:8161 -p 61616:61616 -p 61613:61613 webcenter/activemq:5.13.1</li> 
     
-    <li>docker run -p 9090:9090 --link stoic_colden:databaseHost --link clever_austin:redisHost  social-documet-library/user-documentlibrary-client</li> 
+    <li>docker run -p 9090:9090 -e server.port=9090 --link databaseHost:databaseHost --link redisHost:redisHost  --name user-documentlibrary-client social-documet-library/user-documentlibrary-client</li> 
 </ul>
 
 For Mysql after that the docker conteiner is up you must create the mysql schema for the app. For this propuse you can typing 
