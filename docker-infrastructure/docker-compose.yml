@@ -22,24 +22,6 @@ messagingSystem:
     - "8161:8161"
     - "61616:61616"
     - "61613:61613"
-user-documentlibrary-client:
-  image: social-documet-library/user-documentlibrary-client
-  ports:
-    - "9090:9090"
-  environment:
-  - server.port=9090
-  links:
-    - "databaseHost:databaseHost"
-    - "redisHost:redisHost"
-user-documentlibrary-client-1:
-  image: social-documet-library/user-documentlibrary-client
-  ports:
-    - "9091:9091"
-  environment:
-  - server.port=9091
-  links:
-  - "databaseHost:databaseHost"
-  - "redisHost:redisHost"
 nginx:
   image: nginx
   ports:
@@ -49,3 +31,29 @@ nginx:
   links:
     - "user-documentlibrary-client:user-documentlibrary-client"
     - "user-documentlibrary-client-1:user-documentlibrary-client-1"
+eureka-server:
+    image: social-documet-library/eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - server.port=8761
+user-documentlibrary-client:
+  image: social-documet-library/user-documentlibrary-client
+  ports:
+    - "9090:9090"
+  environment:
+  - server.port=9090
+  links:
+    - "databaseHost:databaseHost"
+    - "redisHost:redisHost"
+    - "eureka-server:eureka-server"
+user-documentlibrary-client-1:
+  image: social-documet-library/user-documentlibrary-client
+  ports:
+    - "9091:9091"
+  environment:
+  - server.port=9091
+  links:
+  - "databaseHost:databaseHost"
+  - "redisHost:redisHost"
+  - "eureka-server:eureka-server"
