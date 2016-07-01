@@ -102,3 +102,24 @@ book-social-metadata-service-1:
   links:
     - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
+
+book-repository-service:
+  image: social-document-library/book-repository-service:lastest
+  ports:
+    - "8080:8080"
+  environment:
+  - server.port=8080
+  links:
+    - "mongoHost:mongoHost"
+    - "eureka-server:eureka-server"
+    - "messagingSystemHost:messagingSystemHost"
+
+book-repository-service-1:
+  image: social-document-library/book-repository-service:lastest
+  ports:
+    - "8081:8081"
+  environment:
+  - server.port=8081
+  links:
+    - "mongoHost:mongoHost"
+    - "eureka-server:eureka-server"

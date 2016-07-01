@@ -30,7 +30,7 @@ buildscript {
 group = 'it.valeriovaudi.documentlibrary'
 version = '2.0.0-SNAPSHOT'
 
-def dockerImagePrefix="social-documet-library"
+def dockerImagePrefix="social-document-library"
 def dockerImageName="book-repository-service"
 
 jar {
@@ -103,6 +103,8 @@ task wrapper(type: Wrapper) {
 
 
 task buildDocker(type: Docker, dependsOn: build) {
+//    push = true
+
     baseImage = "$dockerImagePrefix"
     applicationName = "$dockerImageName"
     tagVersion = "lastest"
