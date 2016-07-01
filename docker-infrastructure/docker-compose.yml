@@ -63,3 +63,41 @@ user-documentlibrary-client-1:
   - "databaseHost:databaseHost"
   - "redisHost:redisHost"
   - "eureka-server:eureka-server"
+
+search-book-service:
+  image: social-documet-library/search-book-service
+  ports:
+    - "6060:6060"
+  environment:
+  - server.port=6060
+  links:
+    - "databaseHost:databaseHost"
+    - "eureka-server:eureka-server"
+search-book-service-1:
+  image: social-documet-library/search-book-service
+  ports:
+    - "6061:6061"
+  environment:
+  - server.port=6061
+  links:
+  - "databaseHost:databaseHost"
+  - "eureka-server:eureka-server"
+
+search-book-service:
+  image: social-documet-library/search-book-service
+  ports:
+    - "6060:6060"
+  environment:
+  - server.port=6060
+  links:
+    - "databaseHost:databaseHost"
+    - "eureka-server:eureka-server"
+search-book-service-1:
+  image: social-documet-library/search-book-service
+  ports:
+    - "6061:6061"
+  environment:
+  - server.port=6061
+  links:
+  - "databaseHost:databaseHost"
+  - "eureka-server:eureka-server"
