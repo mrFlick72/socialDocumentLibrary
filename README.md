@@ -6,8 +6,6 @@ The application is a document Library for IT books, in the documentation I expla
 developed life cycle of the project. Maninly it is composed by two app the app for final user and app for employee user.
 The application was developed for HCI exam for the Master Degree in "La Sapienza" of Rome.
 
-# In the new version I added the uso of Spring Cloud technology, for now the system could be instable becouse is under development
-
 # Main Technologies 
 <ul>
     <li>User Center Design</li>
@@ -52,7 +50,7 @@ In this version I start to integrate docker. Now the main configuration suppose 
 The use the final project you have installed on your pc docker. For this propouse you can follow this link <a href="https://docs.docker.com/mac/">hear</a>.
 After that you have installed Docker on your pc you can start the Docker Toolbox and use this subsequnt command:
 <ul>
-    <li>docker run -d -p 6379:6379 -name redisHost --name redisHost redis</li> 
+    <li>docker run -d -p 6379:6379 --name redisHost redis</li> 
     <li>docker run -d -v /data/db:/data/db  -p 27017:27017 --name mongoHost  mongo</li> 
     <li>docker run -d -v /var/lib/mysql:/var/lib/mysql -d -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 --name databaseHost mysql</li> 
     <li>docker run --name activeMQHost -d -p 8161:8161 -p 61616:61616 -p 61613:61613 webcenter/activemq:5.13.1</li>
