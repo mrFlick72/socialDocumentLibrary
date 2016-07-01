@@ -90,7 +90,7 @@ book-social-metadata-service:
   environment:
   - server.port=4040
   links:
-    - "databaseHost:databaseHost"
+    - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
 book-social-metadata-service-1:
   image: social-documet-library/book-social-metadata-service
@@ -99,5 +99,5 @@ book-social-metadata-service-1:
   environment:
   - server.port=4041
   links:
-  - "databaseHost:databaseHost"
-  - "eureka-server:eureka-server"
+    - "mongoHost:mongoHost"
+    - "eureka-server:eureka-server"
