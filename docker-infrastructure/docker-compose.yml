@@ -71,7 +71,7 @@ search-book-service:
   environment:
   - server.port=6060
   links:
-    - "databaseHost:databaseHost"
+    - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
 search-book-service-1:
   image: social-documet-library/search-book-service
@@ -80,7 +80,7 @@ search-book-service-1:
   environment:
   - server.port=6061
   links:
-  - "databaseHost:databaseHost"
+  - "mongoHost:mongoHost"
   - "eureka-server:eureka-server"
 
 book-social-metadata-service:
@@ -92,6 +92,7 @@ book-social-metadata-service:
   links:
     - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
+
 book-social-metadata-service-1:
   image: social-documet-library/book-social-metadata-service
   ports:
