@@ -83,21 +83,21 @@ search-book-service-1:
   - "databaseHost:databaseHost"
   - "eureka-server:eureka-server"
 
-search-book-service:
-  image: social-documet-library/search-book-service
+book-social-metadata-service:
+  image: social-documet-library/book-social-metadata-service
   ports:
-    - "6060:6060"
+    - "4040:4040"
   environment:
-  - server.port=6060
+  - server.port=4040
   links:
     - "databaseHost:databaseHost"
     - "eureka-server:eureka-server"
-search-book-service-1:
-  image: social-documet-library/search-book-service
+book-social-metadata-service-1:
+  image: social-documet-library/book-social-metadata-service
   ports:
-    - "6061:6061"
+    - "4041:4041"
   environment:
-  - server.port=6061
+  - server.port=4041
   links:
   - "databaseHost:databaseHost"
   - "eureka-server:eureka-server"
