@@ -19,7 +19,7 @@ redisHost:
   ports:
     - "6379:6379"
 
-messagingSystem:
+messagingSystemHost:
   image: webcenter/activemq:5.13.1
   ports:
     - "8161:8161"
