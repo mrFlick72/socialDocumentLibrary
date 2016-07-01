@@ -4,6 +4,7 @@ mongoHost:
   - "27017:27017"
   volumes:
     - "/data/db:/data/db"
+
 databaseHost:
   image: mysql
   ports:
@@ -12,16 +13,19 @@ databaseHost:
     - "/var/lib/mysql:/var/lib/mysql"
   environment:
   - MYSQL_ROOT_PASSWORD=root
+
 redisHost:
   image: redis
   ports:
     - "6379:6379"
+
 messagingSystem:
   image: webcenter/activemq:5.13.1
   ports:
     - "8161:8161"
     - "61616:61616"
     - "61613:61613"
+
 nginx:
   image: nginx
   ports:
@@ -31,12 +35,14 @@ nginx:
   links:
     - "user-documentlibrary-client:user-documentlibrary-client"
     - "user-documentlibrary-client-1:user-documentlibrary-client-1"
+
 eureka-server:
     image: social-documet-library/eureka-server
     ports:
       - "8761:8761"
     environment:
       - server.port=8761
+
 user-documentlibrary-client:
   image: social-documet-library/user-documentlibrary-client
   ports:
