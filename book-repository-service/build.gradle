@@ -38,6 +38,11 @@ jar {
     baseName = '$dockerImageName'
 }
 
+configurations {
+    deployerJars
+}
+
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 

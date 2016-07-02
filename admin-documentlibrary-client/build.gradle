@@ -43,8 +43,6 @@ configurations {
 
 compileJava.dependsOn(processResources)
 
-//archivesBaseName = jar.baseName;
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
