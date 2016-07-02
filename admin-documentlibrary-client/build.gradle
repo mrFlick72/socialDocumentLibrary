@@ -30,7 +30,7 @@ version = '2.0.0-SNAPSHOT'
 group = 'it.valeriovaudi.documentlibrary'
 
 def dockerImagePrefix="social-document-library"
-def dockerImageName="admin-document-library-client"
+def dockerImageName="admin-documentlibrary-client"
 
 jar {
     archiveName="adminDocumentLibraryClient.jar"
