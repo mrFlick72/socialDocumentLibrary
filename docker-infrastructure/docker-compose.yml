@@ -73,6 +73,7 @@ search-book-service:
   links:
     - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
+
 search-book-service-1:
   image: social-documet-library/search-book-service
   ports:
@@ -123,3 +124,5 @@ book-repository-service-1:
   links:
     - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
+    - "messagingSystemHost:messagingSystemHost"
+
