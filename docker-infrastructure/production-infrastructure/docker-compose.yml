@@ -1,14 +1,14 @@
 mongoHost:
   image: mongo
   ports:
-  - "27017:27017"
+    - "27017:27017"
   volumes:
     - "/data/db:/data/db"
 
 databaseHost:
   image: mysql
   ports:
-  - "3306:3306"
+    - "3306:3306"
   volumes:
     - "/var/lib/mysql:/var/lib/mysql"
   environment:
@@ -48,7 +48,7 @@ user-documentlibrary-client:
   ports:
     - "9090:9090"
   environment:
-  - server.port=9090
+    - server.port=9090
   links:
     - "databaseHost:databaseHost"
     - "redisHost:redisHost"
@@ -58,7 +58,7 @@ user-documentlibrary-client-1:
   ports:
     - "9091:9091"
   environment:
-  - server.port=9091
+    - server.port=9091
   links:
   - "databaseHost:databaseHost"
   - "redisHost:redisHost"
@@ -69,7 +69,7 @@ admin-documentlibrary-client:
   ports:
     - "7070:7070"
   environment:
-  - server.port=7070
+    - server.port=7070
   links:
     - "databaseHost:databaseHost"
     - "messagingSystemHost:messagingSystemHost"
@@ -81,7 +81,7 @@ admin-documentlibrary-client-1:
   ports:
     - "7071:7071"
   environment:
-  - server.port=7071
+    - server.port=7071
   links:
     - "databaseHost:databaseHost"
     - "messagingSystemHost:messagingSystemHost"
@@ -93,7 +93,7 @@ search-book-service:
   ports:
     - "6060:6060"
   environment:
-  - server.port=6060
+    - server.port=6060
   links:
     - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
@@ -103,17 +103,17 @@ search-book-service-1:
   ports:
     - "6061:6061"
   environment:
-  - server.port=6061
+    - server.port=6061
   links:
-  - "mongoHost:mongoHost"
-  - "eureka-server:eureka-server"
+    - "mongoHost:mongoHost"
+    - "eureka-server:eureka-server"
 
 book-social-metadata-service:
   image: social-document-library/book-social-metadata-service
   ports:
     - "4040:4040"
   environment:
-  - server.port=4040
+    - server.port=4040
   links:
     - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
@@ -133,7 +133,7 @@ book-repository-service:
   ports:
     - "8080:8080"
   environment:
-  - server.port=8080
+    - server.port=8080
   links:
     - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
@@ -144,7 +144,7 @@ book-repository-service-1:
   ports:
     - "8081:8081"
   environment:
-  - server.port=8081
+    - server.port=8081
   links:
     - "mongoHost:mongoHost"
     - "eureka-server:eureka-server"
