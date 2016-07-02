@@ -64,6 +64,30 @@ user-documentlibrary-client-1:
   - "redisHost:redisHost"
   - "eureka-server:eureka-server"
 
+admin-documentlibrary-client:
+  image: social-document-library/admin-documentlibrary-client:lastest
+  ports:
+    - "7070:7070"
+  environment:
+  - server.port=7070
+  links:
+    - "databaseHost:databaseHost"
+    - "messagingSystemHost:messagingSystemHost"
+    - "redisHost:redisHost"
+    - "eureka-server:eureka-server"
+
+admin-documentlibrary-client-1:
+  image: social-document-library/admin-documentlibrary-client:lastest
+  ports:
+    - "7071:7071"
+  environment:
+  - server.port=7071
+  links:
+  - "databaseHost:databaseHost"
+  - "messagingSystemHost:messagingSystemHost"
+  - "redisHost:redisHost"
+  - "eureka-server:eureka-server"
+
 search-book-service:
   image: social-document-library/search-book-service
   ports:
