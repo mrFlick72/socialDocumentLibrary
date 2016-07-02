@@ -1,9 +1,0 @@
-
-book-repository-service-1:
-  image: social-document-library/book-repository-service:lastest
-  ports:
-    - "8081:8081"
-  environment:
-  - server.port=8081
-  volumes:
-    - "/opt/socialDocumentLibrary/book-repository-service/repository/:/opt/socialDocumentLibrary/book-repository-service/repository/"
