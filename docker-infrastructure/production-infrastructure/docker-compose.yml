@@ -44,7 +44,7 @@ eureka-server:
       - server.port=8761
 
 user-documentlibrary-client:
-  image: social-documet-library/user-documentlibrary-client
+  image: social-document-library/user-documentlibrary-client
   ports:
     - "9090:9090"
   environment:
@@ -54,7 +54,7 @@ user-documentlibrary-client:
     - "redisHost:redisHost"
     - "eureka-server:eureka-server"
 user-documentlibrary-client-1:
-  image: social-documet-library/user-documentlibrary-client
+  image: social-document-library/user-documentlibrary-client
   ports:
     - "9091:9091"
   environment:
@@ -65,7 +65,7 @@ user-documentlibrary-client-1:
   - "eureka-server:eureka-server"
 
 search-book-service:
-  image: social-documet-library/search-book-service
+  image: social-document-library/search-book-service
   ports:
     - "6060:6060"
   environment:
@@ -75,7 +75,7 @@ search-book-service:
     - "eureka-server:eureka-server"
 
 search-book-service-1:
-  image: social-documet-library/search-book-service
+  image: social-document-library/search-book-service
   ports:
     - "6061:6061"
   environment:
@@ -85,7 +85,7 @@ search-book-service-1:
   - "eureka-server:eureka-server"
 
 book-social-metadata-service:
-  image: social-documet-library/book-social-metadata-service
+  image: social-document-library/book-social-metadata-service
   ports:
     - "4040:4040"
   environment:
@@ -95,7 +95,7 @@ book-social-metadata-service:
     - "eureka-server:eureka-server"
 
 book-social-metadata-service-1:
-  image: social-documet-library/book-social-metadata-service
+  image: social-document-library/book-social-metadata-service
   ports:
     - "4041:4041"
   environment:

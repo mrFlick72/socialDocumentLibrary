@@ -1,11 +1,19 @@
+apply plugin: 'propdeps'
+
+apply plugin: "sonar-runner"
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'docker'
+
 buildscript {
     ext {
-        springBootVersion = '1.3.3.RELEASE'
+        springBootVersion = '1.3.5.RELEASE'
     }
     repositories {
         mavenCentral()
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
         maven { url 'http://repo.spring.io/plugins-release' }
     }
 
@@ -13,27 +21,29 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE")
         classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+
+        classpath('se.transmode.gradle:gradle-docker:1.2')
     }
 }
-apply plugin: 'propdeps'
-
-apply plugin: "sonar-runner"
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot' 
-apply plugin: 'io.spring.dependency-management'
 
 version = '2.0.0-SNAPSHOT'
 group = 'it.valeriovaudi.documentlibrary'
 
+def dockerImagePrefix="social-document-library"
+def dockerImageName="admin-documentLibrary-client"
+
 jar {
-    baseName = 'adminDocumentlibraryClient'
+    archiveName="adminDocumentLibraryClient.jar"
+    baseName = '$dockerImageName'
+}
+
+configurations {
+    deployerJars
 }
 
 compileJava.dependsOn(processResources)
 
-archivesBaseName = jar.baseName;
+//archivesBaseName = jar.baseName;
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -98,7 +108,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Brixton.BUILD-SNAPSHOT"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Brixton.RELEASE"
     }
 }
 
@@ -135,6 +145,24 @@ processResources {
     }
     filesMatching("**/*.css") {
         filter(ReplaceTokens, tokens:mappings)
+    }
+}
+
+task buildDocker(type: Docker, dependsOn: build) {
+//    push = true
+
+    baseImage = "$dockerImagePrefix"
+    applicationName = "$dockerImageName"
+    tagVersion = "lastest"
+
+    tag  = "$baseImage/$applicationName"
+
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
     }
 }
 

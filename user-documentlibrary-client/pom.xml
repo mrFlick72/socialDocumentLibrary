@@ -24,7 +24,7 @@
 		<start-class>it.valeriovaudi.documentlibrary.UserDocumentLibraryClientApplication</start-class>
 		<java.version>1.8</java.version>
 
-		<docker.image.prefix>social-documet-library</docker.image.prefix>
+		<docker.image.prefix>social-document-library</docker.image.prefix>
 
 		<search-book-service.server.location>/search-book-service</search-book-service.server.location>
 		<search-book-service.searchBookService.baseUrl>${search-book-service.server.location}/searchBookIndex</search-book-service.searchBookService.baseUrl>

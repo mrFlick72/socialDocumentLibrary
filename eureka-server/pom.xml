@@ -19,7 +19,7 @@
 	</parent>
 
 	<properties>
-		<docker.image.prefix>social-documet-library</docker.image.prefix>
+		<docker.image.prefix>social-document-library</docker.image.prefix>
 
 		<eureka.server.server.port>8761</eureka.server.server.port>
 		<eureka.server.location>localhost</eureka.server.location>
