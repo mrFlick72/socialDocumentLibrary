@@ -48,21 +48,15 @@ First of all you have make mvn clean install of the common-validator project for
 Then for build project you have <a href="https://maven.apache.org/">Apache Maven</a> and <a href="http://gradle.org/">Gradle</a>.
 In this version I start to integrate docker. Now the main configuration suppose that you use docker for redis server, mongo, activeMQ and MySql.
 The use the final project you have installed on your pc docker. For this propouse you can follow this link <a href="https://docs.docker.com/mac/">hear</a>.
-After that you have installed Docker on your pc you can start the Docker Toolbox and use this subsequnt command:
-<ul>
-    <li>docker run -d -p 6379:6379 --name redisHost redis</li> 
-    <li>docker run -d -v /data/db:/data/db  -p 27017:27017 --name mongoHost  mongo</li> 
-    <li>docker run -d -v /var/lib/mysql:/var/lib/mysql -d -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 --name databaseHost mysql</li> 
-    <li>docker run --name activeMQHost -d -p 8161:8161 -p 61616:61616 -p 61613:61613 webcenter/activemq:5.13.1</li>
-    <li>docker run -d -p 9090:9090 -e server.port=9090 --link databaseHost:databaseHost --link redisHost:redisHost  --name user-documentlibrary-client social-documet-library/user-documentlibrary-client</li> 
-    <li>docker run -p 6060:6060 -e server.port=6060 --link mongoHost:mongoHost --link eureka-server:eureka-server --name search-book-service social-documet-library/search-book-service</li> 
-    <li>docker run -p 8761:8761 -e server.port=8761 --name eureka-server social-documet-library/eureka-server</li> 
-    <li>docker run --name some-nginx -v ${yourbasecode}/src/main/ngnix/ngnix.conf:/etc/nginx/nginx.conf:ro -p 80:80 -d --link user-documentlibrary-client:user-documentlibrary-client --link user-documentlibrary-client2:user-documentlibrary-client2 nginx</li> 
-</ul>
+After that you have installed Docker and Docker Compose on your pc you can start the Docker Toolbox.
 
-For Mysql after that the docker conteiner is up you must create the mysql schema for the app. For this propuse you can typing 
+For build the projects you have use docker-compose with the yml file under production-infrastructure/test-infrastructure and build all the projects, pay actention to lunch the 
+docker:build maven goal for maven projects and buildDocker task in gradle projects in the build pipeline.
+For test the product use docker-compose with the yml file under production-infrastructure/production-infrastructure 
 
-mysql -h 192.168.99.100 -u root -proot
+For Mysql if you get an error for database after that the docker container is up you must can create the mysql schema for the app. For this propuse you can typing 
+
+mysql -h ${yourDockerHost} -u root -proot
 
 create database user_document_library_client;
 create database admin_document_library_client;
