@@ -1,0 +1,27 @@
+mongoHost:
+  image: mongo
+  ports:
+  - "27017:27017"
+  volumes:
+    - "/data/db:/data/db"
+
+databaseHost:
+  image: mysql
+  ports:
+  - "3306:3306"
+  volumes:
+    - "/var/lib/mysql:/var/lib/mysql"
+  environment:
+  - MYSQL_ROOT_PASSWORD=root
+
+redisHost:
+  image: redis
+  ports:
+    - "6379:6379"
+
+messagingSystemHost:
+  image: webcenter/activemq:5.13.1
+  ports:
+    - "8161:8161"
+    - "61616:61616"
+    - "61613:61613"
