@@ -170,6 +170,7 @@ public class BookService {
                         }
                     } catch (IOException ioe) {
                         LOGGER.error("ERRORE nella creazione del file temporaneo");
+                        ioe.printStackTrace();
                         return new FileInteractionException(ioe);
                     }
                     return tempFile;
@@ -187,11 +188,13 @@ public class BookService {
                                 result.add(byteArrayOutputStream.toByteArray());
                             } catch (IOException e) {
                                 LOGGER.error(e.getMessage());
+                                e.printStackTrace();
                                 throw new PdfInteractionAndManipulation(e);
                             }
                         });
                     } catch (IOException e) {
                         LOGGER.error(e.getMessage());
+                        e.printStackTrace();
                         throw new PdfInteractionAndManipulation(e);
                     }
 
