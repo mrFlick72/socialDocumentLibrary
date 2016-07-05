@@ -20,7 +20,7 @@ public class FeedBackJsonBuilder {
     private JsonObject master;
     private Set<String> actualFilds = new HashSet<>();
     private Map<String,String> frontEndKeysMap;
-    private String[] frontEndKeys = new String[] {"id","bookId","userName","score","title","body","firstNameAndLastName"};
+    private String[] avaiableKeys = new String[] {"id","bookId","userName","score","feedbackTitle","feedbackBody","firstNameAndLastName"};
 
     public FeedBackJsonBuilder() {
         frontEndKeysMap = new HashMap<>();
@@ -29,8 +29,8 @@ public class FeedBackJsonBuilder {
         frontEndKeysMap.put("bookId","bookId");
         frontEndKeysMap.put("userName","userName");
         frontEndKeysMap.put("score","score");
-        frontEndKeysMap.put("title","feadbackTitle");
-        frontEndKeysMap.put("body","feadbackBody");
+        frontEndKeysMap.put("feedbackTitle","feedbackTitle");
+        frontEndKeysMap.put("feedbackBody","feedbackBody");
         frontEndKeysMap.put("firstNameAndLastName","firstNameAndLastName");
     }
 
@@ -85,14 +85,14 @@ public class FeedBackJsonBuilder {
     }
 
     public FeedBackJsonBuilder feadbackTitle(String feadbackTitle){
-        jsonObjectBuilder.add("feadbackTitle", feadbackTitle);
-        actualFilds.add("title");
+        jsonObjectBuilder.add("feedbackTitle", feadbackTitle);
+        actualFilds.add("feedbackTitle");
         return this;
     }
 
     public FeedBackJsonBuilder feadbackBody(String feadbackBody){
-        jsonObjectBuilder.add("feadbackBody",feadbackBody);
-        actualFilds.add("body");
+        jsonObjectBuilder.add("feedbackBody",feadbackBody);
+        actualFilds.add("feedbackBody");
         return this;
     }
 
@@ -103,7 +103,7 @@ public class FeedBackJsonBuilder {
     }
 
     public JsonObject buildJson(){
-        for (String key : frontEndKeys) {
+        for (String key : avaiableKeys) {
             if(!actualFilds.contains(key)){
                 if(!String.valueOf(JsonUtility.getValueFromJson(master, key)).trim().equals("")){
                     jsonObjectBuilder.add(frontEndKeysMap.get(key),JsonUtility.getValueFromJson(master,key));

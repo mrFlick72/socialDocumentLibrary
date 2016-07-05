@@ -57,7 +57,7 @@ public class FeedBackService extends AbstractService {
         this.documentLibraryUserRepository = documentLibraryUserRepository;
     }
 
-    @RequestMapping(value = "/userFeedBasck/{bookId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/userFeedBack/{bookId}", method = RequestMethod.GET)
     public ResponseEntity<String> getUserFeedBack(@PathVariable("bookId") String bookId) {
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
 
@@ -104,9 +104,13 @@ public class FeedBackService extends AbstractService {
     }
 
     private String getBodyJsonString(String body, String userName) {
+        log.info("*****************************");
+        log.info(body);
         JsonObject jsonObject = FeedBackJsonBuilder.newFeedBackJsonBuilder(body)
                 .userName(userName)
                 .buildJson();
+        log.info("*****************************");
+        log.info(jsonObject.toString());
         return jsonObject.toString();
     }
 }
