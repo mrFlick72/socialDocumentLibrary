@@ -8,7 +8,7 @@ multipart:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/user_document_library_client
+    url: jdbc:mysql://databaseHost:3306/user_document_library_client
     username: root
     password: root
     maximum-pool-size: 20
@@ -16,7 +16,7 @@ spring:
     hibernate:
       ddl-auto: update
   redis:
-    host: localhost
+    host: redisHost
   mvc:
     locale: en
 
@@ -30,7 +30,9 @@ security:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    preferIpAddress: true
 
 
 zuul:
