@@ -48,6 +48,7 @@ user-documentlibrary-client:
   ports:
     - "9090:9090"
   environment:
+     -spring.profiles.active=docker
     - server.port=9090
   links:
     - "databaseHost:databaseHost"
@@ -58,6 +59,7 @@ user-documentlibrary-client-1:
   ports:
     - "9091:9091"
   environment:
+     -spring.profiles.active=docker
     - server.port=9091
   links:
   - "databaseHost:databaseHost"
@@ -69,6 +71,7 @@ admin-documentlibrary-client:
   ports:
     - "7070:7070"
   environment:
+     -spring.profiles.active=docker
     - server.port=7070
   links:
     - "databaseHost:databaseHost"
@@ -81,6 +84,7 @@ admin-documentlibrary-client-1:
   ports:
     - "7071:7071"
   environment:
+     -spring.profiles.active=docker
     - server.port=7071
   links:
     - "databaseHost:databaseHost"
@@ -93,6 +97,7 @@ search-book-service:
   ports:
     - "6060:6060"
   environment:
+     -spring.profiles.active=docker
     - server.port=6060
   links:
     - "mongoHost:mongoHost"
@@ -103,6 +108,7 @@ search-book-service-1:
   ports:
     - "6061:6061"
   environment:
+     -spring.profiles.active=docker
     - server.port=6061
   links:
     - "mongoHost:mongoHost"
@@ -113,6 +119,7 @@ book-social-metadata-service:
   ports:
     - "4040:4040"
   environment:
+     -spring.profiles.active=docker
     - server.port=4040
   links:
     - "mongoHost:mongoHost"
@@ -123,6 +130,7 @@ book-social-metadata-service-1:
   ports:
     - "4041:4041"
   environment:
+   -spring.profiles.active=docker
   - server.port=4041
   links:
     - "mongoHost:mongoHost"
@@ -133,6 +141,7 @@ book-repository-service:
   ports:
     - "8080:8080"
   environment:
+     -spring.profiles.active=docker
     - server.port=8080
   links:
     - "mongoHost:mongoHost"
@@ -144,6 +153,7 @@ book-repository-service-1:
   ports:
     - "8081:8081"
   environment:
+    -spring.profiles.active=docker
     - server.port=8081
   links:
     - "mongoHost:mongoHost"
