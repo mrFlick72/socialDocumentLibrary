@@ -63,5 +63,6 @@ create database admin_document_library_client;
 
 The admin user credential are: user:admin, password: admin.
 
-For test in local enviroment please remember of setting yourBaseLocalPath4BookRepositoryService placeholder in the application.properties. Yon can acived this editing the placeholder, use a enviroment variable or a vm options
+For test in local enviroment please remember of setting yourBaseLocalPath4BookRepositoryService placeholder in the application.properties. 
+Being a Spring Boot application you can acived this editing the placeholder, use a enviroment variable or a vm options
 Indeed for the Final user you have create a new account.
