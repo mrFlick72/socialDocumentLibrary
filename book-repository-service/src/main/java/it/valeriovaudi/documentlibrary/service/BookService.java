@@ -9,6 +9,7 @@ import it.valeriovaudi.documentlibrary.model.Page;
 import it.valeriovaudi.documentlibrary.model.PdfBookMaster;
 import it.valeriovaudi.documentlibrary.repository.BookRepository;
 import it.valeriovaudi.documentlibrary.repository.PdfBookMasterRepository;
+import it.valeriovaudi.documentlibrary.support.BookServiceConfigurationProperties;
 import it.valeriovaudi.documentlibrary.support.PageSupport;
 import org.apache.pdfbox.io.RandomAccessBuffer;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -50,6 +52,7 @@ import java.util.concurrent.Executors;
  */
 
 @Configuration
+@EnableConfigurationProperties(value = BookServiceConfigurationProperties.class)
 public class BookService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookService.class);
 
@@ -65,25 +68,11 @@ public class BookService {
     public static final String MAP_MESSAGE_PAYLOAD_KEY                                    = "payload";
     public static final String MAP_MESSAGE_UUID_KEY                                       = "uuid";
 
+    private BookServiceConfigurationProperties bookServiceConfigurationProperties;
+
     @Autowired
-    private Environment environment;
-
-    @Value("${bookService.bookPageFileFormat}")
-    private String bookPageFileFormat;
-
-    @Value("${bookService.bookPageNameFormat}")
-    private String bookPageNameFormat;
-
-    public void setBookPageFileFormat(String bookPageFileFormat) {
-        this.bookPageFileFormat = bookPageFileFormat;
-    }
-
-    public void setBookPageNameFormat(String bookPageNameFormat) {
-        this.bookPageNameFormat = bookPageNameFormat;
-    }
-
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
+    public void setBookServiceConfigurationProperties(BookServiceConfigurationProperties bookServiceConfigurationProperties) {
+        this.bookServiceConfigurationProperties = bookServiceConfigurationProperties;
     }
 
     @Bean
@@ -136,8 +125,6 @@ public class BookService {
                                                @Qualifier("createBookResultQueue") Destination createBookResultQueue,
                                                PdfBookMasterRepository pdfBookMasterRepository,
                                                BookRepository bookRepository){
-        String tempFilePathBaseDir = environment.getProperty("bookService.storeBookPageByPage.tempFilePathBaseDir");
-
         return IntegrationFlows.from(Jms.messageDriverChannelAdapter(connectionFactory)
                 .destination(createBookQueue)
                 .errorChannel(storeBookPageByPageErrorChannel()))
@@ -161,7 +148,8 @@ public class BookService {
                     pdfBookMasterInfoHeader = (Map<String, Object>) headers.get(PDF_BOOK_MASTER_INFO_HEADER_KEY);
                     byte[] bytes = pdfBookMasterRepository.readPdfMaster(String.valueOf(pdfBookMasterInfoHeader.get(PDF_BOOK_MASTER_ID_HEADER_KEY)));
                     Path tempFile = null;
-                    Path path = Paths.get(tempFilePathBaseDir);
+                    Path path = Paths.get(bookServiceConfigurationProperties.getTempFilePathBaseDir());
+
                     try {
                         tempFile = Files.createTempFile(path, String.valueOf(pdfBookMasterInfoHeader.get(PDF_BOOK_MASTER_ID_HEADER_KEY)), ".pdf");
                         try(InputStream inputStream = new ByteArrayInputStream(bytes)){
@@ -184,7 +172,7 @@ public class BookService {
                         allPages = load.getDocumentCatalog().getAllPages();
                         allPages.stream().forEach(pdPage -> {
                             try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-                                ImageIO.write(pdPage.convertToImage(), bookPageFileFormat, byteArrayOutputStream);
+                                ImageIO.write(pdPage.convertToImage(), bookServiceConfigurationProperties.getBookPageFileFormat(), byteArrayOutputStream);
                                 result.add(byteArrayOutputStream.toByteArray());
                             } catch (IOException e) {
                                 LOGGER.error(e.getMessage());
@@ -205,7 +193,7 @@ public class BookService {
                     String bookId = String.valueOf(headers2.get(BOOK_ID_HEADER_KEY));
                     Page page = PageBuilder
                             .newPageBuilder()
-                            .fileName(PageSupport.fileName4Page(bookPageNameFormat, Integer.parseInt(String.valueOf(headers2.get("sequenceNumber"))), bookPageFileFormat))
+                            .fileName(PageSupport.fileName4Page(bookServiceConfigurationProperties.getBookPageNameFormat(), Integer.parseInt(String.valueOf(headers2.get("sequenceNumber"))), bookServiceConfigurationProperties.getBookPageFileFormat()))
                             .bytes(payload2)
                             .build();
 

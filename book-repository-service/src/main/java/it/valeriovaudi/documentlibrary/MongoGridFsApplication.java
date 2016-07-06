@@ -20,9 +20,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableJms
 @EnableIntegration
 @IntegrationComponentScan
-@PropertySources(value = {
-        @PropertySource("classpath:bookService.properties")
-})
 @EnableEurekaClient
 public class MongoGridFsApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
