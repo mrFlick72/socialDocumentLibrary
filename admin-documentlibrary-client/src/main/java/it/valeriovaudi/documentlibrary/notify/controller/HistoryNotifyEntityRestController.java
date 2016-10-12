@@ -66,7 +66,7 @@ public class HistoryNotifyEntityRestController {
 
     }
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity findAllNotify(){
         return ResponseEntity.ok(historyNotifyEntryRepository.findAll());
     }
