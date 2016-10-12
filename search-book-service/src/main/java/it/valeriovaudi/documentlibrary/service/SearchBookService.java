@@ -101,7 +101,7 @@ public class SearchBookService {
 
     /* read methods*/
 //    SearchIndex findSearckIndexById(I bookId);
-    @RequestMapping("/{bookId}")
+    @RequestMapping(value = "/{bookId}", method = RequestMethod.GET)
     public ResponseEntity findSearchIndexById(@PathVariable(value = "bookId") String bookId){
         SearchIndex searckIndexById = searchIndexRepository.findSearchIndexById(bookId);
         return searckIndexById != null ? ResponseEntity.ok(searchIndexRepository.findSearchIndexById(bookId)) : ResponseEntity.notFound().build();
@@ -109,7 +109,7 @@ public class SearchBookService {
 
 //    List<SearchIndex> findSearchIndexByMetadata(String bookName,String... searchTags);
 //    List<SearchIndex> findAllSearchIndex(int page,int pageSize);
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<SearchIndex>> findSearchIndex(@RequestParam(value = "q",required = false,defaultValue = "") String query,
                                                              @RequestParam(value = "page", defaultValue = SearchIndexRepositoryMongoImpl.EMPTY_PAGE_STRING_PARAMITER,required = false) int page,
                                                              @RequestParam(value = "pageSize", defaultValue = SearchIndexRepositoryMongoImpl.EMPTY_PAGE_STRING_PARAMITER,required = false) int pageSize){
