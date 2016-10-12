@@ -69,12 +69,12 @@ public class BookServiceEndpoint {
         this.searchBookServiceBaseUrl = searchBookServiceBaseUrl;
     }
 
-    @RequestMapping("/{resourcesId}")
+    @RequestMapping(value = "/{resourcesId}", method = RequestMethod.GET)
     public ResponseEntity<Void> readBookDetails(@PathVariable("resourcesId") String resourcesId){
         return null;
     }
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<String> readAddBookDetails(){
         String forObject = searchBookServiceRestTemplate.getForObject(String.format("%s?page=-1&pageSize=-1",searchBookServiceBaseUrl), String.class);
 
