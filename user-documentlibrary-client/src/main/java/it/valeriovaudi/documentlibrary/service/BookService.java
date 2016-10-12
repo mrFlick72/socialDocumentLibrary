@@ -63,7 +63,7 @@ public class BookService {
         this.bookFactory = bookFactory;
     }
 
-    @RequestMapping("/books")
+    @RequestMapping(value = "/books" ,method = RequestMethod.GET)
     public ResponseEntity getUserBooks(@RequestParam("bookName") String bookName, Principal principal){
         UserBookPreferedList userBookPreferredList = userBookPreferedListRepository.findByUserName(principal.getName());
         JsonArrayBuilder jsonArrayBuilderAux =Optional.ofNullable(userBookPreferredList).map(userBookPreferedList ->
@@ -78,7 +78,7 @@ public class BookService {
         return ResponseEntity.ok(jsonArrayBuilderAux.build().toString());
     }
 
-    @RequestMapping("/bookUserList")
+    @RequestMapping(value = "/bookUserList" ,method = RequestMethod.GET)
     public ResponseEntity getUserBookList(Principal principal){
         JsonArrayBuilder jsonArrayBuilderAux = Optional.ofNullable(userBookPreferedListRepository.findByUserName(principal.getName()))
                 .map(userBookPreferedListRepository -> userBookPreferedListRepository.getBooksReadList().parallelStream()
@@ -101,7 +101,7 @@ public class BookService {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity searchBook(@RequestParam(value = "bookName",required = false,defaultValue = "") String bookName,
                                      @RequestParam(value = "searchTags",required = false,defaultValue = "") List<String> searchTags){
         ResponseEntity<String> searchBookResponseEntity = searchBookFromSearchService(bookName, searchTags);
