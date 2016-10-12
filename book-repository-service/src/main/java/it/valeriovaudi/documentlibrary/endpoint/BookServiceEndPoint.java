@@ -102,7 +102,6 @@ public class BookServiceEndPoint {
     @RequestMapping("/book")
     public ResponseEntity getAllBooks(@RequestParam(value = "pageNumber",required = false,defaultValue = "0") Integer pageNumber,
                                       @RequestParam(value = "pageSize",required = false ,defaultValue = "0") Integer pageSize){
-        bookRepository.readAllBooks(pageNumber,pageSize);
         return ResponseEntity.ok(bookResourcesAssembler.toResources(bookRepository.readAllBooks(pageNumber, pageSize)));
     }
 
