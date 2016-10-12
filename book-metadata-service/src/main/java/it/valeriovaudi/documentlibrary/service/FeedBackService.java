@@ -63,7 +63,7 @@ public class FeedBackService {
     /* read methods */
     /**
      * @param bookIdUserNameList : [{userName:'....',bookId:'....'} , ... ,{userName:'....',bookId:'....'}]*/
-    @RequestMapping("/batch")
+    @RequestMapping(value = "/batch", method = RequestMethod.GET)
     public ResponseEntity<String> getByUserBookIdBatchMode(@RequestBody List<Map<String,String>> bookIdUserNameList,
                                                            @RequestParam(required = false) List<String> filterQuery) throws IOException {
         String body;
@@ -83,7 +83,7 @@ public class FeedBackService {
         return ResponseEntity.ok(arrayBuilder.build().toString());
     }
 
-    @RequestMapping("/{userName}/{bookId}/data")
+    @RequestMapping(value = "/{userName}/{bookId}/data", method = RequestMethod.GET)
     public ResponseEntity<String> getFeedBack(@PathVariable("userName") String userName,
                                               @PathVariable("bookId") String bookId,
                                               @RequestParam(required = false) List<String> filterQuery){
@@ -92,21 +92,21 @@ public class FeedBackService {
         return ResponseEntity.ok(feedBackFilteredJson);
     }
 
-    @RequestMapping("/userName/{userName}/data")
+    @RequestMapping(value = "/userName/{userName}/data", method = RequestMethod.GET)
     public ResponseEntity<String> getFeedBackByUser(@PathVariable("userName") String userName,
                                                     @RequestParam(required = false) List<String> filterQuery){
         List<FeedBack> feedBack = feedBackRepository.getFeedBack(userName, null);
         return ResponseEntity.ok(feedBackFactory.createFeedBackFilteredJsonArray(filterQuery,feedBack));
     }
 
-    @RequestMapping("/bookId/{bookId}/data")
+    @RequestMapping(value = "/bookId/{bookId}/data", method = RequestMethod.GET)
     public ResponseEntity<String> getFeedBackByBook(@PathVariable("bookId") String bookId,
                                                     @RequestParam(required = false) List<String> filterQuery){
         List<FeedBack> feedBack = feedBackRepository.getFeedBack(null, bookId);
         return ResponseEntity.ok(feedBackFactory.createFeedBackFilteredJsonArray(filterQuery,feedBack));
     }
 
-    @RequestMapping("/{feedBackId}")
+    @RequestMapping(value = "/{feedBackId}", method = RequestMethod.GET)
     public ResponseEntity<String> getFeedBackById(@PathVariable("feedBackId") String feedBackId,
                                                   @RequestParam(required = false) List<String> filterQuery){
         FeedBack one = feedBackRepository.findOne(feedBackId);
