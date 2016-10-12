@@ -87,25 +87,25 @@ public class BookServiceEndPoint {
     }
 
 
-    @RequestMapping("{bookId}/page/{pageNumber}")
+    @RequestMapping(value = "{bookId}/page/{pageNumber}", method = RequestMethod.GET)
     public ResponseEntity<Page> getSingePage(@PathVariable("bookId") String bookId,
                                              @PathVariable("pageNumber") int pageNumber){
         return ResponseEntity.ok(bookRepository.read(bookId, pageNumber));
     }
 
-    @RequestMapping(value = "{bookId}/pageData/{pageNumber}")
+    @RequestMapping(value = "{bookId}/pageData/{pageNumber}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getSingePageByte(@PathVariable("bookId") String bookId,
                                                    @PathVariable("pageNumber") int pageNumber){
         return ResponseEntity.ok(bookRepository.read(bookId,pageNumber).getBytes());
     }
 
-    @RequestMapping("/book")
+    @RequestMapping(value = "/book", method = RequestMethod.GET)
     public ResponseEntity getAllBooks(@RequestParam(value = "pageNumber",required = false,defaultValue = "0") Integer pageNumber,
                                       @RequestParam(value = "pageSize",required = false ,defaultValue = "0") Integer pageSize){
         return ResponseEntity.ok(bookResourcesAssembler.toResources(bookRepository.readAllBooks(pageNumber, pageSize)));
     }
 
-    @RequestMapping("/book/{bookId}")
+    @RequestMapping(value = "/book/{bookId}", method = RequestMethod.GET)
     public ResponseEntity getBook(@PathVariable("bookId") String bookId,
                                   @RequestParam(value = "startRecord",required = false,defaultValue = "0") Integer startRecord,
                                   @RequestParam(value = "pageSize",required = false,defaultValue = "0") Integer pageSize){
